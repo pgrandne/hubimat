@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.VisualStudio.JavaScript.Sdk/0.5.127-alpha">
+  <PropertyGroup>
+    <StartupCommand>npm run dev -- -p 3000</StartupCommand>
+    <JavaScriptTestRoot>src\</JavaScriptTestRoot>
+    <JavaScriptTestFramework>Jest</JavaScriptTestFramework>
+    <!-- Allows the build (or compile) script located on package.json to run on Build -->
+    <ShouldRunBuildScript Condition=" '$(Configuration)' == 'Release' ">true</ShouldRunBuildScript>
+    <ShouldRunBuildScript Condition=" '$(Configuration)' == 'Debug' ">false</ShouldRunBuildScript>
+    <!-- Folder where production build objects will be placed -->
+    <PublishAssetsDirectory>$(MSBuildProjectDirectory)\out</PublishAssetsDirectory>
+    <!--<BuildCommand>npm run build</BuildCommand>-->
+    <PackageJsonDirectory>$(MSBuildProjectDirectory)\</PackageJsonDirectory>
+  </PropertyGroup>
+  <ItemGroup>
+    <TypeScriptConfiguration Remove="out\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="out\**" />
+  </ItemGroup>  
+</Project>

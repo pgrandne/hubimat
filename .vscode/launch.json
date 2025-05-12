@@ -1,0 +1,30 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+			{
+				"type": "chrome",
+				"request": "launch",
+				"name": "localhost (Chrome)",
+				"url": "http://localhost:3000",
+				"webRoot": "${workspaceFolder}"
+			},
+			{
+				"type": "firefox",
+				"request": "launch",
+				"name": "localhost (Firefox)",
+				"url": "http://localhost:3000",
+				"webRoot": "${workspaceFolder}",
+				"tmpDir": "/home/perrin/Projets/Perso/SMP",
+				"pathMappings": [
+					{
+						"url": "webpack://_n_e/app/",
+						"path": "${workspaceFolder}/app"
+					},
+					{
+						"url": "webpack://_n_e/",
+						"path": "${workspaceFolder}/"
+					}
+				]
+			}
+		]
+}

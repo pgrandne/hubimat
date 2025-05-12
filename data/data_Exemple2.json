@@ -1,0 +1,1633 @@
+[
+    {
+      "Date": "2025-05-02T17:08:18.6385685+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-02T17:08:18.6812181+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Fin du Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-02T17:37:57.7451797+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-02T17:37:57.6981481+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-02T18:31:38.4562891+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-02T18:31:38.5149118+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Fin du Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-02T18:59:36.9041087+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-02T18:59:36.8609559+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-02T19:55:46.2296247+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-02T19:55:46.2723221+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Fin du Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-02T20:27:48.0079114+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-02T20:27:47.9626555+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-02T21:23:50.177426+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-02T21:23:50.2197639+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Fin du Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-02T21:55:15.4804601+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-02T21:55:15.4367392+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-02T22:51:30.4958331+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-02T22:51:30.5397296+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Fin du Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-02T23:17:53.1931277+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-02T23:17:53.1502749+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-03T00:14:05.3195706+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-03T00:14:05.3631719+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Fin du Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-03T00:43:52.6012515+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-03T00:43:52.5566739+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-03T01:39:59.0560299+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-03T01:39:59.0998057+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Fin du Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-03T02:00:08.8556328+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Centrale Intrusion",
+      "Device": "Centrale Intrusion Ajax",
+      "Event": "Problème Réseau"
+    },
+    {
+      "Date": "2025-05-03T08:00:23.6043686+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Centrale Intrusion",
+      "Device": "Centrale Intrusion Ajax",
+      "Event": "Problème Réseau réinitialisé"
+    },
+    {
+      "Date": "2025-05-03T08:00:23.8033824+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-03T08:00:23.6439256+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-03T08:42:53.2253377+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-03T08:42:53.2703927+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Fin du Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-03T09:10:55.1619944+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-03T09:10:55.1193083+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-03T10:06:32.8760751+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-03T10:06:32.9191144+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Fin du Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-03T10:35:47.7054122+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-03T10:35:47.6605986+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-03T11:29:06.9909104+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-03T11:29:07.0367494+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Fin du Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-03T11:56:02.4582854+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-03T11:56:02.4148017+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-03T12:49:46.3071217+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-03T12:49:46.3524872+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Fin du Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-03T13:22:21.1729193+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-03T13:22:21.1306755+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-03T14:16:32.6275743+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-03T14:16:32.6697686+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Fin du Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-03T14:49:04.6626804+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-03T14:49:04.6170246+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-03T15:40:43.187277+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-03T15:40:43.2295731+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Fin du Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-03T16:09:47.8838186+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-03T16:09:47.8389091+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-03T17:05:35.9949177+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-03T17:05:36.0364572+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Fin du Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-03T17:32:07.0586333+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-03T17:32:07.0137059+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-03T18:24:24.6665943+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-03T18:24:24.7457065+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Fin du Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-03T18:52:29.0164736+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-03T18:52:28.970173+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-03T19:46:59.9261599+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-03T19:46:59.9698924+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Fin du Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-03T20:15:02.0838385+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-03T20:15:02.0375312+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-03T21:11:07.0167126+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-03T21:11:07.0627747+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Fin du Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-03T21:37:36.6005051+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-03T21:37:36.5527764+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-03T22:33:46.8099206+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-03T22:33:46.8665722+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Fin du Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-03T23:04:14.4258468+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-03T23:04:14.3753283+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-04T00:00:25.9114723+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-04T00:00:25.9603731+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Fin du Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-04T00:28:35.6302779+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-04T00:28:35.5830132+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-04T01:24:50.1355601+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-04T01:24:50.1795684+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Fin du Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-04T01:51:19.9204922+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-04T01:51:19.8745412+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-04T02:00:08.3390289+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Centrale Intrusion",
+      "Device": "Centrale Intrusion Ajax",
+      "Event": "Problème Réseau"
+    },
+    {
+      "Date": "2025-05-04T08:00:46.6878781+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Centrale Intrusion",
+      "Device": "Centrale Intrusion Ajax",
+      "Event": "Problème Réseau réinitialisé"
+    },
+    {
+      "Date": "2025-05-04T08:21:17.5172957+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-04T08:21:17.5655931+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Fin du Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-04T08:47:57.9768819+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-04T08:47:57.9296609+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-04T09:43:28.9778595+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-04T09:43:29.0280607+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Fin du Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-04T10:15:08.6329104+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-04T10:15:08.5871961+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-04T11:06:16.5240232+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-04T11:06:16.572802+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Fin du Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-04T11:34:53.36769+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-04T11:34:53.3216974+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-04T12:30:05.1159109+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-04T12:30:05.1631882+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Fin du Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-04T12:58:53.8085344+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-04T12:58:53.7364531+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-04T13:53:24.4132604+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-04T13:53:24.4604116+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Fin du Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-04T14:20:25.5224657+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-04T14:20:25.4776604+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-04T15:11:36.7943985+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-04T15:11:36.8414857+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Fin du Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-04T15:43:05.6715762+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-04T15:43:05.6262525+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-04T16:36:32.1994427+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-04T16:36:32.247962+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Fin du Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-04T17:05:44.5492339+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-04T17:05:44.504423+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-04T17:59:30.1393126+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-04T17:59:30.1877398+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Fin du Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-04T18:31:01.7409095+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-04T18:31:01.6941293+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-04T19:27:05.5461745+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-04T19:27:05.5916712+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Fin du Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-04T19:56:25.4656714+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-04T19:56:25.41742+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-04T20:52:34.5446926+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-04T20:52:34.5906244+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Fin du Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-04T21:21:59.7278214+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-04T21:21:59.6828961+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-04T22:18:11.0605637+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-04T22:18:11.1063056+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Fin du Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-04T22:46:13.0396455+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-04T22:46:12.9918159+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-04T23:42:31.922482+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-04T23:42:31.9685386+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Fin du Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-05T00:14:28.8715477+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-05T00:14:28.8261607+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-05T01:10:37.5755586+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-05T01:10:37.6183125+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Fin du Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-05T01:36:46.9680491+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-05T01:36:46.9214486+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-05T02:00:08.4449764+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Centrale Intrusion",
+      "Device": "Centrale Intrusion Ajax",
+      "Event": "Problème Réseau"
+    },
+    {
+      "Date": "2025-05-05T08:00:45.5729159+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Centrale Intrusion",
+      "Device": "Centrale Intrusion Ajax",
+      "Event": "Problème Réseau réinitialisé"
+    },
+    {
+      "Date": "2025-05-05T08:20:35.7828747+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-05T08:20:35.8308781+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Fin du Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-05T08:47:20.7968823+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-05T08:47:20.7491251+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-05T09:40:42.2623903+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-05T09:40:42.3153479+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Fin du Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-05T10:10:29.7442036+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-05T10:10:29.6952385+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-05T11:01:12.4278342+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-05T11:01:12.4694167+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Fin du Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-05T11:28:06.3536581+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-05T11:28:06.3080272+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-05T12:20:23.9615782+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-05T12:20:24.004739+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Fin du Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-05T12:52:26.7745081+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-05T12:52:26.727988+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-05T13:44:27.9542734+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-05T13:44:28.0004492+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Fin du Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-05T14:13:41.7673808+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-05T14:13:41.7221154+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-05T14:13:41.7221154+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-05T14:13:41.7221154+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-05T14:53:59.0469887+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Détecteur Incendie",
+      "Device": "Detecteur Local IT",
+      "Event": "Dérangement"
+    },
+    {
+      "Date": "2025-05-05T14:54:01.7998612+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Détecteur Incendie",
+      "Device": "Detecteur Local IT",
+      "Event": "Detecteur en Service"
+    },
+    {
+      "Date": "2025-05-05T14:54:01.8218229+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Détecteur Incendie",
+      "Device": "Detecteur Local IT",
+      "Event": " Fin du Dérangement"
+    },
+    {
+      "Date": "2025-05-05T15:06:00.9697019+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-05T15:06:01.0251658+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Fin du Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-05T15:33:35.9201324+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-05T15:33:35.8672992+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-05T16:25:35.9858918+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-05T16:25:36.0365593+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Fin du Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-05T16:56:35.7830207+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-05T16:56:35.7359009+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-05T17:52:46.7465095+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-05T17:52:46.796725+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Fin du Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-05T18:24:45.7917822+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-05T18:24:45.7454448+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-05T19:20:45.3110694+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-05T19:20:45.3549309+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Fin du Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-05T19:47:13.7078021+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-05T19:47:13.6620478+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-05T20:43:22.3280057+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-05T20:43:22.375733+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Fin du Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-05T21:15:35.3836999+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-05T21:15:35.3381741+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-05T22:11:38.8968324+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-05T22:11:38.9462577+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Fin du Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-05T22:43:50.1696549+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-05T22:43:50.1192294+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-05T23:40:00.0766055+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-05T23:40:00.1207197+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Fin du Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-06T00:07:04.8145733+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-06T00:07:04.7679086+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-06T01:03:15.4634097+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-06T01:03:15.4717076+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Fin du Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-06T01:34:22.311623+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-06T01:34:22.2630592+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-06T08:00:43.567634+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Centrale Intrusion",
+      "Device": "Centrale Intrusion Ajax",
+      "Event": "Problème Réseau"
+    },
+    {
+      "Date": "2025-05-06T08:00:46.4220285+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Centrale Intrusion",
+      "Device": "Centrale Intrusion Ajax",
+      "Event": "Problème Réseau réinitialisé"
+    },
+    {
+      "Date": "2025-05-06T08:13:21.7860001+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-06T08:13:21.8314368+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Fin du Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-06T08:40:00.2184365+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-06T08:40:00.1710232+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-06T09:11:32.8112912+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Détecteur Incendie",
+      "Device": "Detecteur Local IT",
+      "Event": "Detecteur en Service reinitialisé"
+    },
+    {
+      "Date": "2025-05-06T09:11:32.7725757+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Détecteur Incendie",
+      "Device": "Detecteur Local IT",
+      "Event": "Dérangement"
+    },
+    {
+      "Date": "2025-05-06T09:11:38.3434151+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Détecteur Incendie",
+      "Device": "Detecteur Local IT",
+      "Event": "Detecteur en Service"
+    },
+    {
+      "Date": "2025-05-06T09:11:38.3577806+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Détecteur Incendie",
+      "Device": "Detecteur Local IT",
+      "Event": " Fin du Dérangement"
+    },
+    {
+      "Date": "2025-05-06T09:12:00.5165246+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Détection intrusion"
+    },
+    {
+      "Date": "2025-05-06T09:12:00.5256487+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Fin du Mode Eco ou effacement"
+    },
+    {
+      "Date": "2025-05-06T11:39:09.3042631+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Porte",
+      "Device": "Porte Entrée",
+      "Event": "Porte en Service"
+    },
+    {
+      "Date": "2025-05-06T11:39:18.15134+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Porte",
+      "Device": "Porte Entrée",
+      "Event": "Fin de Porte en Service"
+    },
+    {
+      "Date": "2025-05-06T11:39:18.0897567+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Porte",
+      "Device": "Porte Entrée",
+      "Event": "Effraction Porte"
+    },
+    {
+      "Date": "2025-05-06T11:47:25.8057817+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Porte",
+      "Device": "Porte Entrée",
+      "Event": "Porte en Service"
+    },
+    {
+      "Date": "2025-05-06T11:47:25.87788+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Porte",
+      "Device": "Porte Entrée",
+      "Event": "Fin d’Effraction Porte"
+    },
+    {
+      "Date": "2025-05-06T11:47:30.0106684+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Porte",
+      "Device": "Porte Entrée",
+      "Event": "Porte en Service"
+    },
+    {
+      "Date": "2025-05-06T11:47:30.0172981+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Porte",
+      "Device": "Porte Entrée",
+      "Event": "Fin d’Effraction Porte"
+    },
+    {
+      "Date": "2025-05-06T14:54:44.17082+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Détecteur Incendie",
+      "Device": "Detecteur Local IT",
+      "Event": "Detecteur en Service reinitialisé"
+    },
+    {
+      "Date": "2025-05-06T14:54:44.1079734+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Détecteur Incendie",
+      "Device": "Detecteur Local IT",
+      "Event": "Alarme Feu"
+    },
+    {
+      "Date": "2025-05-07T08:00:24.5493766+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Centrale Intrusion",
+      "Device": "Centrale Intrusion Ajax",
+      "Event": "Problème Réseau"
+    },
+    {
+      "Date": "2025-05-07T08:00:26.7579013+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Centrale Intrusion",
+      "Device": "Centrale Intrusion Ajax",
+      "Event": "Problème Réseau réinitialisé"
+    },
+    {
+      "Date": "2025-05-07T14:36:05.9844134+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Détecteur Incendie",
+      "Device": "Detecteur Entrée",
+      "Event": "Alarme Feu"
+    },
+    {
+      "Date": "2025-05-07T14:36:48.5998928+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Détecteur Incendie",
+      "Device": "Detecteur Entrée",
+      "Event": "Detecteur en Service"
+    },
+    {
+      "Date": "2025-05-07T14:36:48.5999167+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Détecteur Incendie",
+      "Device": "Detecteur Entrée",
+      "Event": "Detecteur en Service"
+    },
+    {
+      "Date": "2025-05-07T14:36:48.7240902+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Détecteur Incendie",
+      "Device": "Detecteur Entrée",
+      "Event": "Fin d'alarme feu"
+    },
+    {
+      "Date": "2025-05-07T14:36:48.7241179+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Détecteur Incendie",
+      "Device": "Detecteur Entrée",
+      "Event": "Fin d'alarme feu"
+    },
+    {
+      "Date": "2025-05-08T08:00:43.5013601+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Centrale Intrusion",
+      "Device": "Centrale Intrusion Ajax",
+      "Event": "Problème Réseau"
+    },
+    {
+      "Date": "2025-05-08T08:00:55.308189+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Centrale Intrusion",
+      "Device": "Centrale Intrusion Ajax",
+      "Event": "Problème Réseau réinitialisé"
+    },
+    {
+      "Date": "2025-05-09T02:00:08.5922671+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Centrale Intrusion",
+      "Device": "Centrale Intrusion Ajax",
+      "Event": "Problème Réseau"
+    },
+    {
+      "Date": "2025-05-09T08:00:57.3401837+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Centrale Intrusion",
+      "Device": "Centrale Intrusion Ajax",
+      "Event": "Problème Réseau réinitialisé"
+    },
+    {
+      "Date": "2025-05-10T08:00:23.5990765+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Centrale Intrusion",
+      "Device": "Centrale Intrusion Ajax",
+      "Event": "Problème Réseau"
+    },
+    {
+      "Date": "2025-05-10T08:00:24.4000601+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Problème Réseau"
+    },
+    {
+      "Date": "2025-05-10T08:00:25.9433937+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Centrale Intrusion",
+      "Device": "Centrale Intrusion Ajax",
+      "Event": "Problème Réseau réinitialisé"
+    },
+    {
+      "Date": "2025-05-10T08:00:28.161864+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Batterie Slat",
+      "Device": "Batterie Slat 1",
+      "Event": "Problème Réseau réinitialisé"
+    },
+    {
+      "Date": "2025-05-11T02:00:08.606922+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Centrale Intrusion",
+      "Device": "Centrale Intrusion Ajax",
+      "Event": "Problème Réseau"
+    },
+    {
+      "Date": "2025-05-11T08:00:37.6817149+02:00",
+      "HierarchyParentId": 5,
+      "DeviceType": "Centrale Intrusion",
+      "Device": "Centrale Intrusion Ajax",
+      "Event": "Problème Réseau réinitialisé"
+    }
+]
