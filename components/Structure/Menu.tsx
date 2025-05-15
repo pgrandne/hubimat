@@ -17,7 +17,7 @@ export const Menu = () => {
     <div className="h-full background-menu z-50">
       <div className="h-1/2 flex flex-col p-5 justify-start items-center">
         <ProfileDropdown />
-        <p className="text-center text-xs">Hi Mathieu</p>
+        <p className="text-center text-xs">Hi Matthieu</p>
         <div className="flex flex-col items-center gap-6 mt-10">
           <Link href="/">
             <Button
