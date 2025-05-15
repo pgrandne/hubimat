@@ -33,7 +33,7 @@ interface AdvancedTableProps<TData, TValue> {
   data: TData[]
 }
 
-export function AdvancedTable<TData, TValue>({
+function AdvancedTable<TData, TValue>({
   columns,
   data,
 }: AdvancedTableProps<TData, TValue>) {
@@ -126,3 +126,5 @@ export function AdvancedTable<TData, TValue>({
     </div>
   )
 }
+
+export default AdvancedTable;

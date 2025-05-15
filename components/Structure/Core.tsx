@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { Toaster } from "../ui/sonner";
-import { AdvancedTable } from "./components/AdvancedTable/advanced-table";
+import AdvancedTable from "./components/AdvancedTable";
 import { Hardware, columns } from "./components/AdvancedTable/columns";
 
 function getData(): Hardware[] {
