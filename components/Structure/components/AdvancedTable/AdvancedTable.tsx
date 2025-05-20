@@ -67,7 +67,6 @@ function AdvancedTable<TData, TValue>({
     }
   })
   
-  
   return (
     <div className="rounded-md border">
       <Table>

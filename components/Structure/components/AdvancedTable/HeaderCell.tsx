@@ -1,0 +1,84 @@
+import { Column, Table } from "@tanstack/react-table"
+import { ArrowUpDown, ChevronDown, Group } from "lucide-react"
+import { Checkbox } from "@/components/ui/checkbox"
+import { Button } from "@/components/ui/button"
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import {
+    Command,
+    CommandEmpty,
+    CommandInput,
+    CommandItem,
+    CommandList,
+} from "@/components/ui/command"
+import { ObjectToString } from "./ColumnHelper"
+import FilterList from "./FilterList"
+import FilterDate from "./FilterDate"
+
+
+export default function HeaderCell({ table, column, name = "default", enableSorting = true, enableFiltering = true, enableGrouping = true }: {
+    table: Table<any>,
+    column: Column<any, unknown>,
+    name?: string,
+    enableSorting?: boolean,
+    enableFiltering?: boolean,
+    enableGrouping?: boolean
+}) {
+
+    // Will these scale well ???
+    const columnValuesCounted: [string, number][] = Object.entries(
+        table.getCoreRowModel().rows.map(
+            (r: any) => r.getValue(column.id)
+        ).reduce(
+            (cnt: any, cur: any) => (cnt[ObjectToString(cur)] = cnt[ObjectToString(cur)] + 1 || 1, cnt), {}
+        )
+    )
+    const isDate = table.getCoreRowModel().rows.filter((r: any) => typeof r.getValue(column.id).getMonth === 'function').length > 0
+
+    return (
+        <>
+            {name}
+            {(enableSorting || enableFiltering) &&
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" className="ml-2 h-7 w-7 p-0" title="Ouvrir le menu">
+                            <ChevronDown className="h-4 w-4" />
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                        {(enableSorting) && <>
+                            <DropdownMenuLabel>Trier</DropdownMenuLabel>
+                            <DropdownMenuItem onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+                                <ArrowUpDown />
+                                Par ordre alphabétique
+                            </DropdownMenuItem>
+                        </>}
+                        {(enableFiltering) &&
+                            <>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuLabel>Filtrer</DropdownMenuLabel>
+                                { (isDate) ?
+                                    <FilterDate column={column} /> :
+                                    <FilterList column={column} columnValuesCounted={columnValuesCounted} />
+                                }
+                            </>
+                        }
+                    </DropdownMenuContent>
+                </DropdownMenu>
+            }
+            {(enableGrouping) &&
+                <Button variant="ghost" className="h-7 w-7 p-0" title="Grouper"
+                    onClick={() => column.toggleGrouping()}
+                >
+                    <Group />
+                </Button>
+            }
+        </>
+    )
+}
