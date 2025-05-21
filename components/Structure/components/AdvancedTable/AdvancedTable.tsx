@@ -1,128 +1,50 @@
-"use client"
+import TanstackTableImplementation from "./TanstackTableImplementation";
+import { Children, PropsWithChildren } from 'react';
+import { ColumnDef } from "@tanstack/react-table";
+import HeaderCell from "../DEPRECATED AdvancedTable/HeaderCell";
 
-import {
-  ColumnDef,
-  SortingState,
-  flexRender,
-  getCoreRowModel,
-  useReactTable,
-  getSortedRowModel,
-  ColumnFiltersState,
-  getFilteredRowModel,
-  getFacetedRowModel,
-  getFacetedUniqueValues,
-  getGroupedRowModel,
-  getExpandedRowModel,
-  ColumnPinningState,
-} from "@tanstack/react-table"
-
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
-
-import React from "react"
-import { ChevronDown, ChevronRight } from "lucide-react"
-
-interface AdvancedTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[]
-  data: TData[]
+ 
+interface Props {
+  data: Array<any>,
+  className?: string,
+  enableGeneralSearch?: boolean
 }
 
-function AdvancedTable<TData, TValue>({
-  columns,
-  data,
-}: AdvancedTableProps<TData, TValue>) {
-  const [rowSelection, setRowSelection] = React.useState({})
-  const [sorting, setSorting] = React.useState<SortingState>([])
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
-  const [columnPinning, setColumnPinning] = React.useState<ColumnPinningState>({left: [], right: [],});
-  const table = useReactTable({
-    data,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-    getFacetedRowModel: getFacetedRowModel(),
-    getFacetedUniqueValues: getFacetedUniqueValues(),
-    onRowSelectionChange: setRowSelection,
-    onSortingChange: setSorting,
-    getSortedRowModel: getSortedRowModel(),
-    onColumnFiltersChange: setColumnFilters,
-    getFilteredRowModel: getFilteredRowModel(),
-    getGroupedRowModel: getGroupedRowModel(),
-    getExpandedRowModel: getExpandedRowModel(),
-    state: {
-      rowSelection,
-      sorting,
-      columnFilters,
-    },
-    initialState: {
-      columnPinning: {
-        left: ['select'],
-        right: ['actions'],
-      },
-    }
-  })
-  
+function isComponent(object: any, componentName: string) {
+  return typeof object === 'object' && Object.hasOwn(object, 'type') && object.type.name === componentName
+}
+
+const AdvancedTable = (props: PropsWithChildren<Props>) =>  {
+
+  if (props.data.length == 0) return <>Tableau vide</>
+
+  const headers = Children.map(props.children, (child) => child)?.filter(child => isComponent(child, 'AdvancedTableHeader')).at(0)?.props.children
+  // console.log(headers)
+
+  const accessors = Object.keys(props.data.at(0))
+
+  if (headers.length != accessors.length) return <>Missing headers</>
+
+  const rowCells = Children.map(props.children, (child) => child)?.filter(child => isComponent(child, 'AdvancedTableBodyRow')).at(0)?.props.children
+  console.log(rowCells)
+
+  if (rowCells.length != accessors.length) return <>Missing body row cells</>
+  Object.length
+
   return (
-    <div className="rounded-md border">
-      <Table>
-        <TableHeader>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map((header) => {
-                return (
-                  <TableHead key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                  </TableHead>
-                )
-              })}
-            </TableRow>
-          ))}
-        </TableHeader>
-        <TableBody>
-          {table.getRowModel().rows?.length ? (
-            table.getRowModel().rows.map((row) => (
-              <TableRow
-                key={row.id}
-                data-state={row.getIsSelected() && "selected"}
-              >
-                {
-                  row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {
-                        row.getCanExpand() && cell.getIsGrouped() &&
-                        <button onClick={row.getToggleExpandedHandler()} style={{ cursor: 'pointer' }}>
-                          {row.getIsExpanded() ? <ChevronDown /> : <ChevronRight />}
-                        </button>
-                      }
-                      {
-                        (!row.getCanExpand() || row.getCanExpand() && cell.getIsGrouped() || cell.column.id === 'select') && 
-                        flexRender(cell.column.columnDef.cell, cell.getContext())
-                      }
-                    </TableCell>
-                  ))
-                }
-              </TableRow>
-            ))
-          ) : (
-            <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center">
-                No results.
-              </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
-    </div>
+    // <>{props.children}</>
+    <TanstackTableImplementation columns={accessors.map((accessor, i): ColumnDef<any, unknown> => {
+      let columnDef: ColumnDef<any, unknown> = {
+        accessorKey: accessor,
+        header: ({ table, column }) => <HeaderCell table={table} column={column} name={headers[i].props.children} />
+      }
+
+      if (Object.keys(rowCells[i].props).length != 0) {
+        columnDef.cell= ({ row }) => { console.log(rowCells[i].props); return rowCells[i].props.children?.map((child: any) => isComponent(child, 'CellRawValue') ? row.getValue(accessor) : child) }
+      }
+
+      return columnDef
+    })} data={props.data}></TanstackTableImplementation>
   )
 }
 
