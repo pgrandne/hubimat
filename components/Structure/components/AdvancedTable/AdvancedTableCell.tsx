@@ -2,6 +2,7 @@ import { Children, ReactNode, PropsWithChildren  } from 'react';
 
 interface Props {
   className?: string
+  valueEditFunction?: Function
 }
 
 const AdvancedTableCell = (props: PropsWithChildren<Props>) => {

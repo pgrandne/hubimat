@@ -74,7 +74,7 @@ export const Core = () => {
         <AdvancedTableBodyRow>
           <AdvancedTableCell></AdvancedTableCell>
           <AdvancedTableCell className="font-medium">--<CellRawValue/>--</AdvancedTableCell>
-          <AdvancedTableCell></AdvancedTableCell>
+          <AdvancedTableCell valueEditFunction={(deviceType:string)=> {return <div>coucou<br></br>{deviceType}<br></br></div>}}><CellRawValue/>salut</AdvancedTableCell>
           <AdvancedTableCell className="text-right"></AdvancedTableCell>
           <AdvancedTableCell></AdvancedTableCell>
           <AdvancedTableCell></AdvancedTableCell>

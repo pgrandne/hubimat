@@ -40,7 +40,18 @@ const AdvancedTable = (props: PropsWithChildren<Props>) =>  {
       }
 
       if (Object.keys(rowCells[i].props).length != 0) {
-        columnDef.cell= ({ row }) => { console.log(rowCells[i].props); return rowCells[i].props.children?.map((child: any) => isComponent(child, 'CellRawValue') ? row.getValue(accessor) : child) }
+        columnDef.cell= ({ row }) => {
+          
+          let cellValue = row.getValue(accessor)
+          if (rowCells[i].props.valueEditFunction != undefined) {
+            console.log(rowCells[i].props.valueEditFunction(cellValue));
+            cellValue = rowCells[i].props.valueEditFunction(cellValue)
+          }
+          if (rowCells[i].props.children?.length > 0)
+            return rowCells[i].props.children?.map((child: any) => isComponent(child, 'CellRawValue') ? cellValue : child)
+          else
+            return cellValue
+        }
       }
 
       return columnDef
