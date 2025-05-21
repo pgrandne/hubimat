@@ -61,13 +61,15 @@ export const Core = () => {
           Exemple {i}
         </Button>)
       }
-      <AdvancedTable data={getData1()} enableGeneralSearch={true}>
+      
+      { (exampleChoice==1) &&
+      <AdvancedTable data={getData1()} enableGeneralSearch={true} enableRowSelection={true}>
         <AdvancedTableCaption>A list of Data.</AdvancedTableCaption>
         <AdvancedTableHeader>
           <AdvancedTableHead defaultSort={sortType.MinortoMayor}>Date</AdvancedTableHead>
-          <AdvancedTableHead enableFiltering={true} enableSorting={true}>Type d'appareil</AdvancedTableHead>
-          <AdvancedTableHead enableFiltering={true} defaultFilter={defaultMethodFilter}>Appareil</AdvancedTableHead>
-          <AdvancedTableHead className="text-right">Action effectuée</AdvancedTableHead>
+          <AdvancedTableHead enableFiltering={false} enableSorting={false} enableGrouping={false}>Type d'appareil</AdvancedTableHead>
+          <AdvancedTableHead defaultFilter={defaultMethodFilter}>Appareil</AdvancedTableHead>
+          <AdvancedTableHead enableFiltering={false} className="text-right">Action effectuée</AdvancedTableHead>
           <AdvancedTableHead>Prénom</AdvancedTableHead>
           <AdvancedTableHead>Nom</AdvancedTableHead>
         </AdvancedTableHeader>
@@ -79,7 +81,37 @@ export const Core = () => {
           <AdvancedTableCell></AdvancedTableCell>
           <AdvancedTableCell></AdvancedTableCell>
         </AdvancedTableBodyRow>
-      </AdvancedTable>
+      </AdvancedTable>}
+
+      { (exampleChoice==4) &&
+      <AdvancedTable data={getData4()} enableGeneralSearch={true} enableRowSelection={true}>
+        <AdvancedTableCaption>A list of Data.</AdvancedTableCaption>
+        <AdvancedTableHeader>
+          <AdvancedTableHead hidden={true}>ID</AdvancedTableHead>
+          <AdvancedTableHead>Catégorie (Device type Group)</AdvancedTableHead>
+          <AdvancedTableHead displayValueFunction={(hardwareType:HardwareType) => hardwareType.name}>Icône et Type d'objet</AdvancedTableHead>
+          <AdvancedTableHead>Label de l'objet</AdvancedTableHead>
+          <AdvancedTableHead>Description</AdvancedTableHead>
+          <AdvancedTableHead>Paramètre(s) Interface</AdvancedTableHead>
+          <AdvancedTableHead>Tests</AdvancedTableHead>
+          <AdvancedTableHead>Instance</AdvancedTableHead>
+        </AdvancedTableHeader>
+        <AdvancedTableBodyRow>
+          <AdvancedTableCell></AdvancedTableCell>
+          <AdvancedTableCell></AdvancedTableCell>
+          <AdvancedTableCell valueEditFunction={(hardwareType:HardwareType) => {
+            return <>
+              <img src={hardwareType.icon_source} style={{maxWidth:'50px', display: 'inline', marginRight:'1em'}} />
+              {hardwareType.name}
+            </>}}>
+          </AdvancedTableCell>
+          <AdvancedTableCell></AdvancedTableCell>
+          <AdvancedTableCell></AdvancedTableCell>
+          <AdvancedTableCell valueEditFunction={(hardwareParameters:HardwareParameters) => hardwareParameters.type + " - " + hardwareParameters.protocol + " | "+ hardwareParameters.utl}></AdvancedTableCell>
+          <AdvancedTableCell></AdvancedTableCell>
+          <AdvancedTableCell></AdvancedTableCell>
+        </AdvancedTableBodyRow>
+      </AdvancedTable>}
     </div>
   )
 

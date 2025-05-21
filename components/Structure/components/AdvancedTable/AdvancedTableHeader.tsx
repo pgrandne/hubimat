@@ -1,8 +1,12 @@
-import { Children } from 'react';
+import { Children, PropsWithChildren } from 'react';
 
-export default function AdvancedTableHeader({ children }: { children: any }) {
+interface Props {}
+
+const AdvancedTableHeader = (props: PropsWithChildren<Props>) => {
 
   return (
-    <>{children}</>
+    <>{props.children}</>
   )
 }
+
+export default AdvancedTableHeader

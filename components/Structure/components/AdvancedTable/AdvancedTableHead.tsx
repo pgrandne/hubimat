@@ -5,19 +5,18 @@ export const sortType = {
 }
 
 interface Props {
+  hidden?: boolean,
   className?: string,
   defaultSort?: number,
   enableFiltering?: boolean,
   enableSorting?: boolean,
   enableGrouping?: boolean,
-  defaultFilter?: Function
+  defaultFilter?: Function,
+  displayValueFunction?: Function
 }
 
 const AdvancedTableHead = (props: PropsWithChildren<Props>) => {
-
-  return (
-    <span style={{marginRight:'0.5em'}}>{props.children}</span>
-  )
+  return <span style={{marginRight:'0.5em'}}>{props.children}</span>
 }
 
 export default AdvancedTableHead

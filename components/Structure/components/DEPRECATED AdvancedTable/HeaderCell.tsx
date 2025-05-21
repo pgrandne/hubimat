@@ -22,21 +22,22 @@ import FilterList from "./FilterList"
 import FilterDate from "./FilterDate"
 
 
-export default function HeaderCell({ table, column, name = "default", enableSorting = true, enableFiltering = true, enableGrouping = true }: {
+export default function HeaderCell({ table, column, name = "default", enableSorting = true, enableFiltering = true, enableGrouping = true, displayValueFunction = ObjectToString }: {
     table: Table<any>,
     column: Column<any, unknown>,
     name?: string,
     enableSorting?: boolean,
     enableFiltering?: boolean,
-    enableGrouping?: boolean
+    enableGrouping?: boolean,
+    displayValueFunction?: Function
 }) {
 
     // Will these scale well ???
-    const columnValuesCounted: [string, number][] = Object.entries(
+    const columnValuesCounted: [string, {"count":number, "displayValue":string}][] = Object.entries(
         table.getCoreRowModel().rows.map(
             (r: any) => r.getValue(column.id)
         ).reduce(
-            (cnt: any, cur: any) => (cnt[ObjectToString(cur)] = cnt[ObjectToString(cur)] + 1 || 1, cnt), {}
+            (cnt: any, cur: any) => (cnt[ObjectToString(cur)] = {"count": cnt[ObjectToString(cur)]?.count + 1 || 1, "displayValue": displayValueFunction(cur)}, cnt), {}
         )
     )
     const isDate = table.getCoreRowModel().rows.filter((r: any) => typeof r.getValue(column.id).getMonth === 'function').length > 0

@@ -4,7 +4,7 @@ import { Column } from "@tanstack/react-table";
 
 interface FilterListProps {
     column: Column<any, unknown>;
-    columnValuesCounted: [string, number][];
+    columnValuesCounted: [string, {"count":number, "displayValue":string}][];
 }
 
 
@@ -53,7 +53,7 @@ export default function FilterList({ column, columnValuesCounted }: FilterListPr
                                         }
                                     }
                                 />
-                                {content + " x" + String(c[1])}
+                                {c[1].displayValue + " x" + String(c[1].count)}
                             </CommandItem>
                         }
                     )
