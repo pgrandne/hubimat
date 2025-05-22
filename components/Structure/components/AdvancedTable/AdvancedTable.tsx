@@ -92,15 +92,16 @@ const AdvancedTable = (props: PropsWithChildren<Props>) => {
     if (Object.keys(rowCells[i].props).length != 0) {
       columnDef.cell = ({ row }) => {
         let cellValue = (rowCells[i].props.valueEditFunction != undefined) ? rowCells[i].props.valueEditFunction(row.getValue(accessor)) : row.getValue(accessor)
-
-        if (rowCells[i].props.children?.length > 0)
-          return rowCells[i].props.children?.map((child: any) => isComponent(child, 'CellRawValue') ? cellValue : child)
-        else
-          return cellValue
+        const cellChildren = (rowCells[i].props.children?.length > 0) ? rowCells[i].props.children : cellValue
+        if (!Array.isArray(cellChildren)) return cellChildren
+        return rowCells[i].props.children?.map((child: any) => isComponent(child, 'CellRawValue') ? cellValue : child)
       }
     }
 
     columnDef.getGroupingValue = (row) => ObjectToString(row[accessor])
+
+    if (rowCells[i].props.sortingFunction != undefined)
+      { columnDef.sortingFn = (rowA: Row<any>, rowB: Row<any>, columnId: string) => rowCells[i].props.sortingFunction(rowA.original[columnId], rowB.original[columnId]) }
 
     return columnDef
   }).filter((_columnDef, i) => headers[i].props.hidden !== true)

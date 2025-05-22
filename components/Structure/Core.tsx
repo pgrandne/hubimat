@@ -76,7 +76,8 @@ export const Core = () => {
         <AdvancedTableBodyRow>
           <AdvancedTableCell></AdvancedTableCell>
           <AdvancedTableCell className="font-medium">--<CellRawValue/>--</AdvancedTableCell>
-          <AdvancedTableCell valueEditFunction={(deviceType:string)=> {return <div>coucou<br></br>{deviceType}<br></br></div>}}><CellRawValue/>salut</AdvancedTableCell>
+          <AdvancedTableCell></AdvancedTableCell>
+          {/* <AdvancedTableCell valueEditFunction={(deviceType:string)=> {return <div>coucou<br></br>{deviceType}<br></br></div>}}><CellRawValue/>salut</AdvancedTableCell> */}
           <AdvancedTableCell className="text-right"></AdvancedTableCell>
           <AdvancedTableCell></AdvancedTableCell>
           <AdvancedTableCell></AdvancedTableCell>
@@ -99,15 +100,19 @@ export const Core = () => {
         <AdvancedTableBodyRow>
           <AdvancedTableCell></AdvancedTableCell>
           <AdvancedTableCell></AdvancedTableCell>
-          <AdvancedTableCell valueEditFunction={(hardwareType:HardwareType) => {
-            return <>
-              <img src={hardwareType.icon_source} style={{maxWidth:'50px', display: 'inline', marginRight:'1em'}} />
-              {hardwareType.name}
-            </>}}>
-          </AdvancedTableCell>
+          <AdvancedTableCell 
+            valueEditFunction={(hardwareType:HardwareType) => { return <>
+                <img src={hardwareType.icon_source} style={{maxWidth:'50px', display: 'inline', marginRight:'1em'}} />
+                {hardwareType.name}
+              </> } }
+            sortingFunction={(valueA: HardwareType, valueB: HardwareType) => { return (valueA.name < valueB.name) ? -1 : (valueA.name > valueB.name) ? 1 : 0 }}
+          ></AdvancedTableCell>
           <AdvancedTableCell></AdvancedTableCell>
           <AdvancedTableCell></AdvancedTableCell>
-          <AdvancedTableCell valueEditFunction={(hardwareParameters:HardwareParameters) => hardwareParameters.type + " - " + hardwareParameters.protocol + " | "+ hardwareParameters.utl}></AdvancedTableCell>
+          <AdvancedTableCell
+            valueEditFunction={(hardwareParameters:HardwareParameters) => hardwareParameters.type + " - " + hardwareParameters.protocol + " | "+ hardwareParameters.utl}
+            sortingFunction={(valueA: HardwareParameters, valueB: HardwareParameters) => { return (valueA.type < valueB.type) ? -1 : (valueA.type > valueB.type) ? 1 : 0 }}
+          ></AdvancedTableCell>
           <AdvancedTableCell></AdvancedTableCell>
           <AdvancedTableCell></AdvancedTableCell>
         </AdvancedTableBodyRow>
