@@ -9,7 +9,7 @@ export type Log = {
     UserLastName: string
 }
 
-export function getData1(): Log[] {
+export async function getData1(): Promise<Log[]> {
     return exampleData1.map((content): Log => {
         let { date, ...rest } = content
         var dateObj = new Date(content.date);

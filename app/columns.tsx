@@ -1,146 +1,83 @@
 import { Badge } from "@/components/ui/badge"
+import { Log } from "@/data/example1"
 import type { ColumnDef } from "@tanstack/react-table"
 import { format } from "date-fns"
 import { Activity, Briefcase, Calendar, TrendingUp, User } from "lucide-react"
 
-export interface Person {
-  id: number
-  rstName: string
-  lastName: string
-  age: number
-  visits: number
-  status: "active" | "inactive" | "pending"
-  progress: number
-  department: "engineering" | "marketing" | "sales" | "design"
-  createdAt: string
-  avatar: string
-}
-
-export const columns: ColumnDef<Person>[] = [
+export const columns: ColumnDef<Log>[] = [
   {
-    id: "avatar",
-    header: "",
-    accessorKey: "avatar",
-    cell: ({ row }) => (
-      <img src={row.original.avatar} alt="Avatar" className="w-10 h-10 rounded-full object-cover shadow-sm" />
+    id: "date",
+    accessorKey: "date",
+    header: () => (
+      <span className="flex items-center gap-2">
+        <Calendar />
+        Date
+      </span>
     ),
+    accessorFn: (row) => format(new Date(row.date), "MM/dd/yyyy"),
+    cell: ({ row }) => <span className="text-sm text-gray-500">{row.getValue("date")}</span>,
     filterFn: "filterRows",
-    meta: { export: { pdf: false } },
+    meta: { export: { pdf: { header: "Date" } } },
   },
   {
-    id: "firstName",
-    accessorKey: "firstName",
+    id: "DeviceType",
+    accessorKey: "DeviceType",
     header: () => (
       <span className="flex items-center gap-2">
         <User />
-        First Name
+        Type d'appareil
       </span>
     ),
-    meta: { align: "center", export: { pdf: { header: "First Name" } } },
+    meta: { align: "center", export: { pdf: { header: "Type d'appareil" } } },
     filterFn: "filterRows",
   },
   {
-    id: "lastName",
-    accessorKey: "lastName",
-    header: "Last Name",
+    id: "Device",
+    accessorKey: "Device",
+    header: "Appareil",
     meta: { align: "center" },
     filterFn: "filterRows",
   },
   {
-    id: "age",
-    accessorKey: "age",
-    header: "Age",
-    cell: ({ row }) => <span className="font-semibold text-blue-600">{row.getValue("age")}</span>,
-    meta: { align: "center", export: { pdf: { header: "Age" } } },
+    id: "Action",
+    accessorKey: "Action",
+    header: "Action effectuée",
+    cell: ({ row }) => <span className="font-semibold text-blue-600">{row.getValue("Action")}</span>,
+    meta: { align: "center", export: { pdf: { header: "Action" } } },
     filterFn: "filterRows",
   },
   {
-    id: "visits",
-    accessorKey: "visits",
+    id: "UserFirstName",
+    accessorKey: "UserFirstName",
     header: () => (
       <span className="flex items-center gap-2">
         <Activity />
-        Visits
+        Prénom
       </span>
     ),
-    meta: { align: "center", export: { pdf: { header: "Visits" } } },
+    meta: { align: "center", export: { pdf: { header: "Prénom" } } },
     filterFn: "filterRows",
   },
   {
-    id: "status",
-    accessorKey: "status",
-    header: "Status",
-    cell: ({ row }) => (
-      <Badge variant={row.getValue("status")} className="capitalize">
-        {row.getValue("status")}
-      </Badge>
-    ),
-    filterFn: "filterRows",
-    meta: { export: { pdf: { header: "Status" } } },
-  },
-  {
-    id: "progress",
-    accessorKey: "progress",
-    header: () => (
-      <span className="flex items-center gap-2">
-        <TrendingUp />
-        Progress
-      </span>
-    ),
-    cell: ({ row }) => (
-      <div className="flex items-center gap-2">
-        <div className="w-20 h-2 bg-gray-200 rounded-full overflow-hidden">
-          <div
-            className="h-full bg-green-500 transition-all duration-300"
-            style={{ width: `${row.getValue("progress")}%` }}
-          />
-        </div>
-        <span className="text-sm text-gray-600">{row.getValue("progress")}%</span>
-      </div>
-    ),
-    filterFn: "filterRows",
-    meta: { export: { pdf: { header: "Progress" } } },
-  },
-  {
-    id: "department",
-    accessorKey: "department",
+    id: "UserLastName",
+    accessorKey: "UserLastName",
     header: () => (
       <span className="flex items-center gap-2">
         <Briefcase />
-        Department
+        Nom
       </span>
     ),
     cell: ({ row }) => {
-      const department = row.getValue("department") as string
+      const name = row.getValue("UserLastName") as string
       const iconClass = "w-5 h-5 mr-2"
-      const icons = {
-        engineering: <Activity className={iconClass} />,
-        marketing: <TrendingUp className={iconClass} />,
-        sales: <User className={iconClass} />,
-        design: <Calendar className={iconClass} />,
-      }
       return (
         <div className="flex items-center font-medium">
-          {icons[department as keyof typeof icons]}
-          {department}
+          <Activity className={iconClass} />
+          {name}
         </div>
       )
     },
     filterFn: "filterRows",
     meta: { export: { pdf: { header: "Department" } } },
-  },
-  {
-    id: "createdAt",
-    accessorKey: "createdAt",
-    header: () => (
-      <span className="flex items-center gap-2">
-        <Calendar />
-        Created At
-      </span>
-    ),
-    accessorFn: (row) => format(new Date(row.createdAt), "MM/dd/yyyy"),
-    cell: ({ row }) => <span className="text-sm text-gray-500">{row.getValue("createdAt")}</span>,
-    filterFn: "filterRows",
-    meta: { export: { pdf: { header: "Created At" } } },
   },
 ]

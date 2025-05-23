@@ -8,24 +8,24 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import type { Row } from "@tanstack/react-table"
 import { useState } from "react"
-import TableSkeleton from "../loading"
-import { type Person, columns } from "./columns"
+import TableSkeleton from "./loading"
+import { columns } from "./columns"
+import { getData1, type Log } from "@/data/example1"
 
 interface ExamplesProps {
-  initialData: Person[]
+  initialData: Log[]
 }
 
 export function Examples({ initialData }: ExamplesProps) {
-  const [data, setData] = useState<Person[]>(initialData)
+  const [data, setData] = useState<Log[]>(initialData)
   const [dataCount, setDataCount] = useState<number>(1000)
   const [headerVariant, setHeaderVariant] = useState<"default" | "dropdown">("default")
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   async function fetchData() {
     setIsLoading(true)
-    const newData = await fetch(`http://localhost:3000/api/fake-data?count=${dataCount}`, {
-      cache: "no-cache",
-    }).then((res) => res.json())
+    await new Promise<void>((resolve) => setTimeout(() => resolve(), 1000));
+    const newData = await getData1().then((res) => res)
     setData(newData)
     setIsLoading(false)
   }
@@ -160,13 +160,13 @@ export function Examples({ initialData }: ExamplesProps) {
   )
 }
 
-const customRowStyles = (row: Row<Person>) => {
+const customRowStyles = (row: Row<Log>) => {
   const baseStyles = "transition-colors hover:bg-opacity-20"
   const statusStyles = {
-    active: "hover:bg-green-100 dark:hover:bg-green-900/50",
-    inactive: "hover:bg-red-100 dark:hover:bg-red-900/50",
-    pending: "hover:bg-yellow-100 dark:hover:bg-yellow-900/50",
+    "Détecteur Incendie": "hover:bg-green-100 dark:hover:bg-green-900/50",
+    "Batterie Slat": "hover:bg-red-100 dark:hover:bg-red-900/50",
+    "Porte Entrée": "hover:bg-yellow-100 dark:hover:bg-yellow-900/50",
   }
 
-  return `${baseStyles} ${statusStyles[row.original.status]}`
+  return `${baseStyles} ${statusStyles[row.original.DeviceType]}`
 }
