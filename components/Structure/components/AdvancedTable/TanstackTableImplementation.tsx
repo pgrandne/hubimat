@@ -97,7 +97,7 @@ export default function TanstackTableImplementation<TData, TValue>({
               >
                 {
                   row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+                    <TableCell key={cell.id} className="h-12 text-center text-sm">
                       {
                         row.getCanExpand() && cell.getIsGrouped() &&
                         <button onClick={row.getToggleExpandedHandler()} style={{ cursor: 'pointer' }}>

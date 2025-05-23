@@ -82,7 +82,7 @@ const AdvancedTable = (props: PropsWithChildren<Props>) => {
       accessorKey: accessor,
       filterFn: ArrayFilterFunction,
       header: ({ table, column }) => (
-      <HeaderCell table={table} column={column} name={headers[i].props.children}
+      <HeaderCell table={table} column={column} name={headers[i].props.children} icon={headers[i].props.icon}
         enableSorting={headers[i].props.enableSorting} enableFiltering={headers[i].props.enableFiltering} enableGrouping={headers[i].props.enableGrouping}
         displayValueFunction={headers[i].props.displayValueFunction}
       />

@@ -20,12 +20,15 @@ import {
 import { ObjectToString } from "./ColumnHelper"
 import FilterList from "./FilterList"
 import FilterDate from "./FilterDate"
+import { ReactElement, ReactNode } from "react"
+import React from "react"
 
 
-export default function HeaderCell({ table, column, name = "default", enableSorting = true, enableFiltering = true, enableGrouping = true, displayValueFunction = ObjectToString }: {
+export default function HeaderCell({ table, column, name = "default", icon, enableSorting = true, enableFiltering = true, enableGrouping = true, displayValueFunction = ObjectToString }: {
     table: Table<any>,
     column: Column<any, unknown>,
-    name?: string,
+    name?: ReactNode,
+    icon?: ReactElement
     enableSorting?: boolean,
     enableFiltering?: boolean,
     enableGrouping?: boolean,
@@ -42,9 +45,12 @@ export default function HeaderCell({ table, column, name = "default", enableSort
     )
     const isDate = table.getCoreRowModel().rows.filter((r: any) => typeof r.getValue(column.id).getMonth === 'function').length > 0
 
+    
+    
     return (
-        <>
-            {name}
+        <div className="py-2 px-3 mr-2 font-semibold text-sm text-muted-foreground flex items-center">
+            <span style={{opacity:'0.7'}}>{icon}</span>
+            <span className="flex items-center ml-2" style={{width:'100%', justifyContent:'center'}}>{name}</span>
             {(enableSorting || enableFiltering) &&
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -80,6 +86,6 @@ export default function HeaderCell({ table, column, name = "default", enableSort
                     <Group />
                 </Button>
             }
-        </>
+        </div>
     )
 }

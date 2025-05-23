@@ -12,6 +12,7 @@ import AdvancedTableHeader from "./components/AdvancedTable/AdvancedTableHeader"
 import AdvancedTableRow from "./components/AdvancedTable/AdvancedTableRow";
 import CellRawValue from "./components/AdvancedTable/CellRawValue";
 import AdvancedTableBodyRow from "./components/AdvancedTable/AdvancedTableBodyRow";
+import { Calendar, CircuitBoard, MemoryStick, MousePointerClick, User } from "lucide-react";
 
 
 // Define data type
@@ -66,18 +67,38 @@ export const Core = () => {
       <AdvancedTable data={getData1()} enableGeneralSearch={true} enableRowSelection={true}>
         <AdvancedTableCaption>A list of Data.</AdvancedTableCaption>
         <AdvancedTableHeader>
-          <AdvancedTableHead defaultSort={sortType.MinortoMayor}>Date</AdvancedTableHead>
-          <AdvancedTableHead enableFiltering={false} enableSorting={false} enableGrouping={false}>Type d'appareil</AdvancedTableHead>
-          <AdvancedTableHead defaultFilter={defaultMethodFilter}>Appareil</AdvancedTableHead>
-          <AdvancedTableHead enableFiltering={false} className="text-right">Action effectuée</AdvancedTableHead>
+          <AdvancedTableHead>Date</AdvancedTableHead>
+          <AdvancedTableHead>Type d'appareil</AdvancedTableHead>
+          <AdvancedTableHead>Appareil</AdvancedTableHead>
+          <AdvancedTableHead>Action effectuée</AdvancedTableHead>
           <AdvancedTableHead>Prénom</AdvancedTableHead>
           <AdvancedTableHead>Nom</AdvancedTableHead>
         </AdvancedTableHeader>
         <AdvancedTableBodyRow>
           <AdvancedTableCell></AdvancedTableCell>
-          <AdvancedTableCell className="font-medium">--<CellRawValue/>--</AdvancedTableCell>
           <AdvancedTableCell></AdvancedTableCell>
-          {/* <AdvancedTableCell valueEditFunction={(deviceType:string)=> {return <div>coucou<br></br>{deviceType}<br></br></div>}}><CellRawValue/>salut</AdvancedTableCell> */}
+          <AdvancedTableCell></AdvancedTableCell>
+          <AdvancedTableCell></AdvancedTableCell>
+          <AdvancedTableCell></AdvancedTableCell>
+          <AdvancedTableCell></AdvancedTableCell>
+        </AdvancedTableBodyRow>
+      </AdvancedTable>}
+
+      { (exampleChoice==2) &&
+      <AdvancedTable data={getData1()} enableGeneralSearch={true} enableRowSelection={true}>
+        <AdvancedTableCaption>A list of Data.</AdvancedTableCaption>
+        <AdvancedTableHeader>
+          <AdvancedTableHead defaultSort={sortType.MinortoMayor} icon={<Calendar />}>Date</AdvancedTableHead>
+          <AdvancedTableHead enableFiltering={false} enableSorting={false} enableGrouping={false} icon={<CircuitBoard />}>Type d'appareil</AdvancedTableHead>
+          <AdvancedTableHead defaultFilter={defaultMethodFilter} icon={<MemoryStick />}>Appareil</AdvancedTableHead>
+          <AdvancedTableHead enableFiltering={false} className="text-right" icon={<MousePointerClick />}>Action effectuée</AdvancedTableHead>
+          <AdvancedTableHead icon={<User />}>Prénom</AdvancedTableHead>
+          <AdvancedTableHead icon={<User />}>Nom</AdvancedTableHead>
+        </AdvancedTableHeader>
+        <AdvancedTableBodyRow>
+          <AdvancedTableCell></AdvancedTableCell>
+          <AdvancedTableCell>--&gt;<CellRawValue/>&lt;--</AdvancedTableCell>
+          <AdvancedTableCell valueEditFunction={(deviceType:string)=> { return <div>coucou<br></br>{deviceType}<br></br></div> }}><CellRawValue/>salut</AdvancedTableCell>
           <AdvancedTableCell className="text-right"></AdvancedTableCell>
           <AdvancedTableCell></AdvancedTableCell>
           <AdvancedTableCell></AdvancedTableCell>
@@ -101,10 +122,10 @@ export const Core = () => {
           <AdvancedTableCell></AdvancedTableCell>
           <AdvancedTableCell></AdvancedTableCell>
           <AdvancedTableCell 
-            valueEditFunction={(hardwareType:HardwareType) => { return <>
+            valueEditFunction={(hardwareType:HardwareType) => { return <div className="text-left ml-4">
                 <img src={hardwareType.icon_source} style={{maxWidth:'50px', display: 'inline', marginRight:'1em'}} />
                 {hardwareType.name}
-              </> } }
+              </div> } }
             sortingFunction={(valueA: HardwareType, valueB: HardwareType) => { return (valueA.name < valueB.name) ? -1 : (valueA.name > valueB.name) ? 1 : 0 }}
           ></AdvancedTableCell>
           <AdvancedTableCell></AdvancedTableCell>

@@ -1,4 +1,4 @@
-import { Children, PropsWithChildren } from 'react';
+import { Children, PropsWithChildren, ReactNode } from 'react';
 
 export const sortType = {
   'MinortoMayor':1
@@ -13,6 +13,7 @@ interface Props {
   enableGrouping?: boolean,
   defaultFilter?: Function,
   displayValueFunction?: Function
+  icon?: ReactNode
 }
 
 const AdvancedTableHead = (props: PropsWithChildren<Props>) => {
