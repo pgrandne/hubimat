@@ -43,7 +43,7 @@ export default function HeaderCell({ table, column, name = "default", icon, enab
             (cnt: any, cur: any) => (cnt[ObjectToString(cur)] = {"count": cnt[ObjectToString(cur)]?.count + 1 || 1, "displayValue": displayValueFunction(cur)}, cnt), {}
         )
     )
-    const isDate = table.getCoreRowModel().rows.filter((r: any) => typeof r.getValue(column.id).getMonth === 'function').length > 0
+    const isDate = false//table.getCoreRowModel().rows.filter((r: any) => typeof r.getValue(column.id).getMonth === 'function').length > 0
 
     
     

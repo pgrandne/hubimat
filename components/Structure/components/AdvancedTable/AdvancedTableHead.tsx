@@ -5,6 +5,7 @@ export const sortType = {
 }
 
 interface Props {
+  accessor: string,
   hidden?: boolean,
   className?: string,
   defaultSort?: number,

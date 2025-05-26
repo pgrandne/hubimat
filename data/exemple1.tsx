@@ -5,8 +5,8 @@ type Log = {
     DeviceType: string,
     Device: string,
     Action: string,
-    UserFirstName: string,
-    UserLastName: string
+    UserFirstName?: string,
+    UserLastName?: string
 }
 
 export function getData1(): Log[] {

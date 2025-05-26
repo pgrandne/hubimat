@@ -11,9 +11,7 @@
       "date": "2025-05-05T14:54:01.7681972+02:00",
       "DeviceType": "Détecteur Incendie",
       "Device": "Detecteur Local IT",
-      "Action": "Mettre en Service",
-      "UserFirstName": "Admin",
-      "UserLastName": "User"
+      "Action": "Mettre en Service"
     },
     {
       "date": "2025-05-06T09:11:32.660299+02:00",
