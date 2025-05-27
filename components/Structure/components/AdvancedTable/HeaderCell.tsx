@@ -1,8 +1,16 @@
 import { ReactElement, ReactNode, useState } from "react";
 import React from "react";
 import { Column, Table } from "@tanstack/react-table";
-import { ArrowUpDown, ChevronDown, Group } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import {
+    ArrowDown,
+  ArrowDown10,
+  ArrowDownAZ,
+  ArrowUp10,
+  ArrowUpAZ,
+  ChevronDown,
+  Funnel,
+  X,
+} from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,10 +23,7 @@ import {
 import FilterDate from "./FilterDate";
 import { ObjectToString } from "./AdvancedTable";
 import FilterList from "./FilterList";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
 import { isDate } from "./FilterDate";
-
 
 export default function HeaderCell({
   table,
@@ -40,28 +45,38 @@ export default function HeaderCell({
   displayValueFunction?: Function;
 }) {
   const [rotateChevron, setRotateChevron] = useState(false);
+  let isNumberColumn = true;
 
   // Will these scale well ???
-  const columnValuesCounted: [string, { count: number; displayValue: string }][] = Object.entries(
-    table.getCoreRowModel()
-      .rows.map((r: any) => r.getValue(column.id))
-      .reduce(
-        (cnt: any, cur: any) => (
-          (cnt[ObjectToString(cur)] = {
-            count: cnt[ObjectToString(cur)]?.count + 1 || 1,
-            displayValue: displayValueFunction(cur),
-          }),
-          cnt
-        ),
-        {}
-      )
-  )
-  const isDateColumn = table.getCoreRowModel().rows.some((r: any) => isDate(r.getValue(column.id)))
+  const columnValuesCounted: [
+    string,
+    { count: number; displayValue: string }
+  ][] = Object.entries(
+    table.getCoreRowModel().rows.reduce((cnt: any, cur: any) => {
+      if (
+        isNumberColumn &&
+        cur.getValue(column.id) != undefined &&
+        typeof cur.getValue(column.id) != "number"
+      ) {
+        isNumberColumn = false;
+      }
+      return (
+        (cnt[ObjectToString(cur.getValue(column.id))] = {
+          count: cnt[ObjectToString(cur.getValue(column.id))]?.count + 1 || 1,
+          displayValue: displayValueFunction(cur.getValue(column.id)),
+        }),
+        cnt
+      );
+    }, {})
+  );
+  const isDateColumn = table
+    .getCoreRowModel()
+    .rows.some((r: any) => isDate(r.getValue(column.id)));
 
   const headerDisplay = (
-    <div className="py-2 px-1 font-semibold text-sm flex items-center">
-        {icon != undefined && React.cloneElement(icon, { className: "mr-2 h-5 w-7 opacity-70" })}
-        {label}
+    <div className="py-2 font-semibold text-sm text-left flex items-center w-full">
+      {icon != undefined && React.cloneElement(icon, { className: "mr-2 h-5 w-7 opacity-70" })}
+      {label}
     </div>
   );
 
@@ -73,11 +88,27 @@ export default function HeaderCell({
                 className="ml-2 h-7 w-7 p-0"
                 title="Ouvrir le menu"
                 > */}
-        <span className="flex items-center ml-2 mr-2" title="Ouvrir le menu">
-            {headerDisplay}
-            <ChevronDown className="h-4 w-4" style={{ transform: rotateChevron ? "rotate(180deg)" : "rotate(0)", transition: "all 0.2s linear" }}/>
+        <span
+          className="flex items-center ml-2 mr-2 w-full pr-2"
+          title="Ouvrir le menu"
+        >
+          {headerDisplay}
+          
+          <div className="flex">
+            {
+                (column.getIsSorted() && column.getIsFiltered()) ? <><Funnel className="h-3 w-3"/><ArrowDown className="h-3 w-3"/></> 
+                : column.getIsSorted() ? <ArrowDown className="h-4 w-4"/> : column.getIsFiltered() ?<Funnel className="h-3*4 w-4"/>
+                : <ChevronDown
+                    className="h-4 w-4"
+                    style={{
+                        transform: rotateChevron ? "rotate(180deg)" : "rotate(0)",
+                        transition: "all 0.2s linear",
+                    }}
+                />
+            }
+          </div>
         </span>
-        
+
         {/* </Button> */}
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
@@ -96,14 +127,27 @@ export default function HeaderCell({
         {enableGrouping && (
           <>
             <DropdownMenuLabel>Trier</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() =>
-                column.toggleSorting(column.getIsSorted() === "asc")
+            <DropdownMenuItem onClick={() => column.toggleSorting(false)}>
+              {
+                isNumberColumn 
+                  ? (<><ArrowUp10 className="mr-2"/> Par ordre croissant </>)
+                  : (<><ArrowDownAZ className="mr-2"/> De A à Z </>)
               }
-            >
-              <ArrowUpDown />
-              Par ordre alphabétique
             </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => column.toggleSorting(true)}>
+              {
+                  isNumberColumn 
+                  ? (<><ArrowDown10 className="mr-2"/> Par ordre décroissant </>)
+                  : (<><ArrowUpAZ className="mr-2"/> De Z à A </>)
+              }
+            </DropdownMenuItem>
+            {
+                column.getIsSorted() &&
+                <DropdownMenuItem onClick={() => column.clearSorting()}>
+                    <X className="mr-2"/> Enlever le tri
+                </DropdownMenuItem>
+            }
+            
           </>
         )}
         {enableFiltering && (

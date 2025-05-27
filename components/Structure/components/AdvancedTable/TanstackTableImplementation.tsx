@@ -97,17 +97,20 @@ export default function TanstackTableImplementation<TData, TValue>({
               >
                 {
                   row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} className="h-12 text-center text-sm">
-                      {
+                    <TableCell key={cell.id} className="pl-2 h-12 text-left text-sm">
+                      <div className="flex items-center">
+                        {
                         row.getCanExpand() && cell.getIsGrouped() &&
                         <button onClick={row.getToggleExpandedHandler()} style={{ cursor: 'pointer' }}>
                           {row.getIsExpanded() ? <ChevronDown /> : <ChevronRight />}
                         </button>
                       }
-                      {
-                        (!row.getCanExpand() || row.getCanExpand() && cell.getIsGrouped() || cell.column.id === 'select') && 
-                        flexRender(cell.column.columnDef.cell, cell.getContext())
-                      }
+                      
+                        {
+                          (!row.getCanExpand() || row.getCanExpand() && cell.getIsGrouped() || cell.column.id === 'select') && 
+                          flexRender(cell.column.columnDef.cell, cell.getContext())
+                        }
+                      </div>
                     </TableCell>
                   ))
                 }

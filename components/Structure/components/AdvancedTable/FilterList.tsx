@@ -14,8 +14,9 @@ export default function FilterList({ column, columnValuesCounted }: FilterListPr
             <CommandInput placeholder="Chercher" />
             <CommandList>
                 <CommandEmpty>Aucun résultat</CommandEmpty>
-                <CommandItem key="select_all">
-                    <Checkbox
+                <CommandItem key="select_all" className="cursor-pointer" onSelect={() => column.setFilterValue(undefined)}>
+                    {/* <Checkbox
+                        className="mr-2"
                         checked={column.getFilterValue() != undefined && (column.getFilterValue() as Array<string>).length == columnValuesCounted.length}
                         onCheckedChange={
                             (checked) => {
@@ -27,7 +28,7 @@ export default function FilterList({ column, columnValuesCounted }: FilterListPr
                                 }
                             }
                         }
-                    />
+                    /> */}
                     Sélectionner tout
                 </CommandItem>
                 {
@@ -35,7 +36,9 @@ export default function FilterList({ column, columnValuesCounted }: FilterListPr
                         (c) => {
                             const content = c[0]
                             return <CommandItem key={content}>
-                                <Checkbox checked={column.getFilterValue() != undefined && (column.getFilterValue() as Array<string>).filter(v => v == content).length > 0}
+                                <Checkbox
+                                    className="mr-2"
+                                    checked={column.getFilterValue() != undefined && (column.getFilterValue() as Array<string>).filter(v => v == content).length > 0}
                                     onCheckedChange={
                                         (checked) => {
                                             //Pars du principe qu'il n'y aura aucune erreur ou changement d'état de départ ou en cours

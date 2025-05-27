@@ -6,6 +6,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { DateToFileString } from "@/lib/utils";
 import { DateFilterFunction, DateRangeType } from "./FilterDate";
 import { isDate } from "./FilterDate";
+import { Check, X } from "lucide-react";
 
 interface Props {
   data: Array<any>,
@@ -89,7 +90,7 @@ const AdvancedTable = (props: PropsWithChildren<Props>) => {
         enableSorting={headers[accessor].props.enableSorting} enableFiltering={headers[accessor].props.enableFiltering} enableGrouping={headers[accessor].props.enableGrouping}
         displayValueFunction={headers[accessor].props.displayValueFunction}
       />
-      )
+      ),
     }
 
     if (rowCells[accessor] != undefined) {
@@ -109,7 +110,28 @@ const AdvancedTable = (props: PropsWithChildren<Props>) => {
             rowCells[accessor].props.sortingFunction(rowA.original[columnId], rowB.original[columnId])
         )
       }
+    }
+    else {
+      let isNumberColumn = true
+      let isBooleanColumn = true
+
+      props.data.forEach((row) => {
+        if (isNumberColumn && row[accessor] != undefined && typeof row[accessor] != 'number') {
+          isNumberColumn = false
+        }
+        if (isBooleanColumn && row[accessor] != undefined && typeof row[accessor] != 'boolean') {
+          isBooleanColumn = false
+        }
+      })
+
+      if (isNumberColumn) {
+        columnDef.cell = ({ row }) => <span className="text-right w-full pr-2">{row.getValue(accessor)}</span>
+      }
+      else if (isBooleanColumn) {
+        columnDef.cell = ({row}) => <div className="justify-center flex w-full">{row.getValue(accessor) ? <Check className="w-5 h-5"/> : <X className="w-5 h-5"/>}</div>
+      }
     } 
+
 
     columnDef.getGroupingValue = row => ObjectToString(row[accessor])
 

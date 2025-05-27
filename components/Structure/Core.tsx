@@ -91,20 +91,16 @@ export const Core = () => {
         <AdvancedTableBodyRow>
           <AdvancedTableCell
             accessor="hardwareType"
-            valueEditFunction={(hardwareType:HardwareType) => { return <div className="text-left ml-4">
-                <img src={hardwareType.icon_source} style={{maxWidth:'50px', display: 'inline', marginRight:'1em'}} />
+            valueEditFunction={(hardwareType:HardwareType) => { return <>
+                <img src={hardwareType.icon_source} className="mr-2" style={{maxWidth:'50px'}} />
                 {hardwareType.name}
-              </div> } }
+              </> } }
             sortingFunction={(valueA: HardwareType, valueB: HardwareType) => { return (valueA.name < valueB.name) ? -1 : (valueA.name > valueB.name) ? 1 : 0 }}
           />
           <AdvancedTableCell
             accessor="hardwareParameters"
             valueEditFunction={(hardwareParameters:HardwareParameters) => hardwareParameters.type + " - " + hardwareParameters.protocol + " | "+ hardwareParameters.utl}
             sortingFunction={(valueA: HardwareParameters, valueB: HardwareParameters) => { return (valueA.type < valueB.type) ? -1 : (valueA.type > valueB.type) ? 1 : 0 }}
-          />
-          <AdvancedTableCell
-            accessor="tests"
-            valueEditFunction={(testsOK: boolean) => testsOK ? "☑" : "☒"}
           />
         </AdvancedTableBodyRow>
       </AdvancedTable>}
