@@ -7,6 +7,7 @@ import { DateToFileString } from "@/lib/utils";
 import { DateFilterFunction, DateRangeType } from "./FilterDate";
 import { isDate } from "./FilterDate";
 import { Check, X } from "lucide-react";
+import { NumberFilterFunction } from "./FilterNumber";
 
 interface Props {
   data: Array<any>,
@@ -28,7 +29,7 @@ export function ObjectToString(object: any): string {
     return String(object)
 }
 
-const ArrayFilterFunction = (row: any, columnId: string, filterValue: Array<string>) => {
+export const ArrayFilterFunction = (row: any, columnId: string, filterValue: Array<string>) => {
     const rowValue = row.getValue(columnId)
     const valueToCheck = ObjectToString(rowValue).toLowerCase()
     
@@ -80,14 +81,43 @@ const AdvancedTable = (props: PropsWithChildren<Props>) => {
                     ? Object.assign({}, ...(AdvancedTableBodyRow.props.children.map((rowCell: ReactElement) => {return {[rowCell.props.accessor]:rowCell}})))
                     : {}
 
-  const columns = accessors.filter(accessor => headers[accessor].props.hidden !== true).map((accessor): ColumnDef<any, unknown> => {
+  const columns = accessors.filter(accessor => headers[accessor].props.hidden !== true).map((accessor): ColumnDef<any, unknown> =>
+  {
+    let isDateColumn : boolean | undefined = undefined // If the column has only undefined values this will stay undefined
+    let isNumberColumn : boolean | undefined = undefined
+    let isBooleanColumn : boolean | undefined = undefined
+
+    props.data.forEach((row) => {
+      // We assume that it's a date column if the first value not undefined is a real date
+      // Because for the moment there isn't any use case where a column would have multiple data types including a Date value
+      if (isDateColumn == undefined && row[accessor] != undefined) {
+        isDateColumn = isDate(row[accessor])
+      }
+      // As for the number and boolean it is possible that it's a string column with somes values being a number or true or false
+      // So we need to go through the whole column to make sure
+      // If it becomes to costly we can only check the first not undefined value and infer the table type from there
+      if (isNumberColumn == undefined && row[accessor] != undefined) {
+        isNumberColumn = typeof row[accessor] == 'number'
+      }
+      else if (isNumberColumn && row[accessor] != undefined && typeof row[accessor] != 'number') {
+        isNumberColumn = false
+      }
+      if (isBooleanColumn == undefined && row[accessor] != undefined) {
+        isBooleanColumn = typeof row[accessor] == 'boolean'
+      }
+      else if (isBooleanColumn && row[accessor] != undefined && typeof row[accessor] != 'boolean') {
+        isBooleanColumn = false
+      }
+    })
+
+
     const columnDef: ColumnDef<any, unknown> = {
-      id: accessor,
       accessorKey: accessor,
-      filterFn: (props.data.some((d: any) => isDate(d[accessor]))) ? DateFilterFunction : ArrayFilterFunction,
+      filterFn: isDateColumn ? DateFilterFunction : (isNumberColumn ? NumberFilterFunction : ArrayFilterFunction),
       header: ({ table, column }) => (
       <HeaderCell table={table} column={column} label={headers[accessor].props.children} icon={headers[accessor].props.icon}
         enableSorting={headers[accessor].props.enableSorting} enableFiltering={headers[accessor].props.enableFiltering} enableGrouping={headers[accessor].props.enableGrouping}
+        isDateColumn={isDateColumn} isNumberColumn={isNumberColumn}
         displayValueFunction={headers[accessor].props.displayValueFunction}
       />
       ),
@@ -112,26 +142,13 @@ const AdvancedTable = (props: PropsWithChildren<Props>) => {
       }
     }
     else {
-      let isNumberColumn = true
-      let isBooleanColumn = true
-
-      props.data.forEach((row) => {
-        if (isNumberColumn && row[accessor] != undefined && typeof row[accessor] != 'number') {
-          isNumberColumn = false
-        }
-        if (isBooleanColumn && row[accessor] != undefined && typeof row[accessor] != 'boolean') {
-          isBooleanColumn = false
-        }
-      })
-
       if (isNumberColumn) {
         columnDef.cell = ({ row }) => <span className="text-right w-full pr-2">{row.getValue(accessor)}</span>
       }
       else if (isBooleanColumn) {
         columnDef.cell = ({row}) => <div className="justify-center flex w-full">{row.getValue(accessor) ? <Check className="w-5 h-5"/> : <X className="w-5 h-5"/>}</div>
       }
-    } 
-
+    }
 
     columnDef.getGroupingValue = row => ObjectToString(row[accessor])
 

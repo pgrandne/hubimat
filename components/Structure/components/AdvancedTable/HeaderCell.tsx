@@ -2,7 +2,7 @@ import { ReactElement, ReactNode, useState } from "react";
 import React from "react";
 import { Column, Table } from "@tanstack/react-table";
 import {
-    ArrowDown,
+  ArrowDown,
   ArrowDown10,
   ArrowDownAZ,
   ArrowUp10,
@@ -23,7 +23,7 @@ import {
 import FilterDate from "./FilterDate";
 import { ObjectToString } from "./AdvancedTable";
 import FilterList from "./FilterList";
-import { isDate } from "./FilterDate";
+import FilterNumber from "./FilterNumber";
 
 export default function HeaderCell({
   table,
@@ -34,6 +34,8 @@ export default function HeaderCell({
   enableFiltering = true,
   enableGrouping = true,
   displayValueFunction = ObjectToString,
+  isDateColumn = false,
+  isNumberColumn = false,
 }: {
   table: Table<any>;
   column: Column<any, unknown>;
@@ -43,39 +45,32 @@ export default function HeaderCell({
   enableFiltering?: boolean;
   enableGrouping?: boolean;
   displayValueFunction?: Function;
+  isDateColumn?: boolean;
+  isNumberColumn?: boolean;
 }) {
   const [rotateChevron, setRotateChevron] = useState(false);
-  let isNumberColumn = true;
 
   // Will these scale well ???
   const columnValuesCounted: [
     string,
     { count: number; displayValue: string }
   ][] = Object.entries(
-    table.getCoreRowModel().rows.reduce((cnt: any, cur: any) => {
-      if (
-        isNumberColumn &&
-        cur.getValue(column.id) != undefined &&
-        typeof cur.getValue(column.id) != "number"
-      ) {
-        isNumberColumn = false;
-      }
-      return (
+    table.getCoreRowModel().rows.reduce(
+      (cnt: any, cur: any) => (
         (cnt[ObjectToString(cur.getValue(column.id))] = {
           count: cnt[ObjectToString(cur.getValue(column.id))]?.count + 1 || 1,
           displayValue: displayValueFunction(cur.getValue(column.id)),
         }),
         cnt
-      );
-    }, {})
+      ),
+      {}
+    )
   );
-  const isDateColumn = table
-    .getCoreRowModel()
-    .rows.some((r: any) => isDate(r.getValue(column.id)));
 
   const headerDisplay = (
     <div className="py-2 font-semibold text-sm text-left flex items-center w-full">
-      {icon != undefined && React.cloneElement(icon, { className: "mr-2 h-5 w-7 opacity-70" })}
+      {icon != undefined &&
+        React.cloneElement(icon, { className: "mr-2 h-5 w-7 opacity-70" })}
       {label}
     </div>
   );
@@ -93,23 +88,28 @@ export default function HeaderCell({
           title="Ouvrir le menu"
         >
           {headerDisplay}
-          
+
           <div className="flex">
-            {
-                (column.getIsSorted() && column.getIsFiltered()) ? <><Funnel className="h-3 w-3"/><ArrowDown className="h-3 w-3"/></> 
-                : column.getIsSorted() ? <ArrowDown className="h-4 w-4"/> : column.getIsFiltered() ?<Funnel className="h-3*4 w-4"/>
-                : <ChevronDown
-                    className="h-4 w-4"
-                    style={{
-                        transform: rotateChevron ? "rotate(180deg)" : "rotate(0)",
-                        transition: "all 0.2s linear",
-                    }}
-                />
-            }
+            {column.getIsSorted() && column.getIsFiltered() ? (
+              <>
+                <Funnel className="h-3 w-3" />
+                <ArrowDown className="h-3 w-3" />
+              </>
+            ) : column.getIsSorted() ? (
+              <ArrowDown className="h-4 w-4" />
+            ) : column.getIsFiltered() ? (
+              <Funnel className="h-3*4 w-4" />
+            ) : (
+              <ChevronDown
+                className="h-4 w-4"
+                style={{
+                  transform: rotateChevron ? "rotate(180deg)" : "rotate(0)",
+                  transition: "all 0.2s linear",
+                }}
+              />
+            )}
           </div>
         </span>
-
-        {/* </Button> */}
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         {enableSorting && (
@@ -128,26 +128,32 @@ export default function HeaderCell({
           <>
             <DropdownMenuLabel>Trier</DropdownMenuLabel>
             <DropdownMenuItem onClick={() => column.toggleSorting(false)}>
-              {
-                isNumberColumn 
-                  ? (<><ArrowUp10 className="mr-2"/> Par ordre croissant </>)
-                  : (<><ArrowDownAZ className="mr-2"/> De A à Z </>)
-              }
+              {isNumberColumn ? (
+                <>
+                  <ArrowUp10 className="mr-2" /> Par ordre croissant{" "}
+                </>
+              ) : (
+                <>
+                  <ArrowDownAZ className="mr-2" /> De A à Z{" "}
+                </>
+              )}
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => column.toggleSorting(true)}>
-              {
-                  isNumberColumn 
-                  ? (<><ArrowDown10 className="mr-2"/> Par ordre décroissant </>)
-                  : (<><ArrowUpAZ className="mr-2"/> De Z à A </>)
-              }
+              {isNumberColumn ? (
+                <>
+                  <ArrowDown10 className="mr-2" /> Par ordre décroissant{" "}
+                </>
+              ) : (
+                <>
+                  <ArrowUpAZ className="mr-2" /> De Z à A{" "}
+                </>
+              )}
             </DropdownMenuItem>
-            {
-                column.getIsSorted() &&
-                <DropdownMenuItem onClick={() => column.clearSorting()}>
-                    <X className="mr-2"/> Enlever le tri
-                </DropdownMenuItem>
-            }
-            
+            {column.getIsSorted() && (
+              <DropdownMenuItem onClick={() => column.clearSorting()}>
+                <X className="mr-2" /> Enlever le tri
+              </DropdownMenuItem>
+            )}
           </>
         )}
         {enableFiltering && (
@@ -157,10 +163,13 @@ export default function HeaderCell({
             {isDateColumn ? (
               <FilterDate column={column} />
             ) : (
-              <FilterList
-                column={column}
-                columnValuesCounted={columnValuesCounted}
-              />
+              <>
+                {isNumberColumn && (<FilterNumber column={column} />)}
+                <FilterList
+                  column={column}
+                  columnValuesCounted={columnValuesCounted}
+                />
+              </>
             )}
           </>
         )}

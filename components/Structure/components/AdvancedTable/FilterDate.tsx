@@ -1,4 +1,3 @@
-import { Calendar } from "@/components/ui/calendar";
 import { DatePicker } from "@/components/ui/date-picker";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import {
@@ -6,21 +5,17 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
 import { Column } from "@tanstack/react-table";
 import { useState } from "react";
-import { unknown } from "zod";
 
-const toDate = (unknown: any): Date | undefined => {
-if (typeof unknown?.getMonth === 'function') {
-    try {
-    return unknown
-} catch (error) {}
-}
-return undefined
+const toDate = (object: any): Date | undefined => {
+    if (typeof object?.getMonth === 'function') {
+        try { return object } catch (error) {}
+    }
+    return undefined
 }
 const toDateRange = (unknown: any) => {
     return {"start": unknown?.start, "end": unknown?.end}
@@ -40,7 +35,7 @@ export const DateFilterFunction = (row: any, columnId: string, filterValue: Date
 
 export const isDate = (object: any) : boolean => (toDate(object) != undefined)
 
-export default function FilterList({
+export default function FilterDate({
   column,
 }: {
   column: Column<any, unknown>;
@@ -53,43 +48,52 @@ export default function FilterList({
   console.log(selectedDate, selectedRange)
   return (
     <>
-      <Select
-        onValueChange={
-            (value) => {
-                if (value == "all") column.setFilterValue(undefined)
-                if (value == "range") column.setFilterValue([undefined, undefined])
-                setSelectedFilter(value)
-            }
-        }
-        defaultValue={filterSelected}
-      >
-        <SelectTrigger>
-          <SelectValue />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectGroup>
-            <SelectItem value="all">Sélectionner tout</SelectItem>
-            <SelectItem value="specific">Date spécifique</SelectItem>
-            <SelectItem value="range">Période</SelectItem>
-          </SelectGroup>
-        </SelectContent>
-      </Select>
+      <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+        <Select
+          onValueChange={
+              (value) => {
+                  if (value == "all") column.setFilterValue(undefined)
+                  if (value == "range") column.setFilterValue([undefined, undefined])
+                  setSelectedFilter(value)
+              }
+          }
+          defaultValue={filterSelected}
+        >
+          <SelectTrigger>
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectItem value="all">Sélectionner tout</SelectItem>
+              <SelectItem value="specific">Date spécifique</SelectItem>
+              <SelectItem value="range">Période</SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+      </DropdownMenuItem>
+      
       {filterSelected == "specific" && (
-        <DatePicker setDate={(date) => {
+        <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+          <DatePicker setDate={(date) => {
             setSelectedDate(date)
             column.setFilterValue(date)
-        }} date={selectedDate}></DatePicker>
+          }} date={selectedDate} />
+        </DropdownMenuItem>
       )}
       {filterSelected == "range" && (
-        <>
-        <DatePicker setDate={(date) => {
+      <>
+        <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+          <DatePicker setDate={(date) => {
             setSelectedRange({"start": date, "end": selectedRange.end})
             column.setFilterValue({"start": date, "end": selectedRange.end})
-            }} date={selectedRange.start}></DatePicker>
-        <DatePicker setDate={(date) => {
+            }} date={selectedRange.start} />
+        </DropdownMenuItem>
+        <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+          <DatePicker setDate={(date) => {
             setSelectedRange({"start": selectedRange.start, "end": date})
             column.setFilterValue({"start": selectedRange.start, "end": date})
-        }} date={selectedRange.end}></DatePicker>
+          }} date={selectedRange.end} />
+        </DropdownMenuItem>
       </>)}
     </>
 )

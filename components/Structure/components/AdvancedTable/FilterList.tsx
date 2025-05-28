@@ -38,12 +38,12 @@ export default function FilterList({ column, columnValuesCounted }: FilterListPr
                             return <CommandItem key={content}>
                                 <Checkbox
                                     className="mr-2"
-                                    checked={column.getFilterValue() != undefined && (column.getFilterValue() as Array<string>).filter(v => v == content).length > 0}
+                                    checked={Array.isArray(column.getFilterValue()) && (column.getFilterValue() as Array<string>).filter(v => v == content).length > 0}
                                     onCheckedChange={
                                         (checked) => {
                                             //Pars du principe qu'il n'y aura aucune erreur ou changement d'état de départ ou en cours
                                             if (checked) {
-                                                if (!column.getFilterValue()) {
+                                                if (!Array.isArray(column.getFilterValue())) {
                                                     column.setFilterValue([content])
                                                 }
                                                 else {
