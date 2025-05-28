@@ -31,11 +31,13 @@ import { ChevronDown, ChevronRight } from "lucide-react"
 interface AdvancedTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
+  className?: string | undefined
 }
 
 export default function TanstackTableImplementation<TData, TValue>({
   columns,
   data,
+  className
 }: AdvancedTableProps<TData, TValue>) {
   const [rowSelection, setRowSelection] = React.useState({})
   const [sorting, setSorting] = React.useState<SortingState>([])
@@ -68,7 +70,7 @@ export default function TanstackTableImplementation<TData, TValue>({
   })
   
   return (
-    <div className="rounded-md border">
+    <div className={"rounded-xl border overflow-y-auto "+className||''}>
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (

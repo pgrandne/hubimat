@@ -33,7 +33,7 @@ export const Core = () => {
       }
       
       { (exampleChoice==1) &&
-      <AdvancedTable data={getData1()} enableGeneralSearch={true} enableRowSelection={true}>
+      <AdvancedTable data={getData1()} enableGeneralSearch={true} enableRowSelection={true} className="h-[32rem]">
         <AdvancedTableCaption>A list of Data.</AdvancedTableCaption>
         <AdvancedTableHeader>
           <AdvancedTableHead accessor="date">Date</AdvancedTableHead>

@@ -159,7 +159,7 @@ const AdvancedTable = (props: PropsWithChildren<Props>) => {
     columns.push(selectColumn)
   }
 
-  return <TanstackTableImplementation columns={columns} data={props.data} />
+  return <TanstackTableImplementation columns={columns} data={props.data} className={props.className} />
 }
 
 export default AdvancedTable;
