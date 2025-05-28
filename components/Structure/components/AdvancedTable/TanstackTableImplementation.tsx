@@ -70,7 +70,7 @@ export default function TanstackTableImplementation<TData, TValue>({
   })
   
   return (
-    <div className={"rounded-xl border overflow-y-auto "+className||''}>
+    <div className={"rounded-xl border overflow-y-auto h-full "+className||''}>
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (

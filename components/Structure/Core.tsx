@@ -25,15 +25,18 @@ export const Core = () => {
   const [exampleChoice, setexampleChoice] = useState(1);
 
   return (
-    <div className="container py-8" style={{ width: '100%', margin: '0.8rem', borderWidth: '1px', borderRadius: '0.5em' }}>
-      {[1, 2, 3, 4].map((i) =>
-        <Button variant="outline" onClick={() => setexampleChoice(i)} style={{ marginRight: "1em", marginBottom: "2em" }}>
-          Exemple {i}
-        </Button>)
-      }
+    <div className="container py-8 flex" style={{ flexFlow:'column', width: '100%', margin: '0.8rem', borderWidth: '1px', borderRadius: '0.5em' }}>
+      <div>
+        {[1, 2, 3, 4].map((i) =>
+          <Button variant="outline" onClick={() => setexampleChoice(i)} style={{ marginRight: "1em", marginBottom: "2em" }}>
+            Exemple {i}
+          </Button>)
+        }
+      </div>
+      
       
       { (exampleChoice==1) &&
-      <AdvancedTable data={getData1()} enableGeneralSearch={true} enableRowSelection={true} className="h-[32rem]">
+      <AdvancedTable data={getData1()} enableGeneralSearch={true} enableRowSelection={true}>
         <AdvancedTableCaption>A list of Data.</AdvancedTableCaption>
         <AdvancedTableHeader>
           <AdvancedTableHead accessor="date">Date</AdvancedTableHead>
