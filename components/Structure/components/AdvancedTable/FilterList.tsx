@@ -7,7 +7,8 @@ interface FilterListProps {
     columnValuesCounted: [string, {"count":number, "displayValue":string}][];
 }
 
-
+// TODO ColumnValuesCounted à mettre à jour en fonction des filtres en place
+// Précocher les valeurs qui ressortent quand on fait une recherche pour le filtre
 export default function FilterList({ column, columnValuesCounted }: FilterListProps) {
     return (
         <Command>

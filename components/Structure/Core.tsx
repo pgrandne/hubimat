@@ -62,8 +62,8 @@ export const Core = () => {
         <AdvancedTableBodyRow>
           <AdvancedTableCell accessor="date" valueEditFunction={(date: Date) => date.toLocaleString()} />
           <AdvancedTableCell accessor="DeviceType">--&gt;<CellRawValue/>&lt;--</AdvancedTableCell>
-          <AdvancedTableCell accessor="Device" valueEditFunction={(deviceType:string) => {
-            return <div key="thisneedsakey">coucou<br></br>{deviceType}<br></br></div>
+          <AdvancedTableCell accessor="Device" valueEditFunction={(device:string) => {
+            return <div key="thisneedsakey">coucou<br></br>{device}<br></br></div>
           }}>
             <CellRawValue/>
             salut

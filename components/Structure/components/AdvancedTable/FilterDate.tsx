@@ -73,27 +73,27 @@ export default function FilterDate({
       </DropdownMenuItem>
       
       {filterSelected == "specific" && (
-        <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+        // <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
           <DatePicker setDate={(date) => {
             setSelectedDate(date)
             column.setFilterValue(date)
           }} date={selectedDate} />
-        </DropdownMenuItem>
+        // </DropdownMenuItem>
       )}
       {filterSelected == "range" && (
       <>
-        <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+        {/* <DropdownMenuItem onSelect={(e) => e.preventDefault()}> */}
           <DatePicker setDate={(date) => {
             setSelectedRange({"start": date, "end": selectedRange.end})
             column.setFilterValue({"start": date, "end": selectedRange.end})
             }} date={selectedRange.start} />
-        </DropdownMenuItem>
-        <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+        {/* </DropdownMenuItem> */}
+        {/* <DropdownMenuItem onSelect={(e) => e.preventDefault()}> */}
           <DatePicker setDate={(date) => {
             setSelectedRange({"start": selectedRange.start, "end": date})
             column.setFilterValue({"start": selectedRange.start, "end": date})
           }} date={selectedRange.end} />
-        </DropdownMenuItem>
+        {/* </DropdownMenuItem> */}
       </>)}
     </>
 )

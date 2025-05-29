@@ -70,7 +70,7 @@ export default function TanstackTableImplementation<TData, TValue>({
   })
   
   return (
-    <div className={"rounded-xl border overflow-y-auto h-full "+className||''}>
+    <div className={"rounded-xl border overflow-y-auto max-h-full "+className||''}>
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -108,7 +108,7 @@ export default function TanstackTableImplementation<TData, TValue>({
                           </button>
                         }
                         {
-                          (!row.getCanExpand() || row.getCanExpand() && cell.getIsGrouped() || cell.column.id === 'select') && 
+                          (!row.getCanExpand() && !cell.column.getIsGrouped() || row.getCanExpand() && cell.getIsGrouped() || cell.column.id === 'select') && 
                           flexRender(cell.column.columnDef.cell, cell.getContext())
                         }
                       </div>
