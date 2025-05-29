@@ -20,10 +20,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import FilterDate from "./FilterDate";
 import { ObjectToString } from "./AdvancedTable";
+import FilterDate from "./FilterDate";
 import FilterList from "./FilterList";
 import FilterNumber from "./FilterNumber";
+import { disablingProps } from "./DisableDropDownMenuItem";
 
 export default function HeaderCell({
   table,
@@ -33,7 +34,7 @@ export default function HeaderCell({
   enableSorting = true,
   enableFiltering = true,
   enableGrouping = true,
-  displayValueFunction = ObjectToString,
+  displayValueFunction = (object: any) => (object == undefined) ? "Vide" : ObjectToString(object),
   isDateColumn = false,
   isNumberColumn = false,
 }: {
@@ -49,23 +50,6 @@ export default function HeaderCell({
   isNumberColumn?: boolean;
 }) {
   const [rotateChevron, setRotateChevron] = useState(false);
-
-  // Will these scale well ???
-  const columnValuesCounted: [
-    string,
-    { count: number; displayValue: string }
-  ][] = Object.entries(
-    table.getCoreRowModel().rows.reduce(
-      (cnt: any, cur: any) => (
-        (cnt[ObjectToString(cur.getValue(column.id))] = {
-          count: cnt[ObjectToString(cur.getValue(column.id))]?.count + 1 || 1,
-          displayValue: displayValueFunction(cur.getValue(column.id)),
-        }),
-        cnt
-      ),
-      {}
-    )
-  );
 
   const headerDisplay = (
     <div className="py-2 font-semibold text-sm text-left flex items-center w-full">
@@ -160,17 +144,33 @@ export default function HeaderCell({
           <>
             <DropdownMenuSeparator />
             <DropdownMenuLabel>Filtrer</DropdownMenuLabel>
-            {isDateColumn ? (
-              <FilterDate column={column} />
-            ) : (
-              <>
-                {isNumberColumn && (<FilterNumber column={column} />)}
-                <FilterList
-                  column={column}
-                  columnValuesCounted={columnValuesCounted}
-                />
-              </>
-            )}
+            <DropdownMenuItem {...disablingProps} onKeyDown={(e) => {console.log(e); e.preventDefault()}}>
+              {isDateColumn ? (
+                <FilterDate column={column} />
+              ) : (
+                <>
+                  {isNumberColumn && (<FilterNumber column={column} />)}
+                  <FilterList
+                    column={column}
+                    columnValuesCounted={
+                      // Will this scale well ???
+                      Object.entries(
+                        column.getFacetedRowModel().rows.reduce(
+                          (cnt: any, cur: any) => (
+                            (cnt[ObjectToString(cur.getValue(column.id))] = {
+                              count: cnt[ObjectToString(cur.getValue(column.id))]?.count + 1 || 1,
+                              displayValue: displayValueFunction(cur.getValue(column.id)),
+                            }),
+                            cnt
+                          ),
+                          {}
+                        )
+                      )
+                    }
+                  />
+                </>
+              )}
+            </DropdownMenuItem>
           </>
         )}
       </DropdownMenuContent>

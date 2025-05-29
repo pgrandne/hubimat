@@ -7,12 +7,11 @@ interface FilterListProps {
     columnValuesCounted: [string, {"count":number, "displayValue":string}][];
 }
 
-// TODO ColumnValuesCounted à mettre à jour en fonction des filtres en place
-// Précocher les valeurs qui ressortent quand on fait une recherche pour le filtre
+// TODO: Précocher les valeurs qui ressortent quand on fait une recherche pour le filtre
 export default function FilterList({ column, columnValuesCounted }: FilterListProps) {
     return (
         <Command>
-            <CommandInput placeholder="Chercher" />
+            <CommandInput placeholder="Chercher" onKeyDown={(e) => e.stopPropagation()} />
             <CommandList>
                 <CommandEmpty>Aucun résultat</CommandEmpty>
                 <CommandItem key="select_all" className="cursor-pointer" onSelect={() => column.setFilterValue(undefined)}>
@@ -39,10 +38,9 @@ export default function FilterList({ column, columnValuesCounted }: FilterListPr
                             return <CommandItem key={content}>
                                 <Checkbox
                                     className="mr-2"
-                                    checked={Array.isArray(column.getFilterValue()) && (column.getFilterValue() as Array<string>).filter(v => v == content).length > 0}
+                                    checked={Array.isArray(column.getFilterValue()) && (column.getFilterValue() as Array<string>).includes(content)}
                                     onCheckedChange={
                                         (checked) => {
-                                            //Pars du principe qu'il n'y aura aucune erreur ou changement d'état de départ ou en cours
                                             if (checked) {
                                                 if (!Array.isArray(column.getFilterValue())) {
                                                     column.setFilterValue([content])
