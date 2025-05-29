@@ -1,8 +1,8 @@
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Column } from "@tanstack/react-table";
-import { useState } from "react";
 import { ArrayFilterFunction } from "./AdvancedTable";
+import { disablingProps } from "./DisableDropDownMenuItem";
 
 const toNumberRange = (object: any): NumberRangeType => {
   return { min: object?.min, max: object?.max };
@@ -29,7 +29,7 @@ export default function FilterNumber({
 }) {
   return (
     <>
-      <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+      <DropdownMenuItem {...disablingProps} style={{ pointerEvents: "none" }}>
         Min :
         <Input type="number"
           defaultValue={(column.getFilterValue() as NumberRangeType)?.min}
@@ -41,9 +41,10 @@ export default function FilterNumber({
           }}
         />
       </DropdownMenuItem>
-      <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+      <DropdownMenuItem {...disablingProps} style={{ pointerEvents: "none" }}>
         Max :
         <Input type="number"
+          style={{ pointerEvents: "auto" }}
           defaultValue={(column.getFilterValue() as NumberRangeType)?.max}
           onChange={(e) => {
             const newValue = (e.target.value != '') ? Number(e.target.value) : undefined

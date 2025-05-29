@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/select";
 import { Column } from "@tanstack/react-table";
 import { useState } from "react";
+import { disablingProps } from "./DisableDropDownMenuItem";
 
 const toDate = (object: any): Date | undefined => {
     if (typeof object?.getMonth === 'function') {
@@ -44,11 +45,9 @@ export default function FilterDate({
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(toDate(column.getFilterValue()));
   const [selectedRange, setSelectedRange] = useState<DateRangeType>(toDateRange(column.getFilterValue()))
 
-
-  console.log(selectedDate, selectedRange)
   return (
     <>
-      <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+      <DropdownMenuItem {...disablingProps}>
         <Select
           onValueChange={
               (value) => {
@@ -73,27 +72,27 @@ export default function FilterDate({
       </DropdownMenuItem>
       
       {filterSelected == "specific" && (
-        // <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+        <DropdownMenuItem {...disablingProps}>
           <DatePicker setDate={(date) => {
             setSelectedDate(date)
             column.setFilterValue(date)
           }} date={selectedDate} />
-        // </DropdownMenuItem>
+        </DropdownMenuItem>
       )}
       {filterSelected == "range" && (
       <>
-        {/* <DropdownMenuItem onSelect={(e) => e.preventDefault()}> */}
+        <DropdownMenuItem {...disablingProps}>
           <DatePicker setDate={(date) => {
             setSelectedRange({"start": date, "end": selectedRange.end})
             column.setFilterValue({"start": date, "end": selectedRange.end})
             }} date={selectedRange.start} />
-        {/* </DropdownMenuItem> */}
-        {/* <DropdownMenuItem onSelect={(e) => e.preventDefault()}> */}
+        </DropdownMenuItem>
+        <DropdownMenuItem {...disablingProps}>
           <DatePicker setDate={(date) => {
             setSelectedRange({"start": selectedRange.start, "end": date})
             column.setFilterValue({"start": selectedRange.start, "end": date})
           }} date={selectedRange.end} />
-        {/* </DropdownMenuItem> */}
+        </DropdownMenuItem>
       </>)}
     </>
 )
