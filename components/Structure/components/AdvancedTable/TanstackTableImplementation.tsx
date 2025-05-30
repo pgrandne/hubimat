@@ -14,6 +14,9 @@ import {
   getGroupedRowModel,
   getExpandedRowModel,
   getPaginationRowModel,
+  Updater,
+  PaginationState,
+  OnChangeFn,
 } from "@tanstack/react-table"
 
 import {
@@ -25,7 +28,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
-import { useEffect, useState } from "react"
+import { forwardRef, Ref, useEffect, useImperativeHandle, useState } from "react"
 import { ChevronDown, ChevronRight } from "lucide-react"
 
 interface AdvancedTableProps<TData, TValue> {
@@ -33,21 +36,33 @@ interface AdvancedTableProps<TData, TValue> {
   data: TData[]
   className?: string
   globalFilterValue?: string
-  showNumber: Function
+  pagination:PaginationState
+  setPagination:OnChangeFn<PaginationState>
 }
 
-export default function TanstackTableImplementation<TData, TValue>({
+export interface AdvancedTablePropsMethods {
+  nextPage: () => void
+  previousPage: () => void
+  setPageSize: (pageSize: number) => void
+  getPageCount: () => number
+  getPageIndex: () => number
+  getFilteredDataSize: () => number
+}
+
+const TanstackTableImplementation = forwardRef(<TData, TValue>({
   columns,
   data,
   className,
-  globalFilterValue
-}: AdvancedTableProps<TData, TValue>) {
+  globalFilterValue,
+  pagination,
+  setPagination
+}: AdvancedTableProps<TData, TValue>, ref: Ref<unknown> | undefined) => {
   const [rowSelection, setRowSelection] = useState({})
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [globalFilter, setGlobalFilter] = useState<string>()
-  const [pagination, setPagination] = useState({pageIndex: 0, pageSize: 10});
   useEffect(() => setGlobalFilter(globalFilterValue), [globalFilterValue])
+
   const table = useReactTable({
     data,
     columns,
@@ -63,6 +78,7 @@ export default function TanstackTableImplementation<TData, TValue>({
     getExpandedRowModel: getExpandedRowModel(),
     globalFilterFn: 'includesString',
     getPaginationRowModel: getPaginationRowModel(),
+    onPaginationChange: setPagination,
     state: {
       rowSelection,
       sorting,
@@ -74,9 +90,19 @@ export default function TanstackTableImplementation<TData, TValue>({
       columnPinning: {
         left: ['select'],
         right: ['actions'],
-      },
+      }
     }
   })
+
+  useImperativeHandle(ref, () => ({
+    nextPage: () => {if (table.getCanNextPage()) table.nextPage()},
+    previousPage: table.previousPage,
+    setPageSize: (pageSize: number) => { table.setPageSize(pageSize); table.resetPageIndex(); },
+    getPageCount: table.getPageCount,
+    getPageIndex: () => pagination.pageIndex,
+    getFilteredDataSize: () => table.getRowCount()
+  }));
+  // useEffect(() => table.setPageSize(pageSize), [pageSize])
 
   return (
     <div className={"rounded-xl border overflow-y-auto max-h-full "+className||''}>
@@ -137,4 +163,6 @@ export default function TanstackTableImplementation<TData, TValue>({
       </Table>
     </div>
   )
-}
+})
+
+export default TanstackTableImplementation

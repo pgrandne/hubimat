@@ -1,5 +1,5 @@
-import TanstackTableImplementation from "./TanstackTableImplementation";
-import { Children, PropsWithChildren, ReactElement, useState } from 'react';
+import TanstackTableImplementation, { AdvancedTablePropsMethods } from "./TanstackTableImplementation";
+import { Children, PropsWithChildren, ReactElement, useRef, useState } from 'react';
 import { ColumnDef, Row, Table } from "@tanstack/react-table";
 import HeaderCell from "./HeaderCell";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -17,6 +17,7 @@ interface Props {
   className?: string,
   enableGeneralSearch?: boolean
   enableRowSelection?: boolean
+  initialPageSize?: number
 }
 
 function isComponent(object: any, componentName: string) {
@@ -69,6 +70,9 @@ const selectColumn: ColumnDef<any, unknown> = {
 const AdvancedTable = (props: PropsWithChildren<Props>) => {
 
   const [globalFilter, setGlobalFilter] = useState<string>()
+  const tableRef = useRef<AdvancedTablePropsMethods>()
+  const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: (props.initialPageSize) ? props.initialPageSize : 10 })
+  // const [pageSize, setPageSize] = useState<number>((props.initialPageSize) ? props.initialPageSize : 10)
 
   // if (props.data.length == 0) return <TanstackTableImplementation columns={[]} data={props.data}/>
 
@@ -86,7 +90,7 @@ const AdvancedTable = (props: PropsWithChildren<Props>) => {
                     ? Object.assign({}, ...(AdvancedTableBodyRow.props.children.map((rowCell: ReactElement) => {return {[rowCell.props.accessor]:rowCell}})))
                     : {}
 
-  const columns = accessors.filter(accessor => headers[accessor].props.hidden !== true).map((accessor): ColumnDef<any, unknown> =>
+  const columns = accessors.filter(accessor => headers[accessor].props.hidden !== true).map((accessor): ColumnDef<unknown, unknown> =>
   {
     let isDateColumn : boolean | undefined = undefined // If the column has only undefined values this will stay undefined
     let isNumberColumn : boolean | undefined = undefined
@@ -116,7 +120,7 @@ const AdvancedTable = (props: PropsWithChildren<Props>) => {
     })
 
 
-    const columnDef: ColumnDef<any, unknown> = {
+    const columnDef: ColumnDef<unknown, unknown> = {
       accessorKey: accessor,
       filterFn: isDateColumn ? DateFilterFunction : (isNumberColumn ? NumberFilterFunction : ArrayFilterFunction),
       header: ({ table, column }) => (
@@ -155,7 +159,7 @@ const AdvancedTable = (props: PropsWithChildren<Props>) => {
       }
     }
 
-    columnDef.getGroupingValue = row => ObjectToString(row[accessor])
+    columnDef.getGroupingValue = (row:any) => ObjectToString(row[accessor])
 
     return columnDef
   })
@@ -166,7 +170,51 @@ const AdvancedTable = (props: PropsWithChildren<Props>) => {
 
   return <>
     <Input className="mb-4 max-w-[40%]" placeholder="Rechercher" onChange={(e) => { setGlobalFilter(e.target.value) }} />
-    <TanstackTableImplementation columns={columns} data={props.data} className={props.className} globalFilterValue={globalFilter} showNumber={(n:number) => {console.log(n)}} />
+    <TanstackTableImplementation ref={tableRef} columns={columns} data={props.data} className={props.className} globalFilterValue={globalFilter} pagination={pagination} setPagination={setPagination}/>
+    <div className="flex w-full items-center text-xs mt-2" style={{justifyContent:'space-between', position:'relative'}}>
+      <div>{pagination.pageIndex*pagination.pageSize+1}-{Math.min(pagination.pageSize*(pagination.pageIndex+1), (tableRef.current)?tableRef.current.getFilteredDataSize():0) } sur {(tableRef.current)?tableRef.current.getFilteredDataSize():0} résultats</div>
+      <div className="flex items-center" style={{position:'absolute', left:'50%', transform:'translateX(-50%)'}}>
+        <Button variant={"ghost"} className="p-1 h-fit"><SkipBack className="w-4 h-4"/></Button>
+        <Button variant={"ghost"} className="p-1 h-fit" onClick={ () => {if (tableRef.current) tableRef.current.previousPage()}}><ChevronLeft className="w-4 h-4"/></Button>
+        <Select onValueChange={
+              (value) => {
+                  
+              }
+          }
+          defaultValue={"0"}
+        >
+          <SelectTrigger className="min-w-0 w-fit text-xs h-[2em]">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent className="min-w-0 w-full">
+              <SelectItem className="text-xs" value="0">0</SelectItem>
+              <SelectItem className="text-xs" value="1">1</SelectItem>
+              <SelectItem className="text-xs" value="2">2</SelectItem>
+          </SelectContent>
+        </Select>
+        <Button variant={"ghost"} className="p-1 h-fit" onClick={ () => {if (tableRef.current) tableRef.current.nextPage()}}><ChevronRight className="w-4 h-4"/></Button>
+        <Button variant={"ghost"} className="p-1 h-fit"><SkipForward className="w-4 h-4"/></Button>
+      </div>
+      <div className="flex items-center">
+        Résultats par page
+        <Select onValueChange={(value) => {if (tableRef.current) {tableRef.current.setPageSize(Number(value))}}}
+          defaultValue={String(pagination.pageSize)}
+        >
+          <SelectTrigger className="min-w-0 w-fit text-xs h-[2em]">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent className="min-w-0 w-full">
+              <SelectItem className="text-xs" value="5">5</SelectItem>
+              <SelectItem className="text-xs" value="10">10</SelectItem>
+              <SelectItem className="text-xs" value="15">15</SelectItem>
+              <SelectItem className="text-xs" value="20">20</SelectItem>
+              <SelectItem className="text-xs" value="25">25</SelectItem>
+              <SelectItem className="text-xs" value="50">50</SelectItem>
+              <SelectItem className="text-xs" value="100">100</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+    </div>
   </>
 }
 
