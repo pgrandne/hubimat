@@ -49,7 +49,7 @@ export const Core = () => {
       </AdvancedTable>}
 
       { (exampleChoice==2) &&
-      <AdvancedTable data={getData1()} enableGeneralSearch={true} enableRowSelection={true}>
+      <AdvancedTable data={getData1()} enableGeneralSearch={true} enableRowSelection={true} initialPageSize={5}>
         <AdvancedTableCaption>A list of Data.</AdvancedTableCaption>
         <AdvancedTableHeader>
           <AdvancedTableHead accessor="date" defaultSort={sortType.MinortoMayor} icon={<Calendar />}>Date</AdvancedTableHead>
