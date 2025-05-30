@@ -174,26 +174,22 @@ const AdvancedTable = (props: PropsWithChildren<Props>) => {
     <div className="flex w-full items-center text-xs mt-2" style={{justifyContent:'space-between', position:'relative'}}>
       <div>{pagination.pageIndex*pagination.pageSize+1}-{Math.min(pagination.pageSize*(pagination.pageIndex+1), (tableRef.current)?tableRef.current.getFilteredDataSize():0) } sur {(tableRef.current)?tableRef.current.getFilteredDataSize():0} résultats</div>
       <div className="flex items-center" style={{position:'absolute', left:'50%', transform:'translateX(-50%)'}}>
-        <Button variant={"ghost"} className="p-1 h-fit"><SkipBack className="w-4 h-4"/></Button>
+        <Button variant={"ghost"} className="p-1 h-fit" onClick={ () => {if (tableRef.current) tableRef.current.goToFirstPage()}}><SkipBack className="w-4 h-4"/></Button>
         <Button variant={"ghost"} className="p-1 h-fit" onClick={ () => {if (tableRef.current) tableRef.current.previousPage()}}><ChevronLeft className="w-4 h-4"/></Button>
-        <Select onValueChange={
-              (value) => {
-                  
-              }
-          }
-          defaultValue={"0"}
-        >
-          <SelectTrigger className="min-w-0 w-fit text-xs h-[2em]">
+        <Select value={String(pagination.pageIndex)} onValueChange={(value) => {if (tableRef.current) tableRef.current.setPageIndex(Number(value))}}>
+          <SelectTrigger className="min-w-0 text-xs h-[2em]">
             <SelectValue />
           </SelectTrigger>
           <SelectContent className="min-w-0 w-full">
-              <SelectItem className="text-xs" value="0">0</SelectItem>
-              <SelectItem className="text-xs" value="1">1</SelectItem>
-              <SelectItem className="text-xs" value="2">2</SelectItem>
+            {
+              Array.from({ length: (tableRef.current) ? tableRef.current.getPageCount() : 1}, (_, index) =>
+                <SelectItem className="text-xs" value={String(index)}>{String(index)}</SelectItem>
+              )
+            }
           </SelectContent>
         </Select>
         <Button variant={"ghost"} className="p-1 h-fit" onClick={ () => {if (tableRef.current) tableRef.current.nextPage()}}><ChevronRight className="w-4 h-4"/></Button>
-        <Button variant={"ghost"} className="p-1 h-fit"><SkipForward className="w-4 h-4"/></Button>
+        <Button variant={"ghost"} className="p-1 h-fit" onClick={ () => {if (tableRef.current) tableRef.current.goToLastPage()}}><SkipForward className="w-4 h-4"/></Button>
       </div>
       <div className="flex items-center">
         Résultats par page

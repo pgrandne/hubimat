@@ -44,9 +44,12 @@ export interface AdvancedTablePropsMethods {
   nextPage: () => void
   previousPage: () => void
   setPageSize: (pageSize: number) => void
+  setPageIndex: (pageIndex: number) => void
   getPageCount: () => number
   getPageIndex: () => number
   getFilteredDataSize: () => number
+  goToFirstPage: () => void
+  goToLastPage: () => void
 }
 
 const TanstackTableImplementation = forwardRef(<TData, TValue>({
@@ -98,12 +101,15 @@ const TanstackTableImplementation = forwardRef(<TData, TValue>({
     nextPage: () => {if (table.getCanNextPage()) table.nextPage()},
     previousPage: table.previousPage,
     setPageSize: (pageSize: number) => { table.setPageSize(pageSize); table.resetPageIndex(); },
+    setPageIndex: (pageIndex: number) => table.setPageIndex(Math.max(0, Math.min(table.getPageCount()-1, pageIndex))),
     getPageCount: table.getPageCount,
     getPageIndex: () => pagination.pageIndex,
-    getFilteredDataSize: () => table.getRowCount()
+    getFilteredDataSize: () => table.getRowCount(),
+    goToFirstPage: table.firstPage,
+    goToLastPage: table.lastPage
   }));
-  // useEffect(() => table.setPageSize(pageSize), [pageSize])
 
+  
   return (
     <div className={"rounded-xl border overflow-y-auto max-h-full "+className||''}>
       <Table>
