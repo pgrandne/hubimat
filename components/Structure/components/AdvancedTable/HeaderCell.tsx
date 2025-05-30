@@ -144,7 +144,6 @@ export default function HeaderCell({
           <>
             <DropdownMenuSeparator />
             <DropdownMenuLabel>Filtrer</DropdownMenuLabel>
-            <DropdownMenuItem {...disablingProps} onKeyDown={(e) => {console.log(e); e.preventDefault()}}>
               {isDateColumn ? (
                 <FilterDate column={column} />
               ) : (
@@ -170,7 +169,6 @@ export default function HeaderCell({
                   />
                 </>
               )}
-            </DropdownMenuItem>
           </>
         )}
       </DropdownMenuContent>
