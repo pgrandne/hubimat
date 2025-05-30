@@ -32,6 +32,7 @@ export default function FilterNumber({
       <DropdownMenuItem {...disablingProps} style={{ pointerEvents: "none" }}>
         Min :
         <Input type="number"
+          style={{ pointerEvents: "auto" }}
           defaultValue={(column.getFilterValue() as NumberRangeType)?.min}
           onChange={(e) => {
             const newValue = (e.target.value != '') ? Number(e.target.value) : undefined
