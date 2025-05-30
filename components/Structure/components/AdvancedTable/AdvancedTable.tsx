@@ -1,13 +1,16 @@
 import TanstackTableImplementation from "./TanstackTableImplementation";
-import { Children, PropsWithChildren, ReactElement } from 'react';
+import { Children, PropsWithChildren, ReactElement, useState } from 'react';
 import { ColumnDef, Row, Table } from "@tanstack/react-table";
 import HeaderCell from "./HeaderCell";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DateToFileString } from "@/lib/utils";
 import { DateFilterFunction, DateRangeType } from "./FilterDate";
 import { isDate } from "./FilterDate";
-import { Check, X } from "lucide-react";
+import { Check, ChevronLeft, ChevronRight, SkipBack, SkipForward, X } from "lucide-react";
 import { NumberFilterFunction } from "./FilterNumber";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
 
 interface Props {
   data: Array<any>,
@@ -64,6 +67,8 @@ const selectColumn: ColumnDef<any, unknown> = {
 }
 
 const AdvancedTable = (props: PropsWithChildren<Props>) => {
+
+  const [globalFilter, setGlobalFilter] = useState<string>()
 
   // if (props.data.length == 0) return <TanstackTableImplementation columns={[]} data={props.data}/>
 
@@ -159,7 +164,10 @@ const AdvancedTable = (props: PropsWithChildren<Props>) => {
     columns.push(selectColumn)
   }
 
-  return <TanstackTableImplementation columns={columns} data={props.data} className={props.className} />
+  return <>
+    <Input className="mb-4 max-w-[40%]" placeholder="Rechercher" onChange={(e) => { setGlobalFilter(e.target.value) }} />
+    <TanstackTableImplementation columns={columns} data={props.data} className={props.className} globalFilterValue={globalFilter} showNumber={(n:number) => {console.log(n)}} />
+  </>
 }
 
 export default AdvancedTable;

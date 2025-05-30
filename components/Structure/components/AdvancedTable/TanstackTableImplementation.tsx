@@ -13,7 +13,7 @@ import {
   getFacetedUniqueValues,
   getGroupedRowModel,
   getExpandedRowModel,
-  ColumnPinningState,
+  getPaginationRowModel,
 } from "@tanstack/react-table"
 
 import {
@@ -25,24 +25,29 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
-import React from "react"
+import { useEffect, useState } from "react"
 import { ChevronDown, ChevronRight } from "lucide-react"
 
 interface AdvancedTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
-  className?: string | undefined
+  className?: string
+  globalFilterValue?: string
+  showNumber: Function
 }
 
 export default function TanstackTableImplementation<TData, TValue>({
   columns,
   data,
-  className
+  className,
+  globalFilterValue
 }: AdvancedTableProps<TData, TValue>) {
-  const [rowSelection, setRowSelection] = React.useState({})
-  const [sorting, setSorting] = React.useState<SortingState>([])
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
-  const [columnPinning, setColumnPinning] = React.useState<ColumnPinningState>({left: [], right: [],});
+  const [rowSelection, setRowSelection] = useState({})
+  const [sorting, setSorting] = useState<SortingState>([])
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
+  const [globalFilter, setGlobalFilter] = useState<string>()
+  const [pagination, setPagination] = useState({pageIndex: 0, pageSize: 10});
+  useEffect(() => setGlobalFilter(globalFilterValue), [globalFilterValue])
   const table = useReactTable({
     data,
     columns,
@@ -56,10 +61,14 @@ export default function TanstackTableImplementation<TData, TValue>({
     getFilteredRowModel: getFilteredRowModel(),
     getGroupedRowModel: getGroupedRowModel(),
     getExpandedRowModel: getExpandedRowModel(),
+    globalFilterFn: 'includesString',
+    getPaginationRowModel: getPaginationRowModel(),
     state: {
       rowSelection,
       sorting,
       columnFilters,
+      globalFilter,
+      pagination
     },
     initialState: {
       columnPinning: {
@@ -68,7 +77,7 @@ export default function TanstackTableImplementation<TData, TValue>({
       },
     }
   })
-  
+
   return (
     <div className={"rounded-xl border overflow-y-auto max-h-full "+className||''}>
       <Table>
