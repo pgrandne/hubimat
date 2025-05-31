@@ -21,7 +21,7 @@ export const NumberFilterFunction = (row: any, columnId: string, filterValue: Nu
     ? ArrayFilterFunction(row, columnId, filterValue.map(String))
     : (filterValueRange.min == undefined || filterValueRange.min <= value) && (filterValueRange.max == undefined || value <= filterValueRange.max)
 }
-
+// TODO fix closing on input
 export default function FilterNumber({
   column,
 }: {

@@ -45,6 +45,8 @@ export default function FilterDate({
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(toDate(column.getFilterValue()));
   const [selectedRange, setSelectedRange] = useState<DateRangeType>(toDateRange(column.getFilterValue()))
 
+// TODO fix closing on click
+
   return (
     <>
       <DropdownMenuItem {...disablingProps}>
