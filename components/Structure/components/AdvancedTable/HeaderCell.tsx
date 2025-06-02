@@ -24,7 +24,6 @@ import { ObjectToString } from "./AdvancedTable";
 import FilterDate from "./FilterDate";
 import FilterList from "./FilterList";
 import FilterNumber from "./FilterNumber";
-import { disablingProps } from "./DisableDropDownMenuItem";
 
 export default function HeaderCell({
   table,
@@ -49,6 +48,7 @@ export default function HeaderCell({
   isDateColumn?: boolean;
   isNumberColumn?: boolean;
 }) {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [rotateChevron, setRotateChevron] = useState(false);
 
   const headerDisplay = (
@@ -60,7 +60,7 @@ export default function HeaderCell({
   );
 
   return enableSorting || enableGrouping || enableFiltering ? (
-    <DropdownMenu onOpenChange={(open) => setRotateChevron(open)}>
+    <DropdownMenu onOpenChange={(open) => {setIsMenuOpen(open); setRotateChevron(open)}}>
       <DropdownMenuTrigger>
         {/* <Button
                 variant="ghost"
@@ -148,7 +148,7 @@ export default function HeaderCell({
                 <FilterDate column={column} />
               ) : (
                 <>
-                  {isNumberColumn && (<FilterNumber column={column} />)}
+                  {isNumberColumn && (<FilterNumber column={column} isMenuOpen={isMenuOpen} />)}
                   <FilterList
                     column={column}
                     columnValuesCounted={
