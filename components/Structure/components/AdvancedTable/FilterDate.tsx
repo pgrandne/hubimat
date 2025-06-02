@@ -44,11 +44,9 @@ enum options {
 export default function FilterDate({
   columnFilter,
   setColumnFilter,
-  forceUpdate
 }: {
   columnFilter: any
   setColumnFilter: Function
-  forceUpdate: Function
 }) {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(toDate(columnFilter));
   const [selectedRange, setSelectedRange] = useState<DateRangeType>(toDateRange(columnFilter))

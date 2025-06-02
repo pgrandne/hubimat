@@ -60,7 +60,7 @@ export default function HeaderCell({
   );
 
   return enableSorting || enableGrouping || enableFiltering ? (
-    <DropdownMenu onOpenChange={(open) => { setRotateChevron(open); if (!open) column.setFilterValue(columnFilter) }}>
+    <DropdownMenu onOpenChange={open => setRotateChevron(open)}>
       <DropdownMenuTrigger>
         {/* <Button
                 variant="ghost"
@@ -95,7 +95,7 @@ export default function HeaderCell({
           </div>
         </span>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent align="end" onKeyDown={e => {if (e.key == "Enter" && columnFilter != column.getFilterValue()) column.setFilterValue(columnFilter)}}>
         {enableSorting && (
           <>
             <DropdownMenuLabel>Grouper</DropdownMenuLabel>
@@ -145,10 +145,10 @@ export default function HeaderCell({
             <DropdownMenuSeparator />
             <DropdownMenuLabel>Filtrer</DropdownMenuLabel>
               {isDateColumn ? (
-                <FilterDate columnFilter={columnFilter} setColumnFilter={setColumnFilter} forceUpdate={() => column.setFilterValue(columnFilter)} />
+                <FilterDate columnFilter={columnFilter} setColumnFilter={setColumnFilter} />
               ) : (
                 <>
-                  {isNumberColumn && (<FilterNumber columnFilter={columnFilter} setColumnFilter={setColumnFilter} forceUpdate={() => column.setFilterValue(columnFilter)} />)}
+                  {isNumberColumn && (<FilterNumber columnFilter={columnFilter} setColumnFilter={setColumnFilter} />)}
                   <FilterList
                     columnFilter={columnFilter}
                     setColumnFilter={setColumnFilter}
@@ -170,6 +170,10 @@ export default function HeaderCell({
                   />
                 </>
               )}
+              {column.getFilterValue() != columnFilter && <DropdownMenuItem className="border my-2 mx-3" onClick={() => column.setFilterValue(columnFilter)}>
+                <span className="mx-auto">Appliquer le filtre</span>
+              </DropdownMenuItem>
+              }
           </>
         )}
       </DropdownMenuContent>

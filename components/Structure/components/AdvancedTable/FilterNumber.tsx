@@ -25,11 +25,9 @@ export const NumberFilterFunction = (row: any, columnId: string, filterValue: Nu
 export default function FilterNumber({
   columnFilter,
   setColumnFilter,
-  forceUpdate
 }: {
   columnFilter: any
   setColumnFilter: Function
-  forceUpdate: Function
 }) {
 
   const [min, setMin] = useState<number | undefined>((columnFilter as NumberRangeType)?.min)
@@ -50,7 +48,6 @@ export default function FilterNumber({
           style={{ pointerEvents: "auto" }}
           defaultValue={min}
           onChange={e => updateFilter((e.target.value != '') ? Number(e.target.value) : undefined, max)}
-          onKeyDown={e => {if (e.key == "Enter") forceUpdate()}}
         />
       </DropdownMenuItem>
       <DropdownMenuItem {...disablingProps} style={{ pointerEvents: "none" }}>
@@ -59,7 +56,6 @@ export default function FilterNumber({
           style={{ pointerEvents: "auto" }}
           defaultValue={max}
           onChange={e => updateFilter(min, (e.target.value != '') ? Number(e.target.value) : undefined)}
-          onKeyDown={e => {if (e.key == "Enter") forceUpdate()}}
         />
       </DropdownMenuItem>
     </>

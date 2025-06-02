@@ -36,9 +36,7 @@ export function ObjectToString(object: any): string {
 export const ArrayFilterFunction = (row: any, columnId: string, filterValue: Array<string>) => {
     const rowValue = row.getValue(columnId)
     const valueToCheck = ObjectToString(rowValue).toLowerCase()
-    
-    const filterValues: Array<string> = filterValue
-    return filterValues.some(v => valueToCheck == v.toLowerCase())
+    return filterValue.some(v => valueToCheck == v.toLowerCase())
 }
 
 const selectColumn: ColumnDef<any, unknown> = {

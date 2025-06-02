@@ -5,7 +5,6 @@ interface FilterListProps {
     columnFilter: any
     setColumnFilter: Function
     columnValuesCounted: [string, {"count":number, "displayValue":string}][]
-    
 }
 
 // TODO: Précocher les valeurs qui ressortent quand on fait une recherche pour le filtre
@@ -51,7 +50,9 @@ export default function FilterList({ columnFilter, setColumnFilter, columnValues
                                                 }
                                             }
                                             else {
-                                                setColumnFilter((columnFilter as Array<string>).filter(v => v != content))
+                                                const newFilter = (columnFilter as Array<string>).filter(v => v != content)
+                                                if (newFilter.length == 0) setColumnFilter(undefined)
+                                                else setColumnFilter(newFilter)
                                             }
                                         }
                                     }
