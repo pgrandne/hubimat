@@ -38,7 +38,7 @@ export const ArrayFilterFunction = (row: any, columnId: string, filterValue: Arr
     const valueToCheck = ObjectToString(rowValue).toLowerCase()
     
     const filterValues: Array<string> = filterValue
-    return filterValues.filter(v => valueToCheck.includes(v.toLowerCase())).length > 0
+    return filterValues.some(v => valueToCheck == v.toLowerCase())
 }
 
 const selectColumn: ColumnDef<any, unknown> = {

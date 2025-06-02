@@ -1,9 +1,8 @@
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
-import { Column } from "@tanstack/react-table";
 import { ArrayFilterFunction } from "./AdvancedTable";
 import { disablingProps } from "./DisableDropDownMenuItem";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const toNumberRange = (object: any): NumberRangeType => {
   return { min: object?.min, max: object?.max };
@@ -24,22 +23,24 @@ export const NumberFilterFunction = (row: any, columnId: string, filterValue: Nu
 }
 
 export default function FilterNumber({
-  column,
-  isMenuOpen,
+  columnFilter,
+  setColumnFilter,
+  forceUpdate
 }: {
-  column: Column<any, unknown>
-  isMenuOpen: boolean
+  columnFilter: any
+  setColumnFilter: Function
+  forceUpdate: Function
 }) {
 
-  const [min, setMin] = useState<number | undefined>((column.getFilterValue() as NumberRangeType)?.min)
-  const [max, setMax] = useState<number | undefined>((column.getFilterValue() as NumberRangeType)?.max)
+  const [min, setMin] = useState<number | undefined>((columnFilter as NumberRangeType)?.min)
+  const [max, setMax] = useState<number | undefined>((columnFilter as NumberRangeType)?.max)
 
-  const updateFilter = () => {
-    if (min == undefined && max == undefined) column.setFilterValue(undefined)
-    else column.setFilterValue({"min": min, "max": max})
+  const updateFilter = (newMin ?: number, newMax ?: number) => {
+    if (newMin == undefined && newMax == undefined) setColumnFilter(undefined)
+    else setColumnFilter({"min": newMin, "max": newMax})
+    setMin(newMin)
+    setMax(newMax)
   }
-
-  useEffect(() => {if (!isMenuOpen) updateFilter()}, [isMenuOpen])
 
   return (
     <>
@@ -47,18 +48,18 @@ export default function FilterNumber({
         Min :
         <Input type="number"
           style={{ pointerEvents: "auto" }}
-          defaultValue={(column.getFilterValue() as NumberRangeType)?.min}
-          onChange={e => setMin((e.target.value != '') ? Number(e.target.value) : undefined)}
-          onKeyDown={e => {if (e.key == "Enter") updateFilter()}}
+          defaultValue={min}
+          onChange={e => updateFilter((e.target.value != '') ? Number(e.target.value) : undefined, max)}
+          onKeyDown={e => {if (e.key == "Enter") forceUpdate()}}
         />
       </DropdownMenuItem>
       <DropdownMenuItem {...disablingProps} style={{ pointerEvents: "none" }}>
         Max :
         <Input type="number"
           style={{ pointerEvents: "auto" }}
-          defaultValue={(column.getFilterValue() as NumberRangeType)?.max}
-          onChange={e => setMax((e.target.value != '') ? Number(e.target.value) : undefined)}
-          onKeyDown={e => {if (e.key == "Enter") updateFilter()}}
+          defaultValue={max}
+          onChange={e => updateFilter(min, (e.target.value != '') ? Number(e.target.value) : undefined)}
+          onKeyDown={e => {if (e.key == "Enter") forceUpdate()}}
         />
       </DropdownMenuItem>
     </>

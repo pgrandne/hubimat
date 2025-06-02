@@ -8,7 +8,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Column } from "@tanstack/react-table";
 import { useState } from "react";
 import { disablingProps } from "./DisableDropDownMenuItem";
 
@@ -36,25 +35,34 @@ export const DateFilterFunction = (row: any, columnId: string, filterValue: Date
 
 export const isDate = (object: any) : boolean => (toDate(object) != undefined)
 
+enum options {
+  all="all",
+  specific="specific",
+  range="range"
+}
+
 export default function FilterDate({
-  column,
+  columnFilter,
+  setColumnFilter,
+  forceUpdate
 }: {
-  column: Column<any, unknown>;
+  columnFilter: any
+  setColumnFilter: Function
+  forceUpdate: Function
 }) {
-  const [filterSelected, setSelectedFilter] = useState(column.getFilterValue() == undefined ? "all" : toDateRange(column.getFilterValue()).start != undefined ? "range" : "specific");
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(toDate(column.getFilterValue()));
-  const [selectedRange, setSelectedRange] = useState<DateRangeType>(toDateRange(column.getFilterValue()))
-
-// TODO fix closing on click
-
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(toDate(columnFilter));
+  const [selectedRange, setSelectedRange] = useState<DateRangeType>(toDateRange(columnFilter))
+  const [filterSelected, setSelectedFilter] = useState<string>(columnFilter == undefined ? options.all : selectedDate != undefined ? options.specific : options.range);
+  
   return (
     <>
       <DropdownMenuItem {...disablingProps}>
         <Select
           onValueChange={
               (value) => {
-                  if (value == "all") column.setFilterValue(undefined)
-                  if (value == "range") column.setFilterValue([undefined, undefined])
+                  if (value == options.all) setColumnFilter(undefined)
+                  if (value == options.specific && selectedDate != undefined) setColumnFilter(selectedDate)
+                  if (value == options.range && selectedDate != undefined) setColumnFilter(selectedDate)
                   setSelectedFilter(value)
               }
           }
@@ -65,34 +73,34 @@ export default function FilterDate({
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem value="all">Sélectionner tout</SelectItem>
-              <SelectItem value="specific">Date spécifique</SelectItem>
-              <SelectItem value="range">Période</SelectItem>
+              <SelectItem value={options.all}>Sélectionner tout</SelectItem>
+              <SelectItem value={options.specific}>Date spécifique</SelectItem>
+              <SelectItem value={options.range}>Période</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
       </DropdownMenuItem>
       
-      {filterSelected == "specific" && (
+      {filterSelected == options.specific && (
         <DropdownMenuItem {...disablingProps}>
           <DatePicker setDate={(date) => {
             setSelectedDate(date)
-            column.setFilterValue(date)
+            setColumnFilter(date)
           }} date={selectedDate} />
         </DropdownMenuItem>
       )}
-      {filterSelected == "range" && (
+      {filterSelected == options.range && (
       <>
         <DropdownMenuItem {...disablingProps}>
           <DatePicker setDate={(date) => {
             setSelectedRange({"start": date, "end": selectedRange.end})
-            column.setFilterValue({"start": date, "end": selectedRange.end})
+            setColumnFilter({"start": date, "end": selectedRange.end})
             }} date={selectedRange.start} />
         </DropdownMenuItem>
         <DropdownMenuItem {...disablingProps}>
           <DatePicker setDate={(date) => {
             setSelectedRange({"start": selectedRange.start, "end": date})
-            column.setFilterValue({"start": selectedRange.start, "end": date})
+            setColumnFilter({"start": selectedRange.start, "end": date})
           }} date={selectedRange.end} />
         </DropdownMenuItem>
       </>)}

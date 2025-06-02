@@ -1,30 +1,31 @@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Command, CommandEmpty, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
-import { Column } from "@tanstack/react-table";
 
 interface FilterListProps {
-    column: Column<any, unknown>;
-    columnValuesCounted: [string, {"count":number, "displayValue":string}][];
+    columnFilter: any
+    setColumnFilter: Function
+    columnValuesCounted: [string, {"count":number, "displayValue":string}][]
+    
 }
 
 // TODO: Précocher les valeurs qui ressortent quand on fait une recherche pour le filtre
-export default function FilterList({ column, columnValuesCounted }: FilterListProps) {
+export default function FilterList({ columnFilter, setColumnFilter, columnValuesCounted }: FilterListProps) {
     return (
         <Command>
             <CommandInput placeholder="Chercher" onKeyDown={(e) => e.stopPropagation()} />
             <CommandList>
                 <CommandEmpty>Aucun résultat</CommandEmpty>
-                <CommandItem key="select_all" className="cursor-pointer" onSelect={() => column.setFilterValue(undefined)}>
+                <CommandItem key="select_all" className="cursor-pointer" onSelect={() => setColumnFilter(undefined)}>
                     {/* <Checkbox
                         className="mr-2"
-                        checked={column.getFilterValue() != undefined && (column.getFilterValue() as Array<string>).length == columnValuesCounted.length}
+                        checked={columnFilter != undefined && (columnFilter as Array<string>).length == columnValuesCounted.length}
                         onCheckedChange={
                             (checked) => {
                                 if (checked) {
-                                    column.setFilterValue(columnValuesCounted.map(c => c[0]))
+                                    setColumnFilter(columnValuesCounted.map(c => c[0]))
                                 }
                                 else {
-                                    column.setFilterValue(undefined) //if we don't want to reset when unchecking 'select all' we need to set value to []
+                                    setColumnFilter(undefined) //if we don't want to reset when unchecking 'select all' we need to set value to []
                                 }
                             }
                         }
@@ -38,19 +39,19 @@ export default function FilterList({ column, columnValuesCounted }: FilterListPr
                             return <CommandItem key={content}>
                                 <Checkbox
                                     className="mr-2"
-                                    checked={Array.isArray(column.getFilterValue()) && (column.getFilterValue() as Array<string>).includes(content)}
+                                    checked={Array.isArray(columnFilter) && (columnFilter as Array<string>).includes(content)}
                                     onCheckedChange={
                                         (checked) => {
                                             if (checked) {
-                                                if (!Array.isArray(column.getFilterValue())) {
-                                                    column.setFilterValue([content])
+                                                if (!Array.isArray(columnFilter)) {
+                                                    setColumnFilter([content])
                                                 }
                                                 else {
-                                                    column.setFilterValue((column.getFilterValue() as Array<string>).concat(content))
+                                                    setColumnFilter((columnFilter as Array<string>).concat(content))
                                                 }
                                             }
                                             else {
-                                                column.setFilterValue((column.getFilterValue() as Array<string>).filter(v => v != content))
+                                                setColumnFilter((columnFilter as Array<string>).filter(v => v != content))
                                             }
                                         }
                                     }

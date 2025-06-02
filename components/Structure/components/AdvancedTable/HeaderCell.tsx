@@ -48,7 +48,7 @@ export default function HeaderCell({
   isDateColumn?: boolean;
   isNumberColumn?: boolean;
 }) {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [columnFilter, setColumnFilter] = useState(column.getFilterValue())
   const [rotateChevron, setRotateChevron] = useState(false);
 
   const headerDisplay = (
@@ -60,7 +60,7 @@ export default function HeaderCell({
   );
 
   return enableSorting || enableGrouping || enableFiltering ? (
-    <DropdownMenu onOpenChange={(open) => {setIsMenuOpen(open); setRotateChevron(open)}}>
+    <DropdownMenu onOpenChange={(open) => { setRotateChevron(open); if (!open) column.setFilterValue(columnFilter) }}>
       <DropdownMenuTrigger>
         {/* <Button
                 variant="ghost"
@@ -145,12 +145,13 @@ export default function HeaderCell({
             <DropdownMenuSeparator />
             <DropdownMenuLabel>Filtrer</DropdownMenuLabel>
               {isDateColumn ? (
-                <FilterDate column={column} />
+                <FilterDate columnFilter={columnFilter} setColumnFilter={setColumnFilter} forceUpdate={() => column.setFilterValue(columnFilter)} />
               ) : (
                 <>
-                  {isNumberColumn && (<FilterNumber column={column} isMenuOpen={isMenuOpen} />)}
+                  {isNumberColumn && (<FilterNumber columnFilter={columnFilter} setColumnFilter={setColumnFilter} forceUpdate={() => column.setFilterValue(columnFilter)} />)}
                   <FilterList
-                    column={column}
+                    columnFilter={columnFilter}
+                    setColumnFilter={setColumnFilter}
                     columnValuesCounted={
                       // Will this scale well ???
                       Object.entries(
