@@ -62,11 +62,6 @@ export default function HeaderCell({
   return enableSorting || enableGrouping || enableFiltering ? (
     <DropdownMenu onOpenChange={open => setRotateChevron(open)}>
       <DropdownMenuTrigger>
-        {/* <Button
-                variant="ghost"
-                className="ml-2 h-7 w-7 p-0"
-                title="Ouvrir le menu"
-                > */}
         <span
           className="flex items-center ml-2 mr-2 w-full pr-2"
           title="Ouvrir le menu"
@@ -95,7 +90,7 @@ export default function HeaderCell({
           </div>
         </span>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" onKeyDown={e => {if (e.key == "Enter" && columnFilter != column.getFilterValue()) column.setFilterValue(columnFilter)}}>
+      <DropdownMenuContent align="end" onKeyDown={e => {if (e.key == "Enter" && columnFilter != column.getFilterValue()) column.setFilterValue(columnFilter) }}>
         {enableSorting && (
           <>
             <DropdownMenuLabel>Grouper</DropdownMenuLabel>
@@ -103,8 +98,6 @@ export default function HeaderCell({
               {column.getIsGrouped()
                 ? "Dégrouper"
                 : 'Grouper par "' + label + '"'}
-              {/* <Switch checked={column.getIsGrouped()} onCheckedChange={() => column.toggleGrouping()} className="mr-2"/>
-                                    <Label htmlFor="group-by">Grouper par "{label}"</Label> */}
             </DropdownMenuItem>
           </>
         )}
@@ -167,6 +160,7 @@ export default function HeaderCell({
                         )
                       )
                     }
+                    forceUpdate={(filterValue: Array<string> | undefined) => column.setFilterValue(filterValue)}
                   />
                 </>
               )}
