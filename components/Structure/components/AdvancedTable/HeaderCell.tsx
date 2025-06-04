@@ -80,7 +80,14 @@ export default function HeaderCell({
   };
 
   return enableSorting || enableGrouping || enableFiltering ? (
-    <DropdownMenu onOpenChange={(open) => {setRotateChevron(open); if (!open) {setMenuContentCssUpdated(false); setMenuContentCss(undefined)}}}>
+    <DropdownMenu onOpenChange={(open) => {
+      setRotateChevron(open)
+      if (!open) {
+        setMenuContentCssUpdated(false)
+        setMenuContentCss(undefined)
+        setColumnFilter(column.getFilterValue()) // If columnFilter has been modified but not applied, we reset it
+      }
+    }}>
       <DropdownMenuTrigger>
         <span
           className="flex items-center ml-2 mr-2 w-full pr-2"

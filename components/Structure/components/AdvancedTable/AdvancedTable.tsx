@@ -3,13 +3,13 @@ import { Children, PropsWithChildren, ReactElement, useRef, useState } from 'rea
 import { ColumnDef, Row, Table } from "@tanstack/react-table";
 import HeaderCell from "./HeaderCell";
 import { Checkbox } from "@/components/ui/checkbox";
-import { DateToFileString } from "@/lib/utils";
-import { DateFilterFunction, DateRangeType } from "./FilterDate";
+import { CoreDateToString, DateToFileString } from "@/lib/utils";
+import { DateFilterFunction } from "./FilterDate";
 import { isDate } from "./FilterDate";
 import { Check, ChevronLeft, ChevronRight, SkipBack, SkipForward, X } from "lucide-react";
 import { NumberFilterFunction } from "./FilterNumber";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 
 interface Props {
@@ -85,7 +85,9 @@ const AdvancedTable = (props: PropsWithChildren<Props>) => {
 
   const AdvancedTableBodyRow = forceReactElement(Children.toArray(props.children).filter(child => isComponent(child, 'AdvancedTableBodyRow')).at(0))
   const rowCells = AdvancedTableBodyRow && AdvancedTableBodyRow.props.children
-                    ? Object.assign({}, ...(AdvancedTableBodyRow.props.children.map((rowCell: ReactElement) => {return {[rowCell.props.accessor]:rowCell}})))
+                    ? (Array.isArray(AdvancedTableBodyRow.props.children))
+                      ? Object.assign({}, ...(AdvancedTableBodyRow.props.children.map((rowCell: ReactElement) => {return {[rowCell.props.accessor]:rowCell}})))
+                      : {[(AdvancedTableBodyRow.props.children as ReactElement).props.accessor]:(AdvancedTableBodyRow.props.children as ReactElement)}
                     : {}
 
   const columns = accessors.filter(accessor => headers[accessor].props.hidden !== true).map((accessor): ColumnDef<unknown, unknown> =>
@@ -134,7 +136,7 @@ const AdvancedTable = (props: PropsWithChildren<Props>) => {
       columnDef.cell = ({ row }) => {
         let cellValue = ( rowCells[accessor].props.valueEditFunction != undefined
                           ? rowCells[accessor].props.valueEditFunction(row.getValue(accessor))
-                          : row.getValue(accessor) )
+                          : (isDateColumn) ? CoreDateToString(row.getValue(accessor)) : row.getValue(accessor) )
         const cellChildren = (rowCells[accessor].props.children?.length > 0) ? rowCells[accessor].props.children : cellValue
         if (!Array.isArray(cellChildren)) return cellChildren //If there is only one child the children array is not constructed (react behavior) so we return it directly
         return rowCells[accessor].props.children?.map((child: any) => isComponent(child, 'CellRawValue') ? cellValue : child)
@@ -154,6 +156,9 @@ const AdvancedTable = (props: PropsWithChildren<Props>) => {
       }
       else if (isBooleanColumn) {
         columnDef.cell = ({row}) => <div className="justify-center flex w-full">{row.getValue(accessor) ? <Check className="w-5 h-5"/> : <X className="w-5 h-5"/>}</div>
+      }
+      else if (isDateColumn) {
+        columnDef.cell = ({ row }) => CoreDateToString(row.getValue(accessor))
       }
     }
 
@@ -181,7 +186,7 @@ const AdvancedTable = (props: PropsWithChildren<Props>) => {
           <SelectContent className="min-w-0 w-full">
             {
               Array.from({ length: (tableRef.current) ? tableRef.current.getPageCount() : 1}, (_, index) =>
-                <SelectItem className="text-xs" value={String(index)}>{String(index)}</SelectItem>
+                <SelectItem className="text-xs" value={String(index)}>{String(index+1)}</SelectItem>
               )
             }
           </SelectContent>
