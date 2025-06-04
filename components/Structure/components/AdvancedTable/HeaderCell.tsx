@@ -50,6 +50,8 @@ export default function HeaderCell({
 }) {
   const [columnFilter, setColumnFilter] = useState(column.getFilterValue())
   const [rotateChevron, setRotateChevron] = useState(false);
+  const [menuContentCss, setMenuContentCss] = useState<string>()
+  const [menuContentCssUpdated, setMenuContentCssUpdated] = useState(false)
 
   const headerDisplay = (
     <div className="py-2 font-semibold text-sm text-left flex items-center w-full">
@@ -59,8 +61,26 @@ export default function HeaderCell({
     </div>
   );
 
+  const menuContentInstantRef = (node: HTMLDivElement | null) => {
+    if (node && !menuContentCssUpdated) {
+      const rect = node.getBoundingClientRect()
+      const visibleHeight = Math.max(0, Math.min(rect.bottom, window.innerHeight) - Math.max(rect.top, 0));
+      const intersectionRatio = visibleHeight / rect.height;
+
+      if (intersectionRatio > 0 && intersectionRatio < 1) {
+        setMenuContentCss(
+          '[data-radix-menu-content] {\
+            max-height: '+String(rect.height*intersectionRatio)+'px !important;\
+            overflow-y: scroll; \
+          }'
+        )
+        setMenuContentCssUpdated(true)
+      }
+    }
+  };
+
   return enableSorting || enableGrouping || enableFiltering ? (
-    <DropdownMenu onOpenChange={open => setRotateChevron(open)}>
+    <DropdownMenu onOpenChange={(open) => {setRotateChevron(open); if (!open) {setMenuContentCssUpdated(false); setMenuContentCss(undefined)}}}>
       <DropdownMenuTrigger>
         <span
           className="flex items-center ml-2 mr-2 w-full pr-2"
@@ -90,7 +110,8 @@ export default function HeaderCell({
           </div>
         </span>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" onKeyDown={e => {if (e.key == "Enter" && columnFilter != column.getFilterValue()) column.setFilterValue(columnFilter) }}>
+      <DropdownMenuContent ref={menuContentInstantRef} onKeyDown={e => {if (e.key == "Enter" && columnFilter != column.getFilterValue()) column.setFilterValue(columnFilter) }}>
+        <style>{menuContentCss}</style>
         {enableSorting && (
           <>
             <DropdownMenuLabel>Grouper</DropdownMenuLabel>
