@@ -6,11 +6,12 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { CoreDateToString, DateToFileString } from "@/lib/utils";
 import { DateFilterFunction } from "./FilterDate";
 import { isDate } from "./FilterDate";
-import { Check, ChevronLeft, ChevronRight, SkipBack, SkipForward, X } from "lucide-react";
+import { Check, ChevronLeft, ChevronRight, Download, SkipBack, SkipForward, X } from "lucide-react";
 import { NumberFilterFunction } from "./FilterNumber";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
+import * as ExcelJS from 'exceljs';
 
 interface Props {
   data: Array<any>,
@@ -70,7 +71,7 @@ const AdvancedTable = (props: PropsWithChildren<Props>) => {
   const [globalFilter, setGlobalFilter] = useState<string>()
   const tableRef = useRef<AdvancedTablePropsMethods>()
   const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: (props.initialPageSize) ? props.initialPageSize : 10 })
-  // const [pageSize, setPageSize] = useState<number>((props.initialPageSize) ? props.initialPageSize : 10)
+  const caption = String(forceReactElement(Children.toArray(props.children).filter(child => isComponent(child, 'AdvancedTableCaption')).at(0))?.props?.children ?? 'tableau_hubiquity').replaceAll(" ", "_")
 
   // if (props.data.length == 0) return <TanstackTableImplementation columns={[]} data={props.data}/>
 
@@ -171,11 +172,88 @@ const AdvancedTable = (props: PropsWithChildren<Props>) => {
     columns.push(selectColumn)
   }
 
+  const nullToEmptyReplacer = ( _key: string, value: unknown ) => {
+    return ( null === value ? "" : value );
+  };
+  const prepareDataItem = ( item: any ) => {
+    return accessors.map( accessor => {
+      let value;
+      
+      try {
+        value = item[accessor] ?? "";
+      }
+      catch {
+        value = "";
+      }
+
+      return (typeof value === 'object') ? JSON.stringify( value, nullToEmptyReplacer ) : String(value)
+    });
+  };
   return <>
-    <Input className="mb-4 max-w-[40%]" placeholder="Rechercher" onChange={(e) => { setGlobalFilter(e.target.value) }} />
+    <span className="flex items-center mb-3">
+      <Input className="max-w-[40%] mr-auto" placeholder="Rechercher" onChange={(e) => { setGlobalFilter(e.target.value) }} />
+      <Button id="download_csv" title="Télécharger en csv" variant={'outline'} className="h-9 w-9 p-2 mt-1" onClick={() => {
+        if (tableRef.current) {
+          
+          const headingsRow = accessors.map( accessor => headers[accessor].props.children ).join( ";" )
+          const contentRows = tableRef.current.getFinalData().map( dataItem => {
+            return prepareDataItem( dataItem ).join( ";" )
+          });
+
+          const csvDataString = [ headingsRow, ...contentRows ].join( "\r\n" )
+
+          const universalBom = "\uFEFF"
+          const blobParts    = [ universalBom + csvDataString ]
+          const blobOptions: BlobPropertyBag = {
+            type: "text/csv;charset=UTF-8"
+          }
+
+          const file = new Blob( blobParts, blobOptions )
+          const link = document.createElement( "a" )
+          
+          link.href     = window.URL.createObjectURL( file )
+          link.download = `${caption+"_"+DateToFileString(new Date())}.csv`
+          link.click()
+        }
+      }}><Download/></Button>
+      <Button id="download_xlsx" title="Télécharger en xlsx" variant={'outline'} className="h-9 w-9 p-2 mt-1" onClick={async () => {
+        if (tableRef.current) {
+          
+          const headingsRow = accessors.map( accessor => headers[accessor].props.children )
+          const contentRows = tableRef.current.getFinalData().map( dataItem => {
+            return prepareDataItem( dataItem )
+          })
+
+          const workbook = new ExcelJS.Workbook()
+          const worksheet = workbook.addWorksheet('Sheet1')
+
+          worksheet.addRow(headingsRow)
+          contentRows.forEach((row) => { worksheet.addRow(row) })
+
+          workbook.xlsx.writeBuffer()
+          .then(buffer => {
+            const blobOptions: BlobPropertyBag = {
+              type: "application/vnd.ms-excel"
+            }
+
+            const file = new Blob( [buffer], blobOptions );
+            const link = document.createElement( "a" );
+            
+            link.href     = window.URL.createObjectURL( file );
+            link.download = `${caption+"_"+DateToFileString(new Date())}.xlsx`;
+            link.click();
+          })
+          .catch(err => console.log('Error writing excel export', err))
+        }
+      }}><Download/></Button>
+    </span>
+    
     <TanstackTableImplementation ref={tableRef} columns={columns} data={props.data} className={props.className} globalFilterValue={globalFilter} pagination={pagination} setPagination={setPagination}/>
+
     <div className="flex w-full items-center text-xs mt-2" style={{justifyContent:'space-between', position:'relative'}}>
-      <div>{pagination.pageIndex*pagination.pageSize+1}-{Math.min(pagination.pageSize*(pagination.pageIndex+1), (tableRef.current)?tableRef.current.getFilteredDataSize():0) } sur {(tableRef.current)?tableRef.current.getFilteredDataSize():0} résultats</div>
+      
+      <div>{pagination.pageIndex*pagination.pageSize+1}-{Math.min(pagination.pageSize*(pagination.pageIndex+1), (tableRef.current)?tableRef.current.getFilteredDataSize():0)} sur {(tableRef.current)?tableRef.current.getFilteredDataSize():0} résultats</div>
+
       <div className="flex items-center" style={{position:'absolute', left:'50%', transform:'translateX(-50%)'}}>
         <Button variant={"ghost"} className="p-1 h-fit" onClick={ () => {if (tableRef.current) tableRef.current.goToFirstPage()}}><SkipBack className="w-4 h-4"/></Button>
         <Button variant={"ghost"} className="p-1 h-fit" onClick={ () => {if (tableRef.current) tableRef.current.previousPage()}}><ChevronLeft className="w-4 h-4"/></Button>
@@ -194,6 +272,7 @@ const AdvancedTable = (props: PropsWithChildren<Props>) => {
         <Button variant={"ghost"} className="p-1 h-fit" onClick={ () => {if (tableRef.current) tableRef.current.nextPage()}}><ChevronRight className="w-4 h-4"/></Button>
         <Button variant={"ghost"} className="p-1 h-fit" onClick={ () => {if (tableRef.current) tableRef.current.goToLastPage()}}><SkipForward className="w-4 h-4"/></Button>
       </div>
+
       <div className="flex items-center">
         Résultats par page
         <Select onValueChange={(value) => {if (tableRef.current) {tableRef.current.setPageSize(Number(value))}}}
@@ -213,6 +292,7 @@ const AdvancedTable = (props: PropsWithChildren<Props>) => {
           </SelectContent>
         </Select>
       </div>
+
     </div>
   </>
 }

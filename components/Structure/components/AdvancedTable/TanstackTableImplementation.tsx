@@ -50,6 +50,7 @@ export interface AdvancedTablePropsMethods {
   getFilteredDataSize: () => number
   goToFirstPage: () => void
   goToLastPage: () => void
+  getFinalData: () => Array<any>
 }
 
 const TanstackTableImplementation = forwardRef(<TData, TValue>({
@@ -106,9 +107,9 @@ const TanstackTableImplementation = forwardRef(<TData, TValue>({
     getPageIndex: () => pagination.pageIndex,
     getFilteredDataSize: () => table.getRowCount(),
     goToFirstPage: table.firstPage,
-    goToLastPage: table.lastPage
+    goToLastPage: table.lastPage,
+    getFinalData: () => table.getPrePaginationRowModel().rows.map(row => row.original)
   }));
-
   
   return (
     <div className={"rounded-xl border overflow-y-auto max-h-full "+className||''}>
