@@ -52,6 +52,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Checkbox } from './checkbox';
 
 export type CalendarProps = Omit<React.ComponentProps<typeof DayPicker>, 'mode'>;
+export type TimePickerType = {hour?: boolean; minute?: boolean; second?: boolean;}
 
 const AM_VALUE = 0;
 const PM_VALUE = 1;
@@ -116,11 +117,13 @@ export type DateTimePickerProps = {
      */
     trigger?: string;
   };
-  timePicker?: {
-    hour?: boolean;
-    minute?: boolean;
-    second?: boolean;
-  };
+  /**
+   * To enable or disable using hours, minutes and/or seconds
+   */
+  timePicker?: TimePickerType;
+  /**
+   * To allow the user to change it
+   */
   setTimePicker?: React.Dispatch<React.SetStateAction<{hour?: boolean;minute?: boolean;second?: boolean;}>>
   /**
    * Custom render function for the trigger.
@@ -137,7 +140,7 @@ export type DateTimeRenderTriggerProps = {
   setOpen: (open: boolean) => void;
 };
 
-const getTimeFormat = (timePicker: {hour?: boolean; minute?: boolean; second?: boolean;}, use12HourFormat: boolean) => [
+const getTimeFormat = (timePicker: TimePickerType, use12HourFormat: boolean) => [
     timePicker.hour === true ? (use12HourFormat ? "hh" : "HH") + (timePicker.hour !== true || timePicker.minute !== true || timePicker.second !== true ? "'h'" : "") : undefined,
     timePicker.minute === true ? "mm" + (timePicker.hour !== true || timePicker.minute !== true || timePicker.second !== true ? "'m'" : "") : undefined,
     timePicker.second === true ? "ss" + (timePicker.hour !== true || timePicker.minute !== true || timePicker.second !== true ? "'s'" : "") : undefined

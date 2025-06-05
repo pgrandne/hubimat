@@ -9,13 +9,12 @@ import {
 } from "@/components/ui/select";
 import { useState } from "react";
 import { disablingProps } from "./DisableDropDownMenuItem";
-import { DateTimePicker } from "@/components/ui/datetime-picker";
+import { DateTimePicker, TimePickerType } from "@/components/ui/datetime-picker";
 
 const toDateRange = (object: any) => {
     return {"start": object?.start, "end": object?.end}
 }
 
-type TimePickerType = {hour?: boolean; minute?: boolean; second?: boolean;}
 type DateWithTimePickerType = {date: Date, timePicker: TimePickerType}
 export type DateRangeType = {"start": Date | undefined, "end": Date | undefined}
 
