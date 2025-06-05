@@ -150,7 +150,7 @@ const AdvancedTable = (props: PropsWithChildren<Props>) => {
 
   if (props.enableRowSelection === true) columns.push(selectColumn)
 
-  const prepareRowDataForExport = ( row: any ) => displayedAccessors.map( accessor => {
+  const prepareRowDataForExport = (row: any) => displayedAccessors.map(accessor => {
     const value = row[accessor]
     return (types[accessor] === 'object')
             ? JSON.stringify(value, (( _key: string, value: unknown ) => value === null ? "" : value))

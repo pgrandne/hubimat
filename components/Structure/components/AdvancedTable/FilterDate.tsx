@@ -11,12 +11,6 @@ import { useState } from "react";
 import { disablingProps } from "./DisableDropDownMenuItem";
 import { DateTimePicker } from "@/components/ui/datetime-picker";
 
-const toDate = (object: any): Date | undefined => {
-    if (typeof object?.getMonth === 'function') {
-        try { return object } catch (error) {}
-    }
-    return undefined
-}
 const toDateRange = (object: any) => {
     return {"start": object?.start, "end": object?.end}
 }
@@ -38,8 +32,6 @@ export const DateFilterFunction = (row: any, columnId: string, filterValue: Date
         && (filterTimePicker.second !== true || date.getSeconds() === filterValueDate.getSeconds())
       : filterValueRange.start <= date && date <= filterValueRange.end
 }
-
-export const isDate = (object: any) : boolean => object instanceof Date
 
 enum options {
   all="all",
