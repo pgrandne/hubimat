@@ -138,9 +138,9 @@ export type DateTimeRenderTriggerProps = {
 };
 
 const getTimeFormat = (timePicker: {hour?: boolean; minute?: boolean; second?: boolean;}, use12HourFormat: boolean) => [
-    timePicker.hour === true ? (use12HourFormat ? "hh'h'" : "HH'h'") : undefined,
-    timePicker.minute === true ? "mm'm'" : undefined,
-    timePicker.second === true ? "ss's'" : undefined
+    timePicker.hour === true ? (use12HourFormat ? "hh" : "HH") + (timePicker.hour !== true || timePicker.minute !== true || timePicker.second !== true ? "'h'" : "") : undefined,
+    timePicker.minute === true ? "mm" + (timePicker.hour !== true || timePicker.minute !== true || timePicker.second !== true ? "'m'" : "") : undefined,
+    timePicker.second === true ? "ss" + (timePicker.hour !== true || timePicker.minute !== true || timePicker.second !== true ? "'s'" : "") : undefined
   ].filter(v=>v!=undefined).join(':')+(use12HourFormat ? ' a' : '')
 
 export function DateTimePicker({
