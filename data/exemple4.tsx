@@ -4,7 +4,7 @@ import exampleData4 from '@/data/data_Exemple4.json'
 export type Hardware = {
   id: string
   category: string
-  hardwareType: HardwareType
+  hardwareType?: HardwareType
   label: string
   description: string
   hardwareParameters: HardwareParameters

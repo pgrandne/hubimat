@@ -89,7 +89,7 @@ export const Core = () => {
         <AdvancedTableHeader>
           <AdvancedTableHead accessor="id" hidden={true}>ID</AdvancedTableHead>
           <AdvancedTableHead accessor="category">Catégorie (Device type Group)</AdvancedTableHead>
-          <AdvancedTableHead accessor="hardwareType" displayValueFunction={(hardwareType:HardwareType) => hardwareType.name}>Icône et Type d'objet</AdvancedTableHead>
+          <AdvancedTableHead accessor="hardwareType" displayValueFunction={(hardwareType:HardwareType) => hardwareType ? hardwareType.name : ""}>Icône et Type d'objet</AdvancedTableHead>
           <AdvancedTableHead accessor="label">Label de l'objet</AdvancedTableHead>
           <AdvancedTableHead accessor="description">Description</AdvancedTableHead>
           <AdvancedTableHead accessor="hardwareParameters">Paramètre(s) Interface</AdvancedTableHead>
@@ -99,10 +99,10 @@ export const Core = () => {
         <AdvancedTableBodyRow>
           <AdvancedTableCell
             accessor="hardwareType"
-            valueEditFunction={(hardwareType:HardwareType) => { return <>
+            valueEditFunction={(hardwareType:HardwareType) => { return (hardwareType) ? <>
                 <img src={hardwareType.icon_source} className="mr-2" style={{maxWidth:'50px'}} />
                 {hardwareType.name}
-              </> } }
+              </> : undefined } }
             sortingFunction={(valueA: HardwareType, valueB: HardwareType) => { return (valueA.name < valueB.name) ? -1 : (valueA.name > valueB.name) ? 1 : 0 }}
           />
           <AdvancedTableCell

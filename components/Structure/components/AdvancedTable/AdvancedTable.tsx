@@ -3,9 +3,8 @@ import { Children, PropsWithChildren, ReactElement, useRef, useState } from 'rea
 import { ColumnDef, Row, Table } from "@tanstack/react-table";
 import HeaderCell from "./HeaderCell";
 import { Checkbox } from "@/components/ui/checkbox";
-import { CoreDateToString, DateToFileString } from "@/lib/utils";
+import { CoreDateToString, DateToFileString, sanitizeFileName } from "@/lib/utils";
 import { DateFilterFunction } from "./FilterDate";
-import { isDate } from "./FilterDate";
 import { Check, ChevronLeft, ChevronRight, Download, SkipBack, SkipForward, X } from "lucide-react";
 import { NumberFilterFunction } from "./FilterNumber";
 import { Input } from "@/components/ui/input";
@@ -71,9 +70,7 @@ const AdvancedTable = (props: PropsWithChildren<Props>) => {
   const [globalFilter, setGlobalFilter] = useState<string>()
   const tableRef = useRef<AdvancedTablePropsMethods>()
   const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: (props.initialPageSize) ? props.initialPageSize : 10 })
-  const caption = String(forceReactElement(Children.toArray(props.children).filter(child => isComponent(child, 'AdvancedTableCaption')).at(0))?.props?.children ?? 'tableau_hubiquity').replaceAll(" ", "_")
-
-  // if (props.data.length == 0) return <TanstackTableImplementation columns={[]} data={props.data}/>
+  const caption = String(forceReactElement(Children.toArray(props.children).filter(child => isComponent(child, 'AdvancedTableCaption')).at(0))?.props?.children ?? 'tableau_hubiquity')
 
   const advancedTableHeader = forceReactElement(Children.toArray(props.children).filter(child => isComponent(child, 'AdvancedTableHeader')).at(0))
   if (advancedTableHeader == undefined || !Array.isArray(advancedTableHeader.props.children)) return <div>No header row</div>
@@ -81,6 +78,8 @@ const AdvancedTable = (props: PropsWithChildren<Props>) => {
   //C'est une propriété obligatoire donc il y a forcément un accessor par header
   const headers = Object.assign({}, ...advancedTableHeader.props.children.map((header: ReactElement) => {return {[header.props.accessor]:header}}))
   const accessors = Object.keys(headers)
+  const displayedAccessors = accessors.filter(accessor => headers[accessor].props.hidden !== true)
+  const types = Object.fromEntries(accessors.map(a => [[a], undefined]))
 
   if (accessors.some(accessor => accessor === '')) return <div>One or more accessors are empty</div>
 
@@ -91,45 +90,26 @@ const AdvancedTable = (props: PropsWithChildren<Props>) => {
                       : {[(AdvancedTableBodyRow.props.children as ReactElement).props.accessor]:(AdvancedTableBodyRow.props.children as ReactElement)}
                     : {}
 
-  const columns = accessors.filter(accessor => headers[accessor].props.hidden !== true).map((accessor): ColumnDef<unknown, unknown> =>
+  const columns = displayedAccessors.map((accessor): ColumnDef<unknown, unknown> =>
   {
-    let isDateColumn : boolean | undefined = undefined // If the column has only undefined values this will stay undefined
-    let isNumberColumn : boolean | undefined = undefined
-    let isBooleanColumn : boolean | undefined = undefined
+    // Get the column data type
+    const columnTypes = new Set<string>(props.data.map(row => Object.prototype.toString.call(row[accessor]).split(" ")[1].slice(0,-1)))
+    columnTypes.delete('undefined')
+    if (columnTypes.size == 1) types[accessor] = columnTypes.values().next().value?.toLowerCase()
 
-    props.data.forEach((row) => {
-      // We assume that it's a date column if the first value not undefined is a real date
-      // Because for the moment there isn't any use case where a column would have multiple data types including a Date value
-      if (isDateColumn == undefined && row[accessor] != undefined) {
-        isDateColumn = isDate(row[accessor])
-      }
-      // As for the number and boolean it is possible that it's a string column with somes values being a number or true or false
-      // So we need to go through the whole column to make sure
-      // If it becomes to costly we can only check the first not undefined value and infer the table type from there
-      if (isNumberColumn == undefined && row[accessor] != undefined) {
-        isNumberColumn = typeof row[accessor] == 'number'
-      }
-      else if (isNumberColumn && row[accessor] != undefined && typeof row[accessor] != 'number') {
-        isNumberColumn = false
-      }
-      if (isBooleanColumn == undefined && row[accessor] != undefined) {
-        isBooleanColumn = typeof row[accessor] == 'boolean'
-      }
-      else if (isBooleanColumn && row[accessor] != undefined && typeof row[accessor] != 'boolean') {
-        isBooleanColumn = false
-      }
-    })
-
+    const isDateColumn = types[accessor] === 'date'
+    const isNumberColumn = types[accessor] === 'number'
+    const isBooleanColumn = types[accessor] === 'boolean'
 
     const columnDef: ColumnDef<unknown, unknown> = {
       accessorKey: accessor,
       filterFn: isDateColumn ? DateFilterFunction : (isNumberColumn ? NumberFilterFunction : ArrayFilterFunction),
       header: ({ table, column }) => (
-      <HeaderCell table={table} column={column} label={headers[accessor].props.children} icon={headers[accessor].props.icon}
-        enableSorting={headers[accessor].props.enableSorting} enableFiltering={headers[accessor].props.enableFiltering} enableGrouping={headers[accessor].props.enableGrouping}
-        isDateColumn={isDateColumn} isNumberColumn={isNumberColumn}
-        displayValueFunction={headers[accessor].props.displayValueFunction}
-      />
+        <HeaderCell table={table} column={column} label={headers[accessor].props.children} icon={headers[accessor].props.icon}
+          enableSorting={headers[accessor].props.enableSorting} enableFiltering={headers[accessor].props.enableFiltering} enableGrouping={headers[accessor].props.enableGrouping}
+          isDateColumn={isDateColumn} isNumberColumn={isNumberColumn}
+          displayValueFunction={headers[accessor].props.displayValueFunction}
+        />
       ),
     }
 
@@ -168,83 +148,64 @@ const AdvancedTable = (props: PropsWithChildren<Props>) => {
     return columnDef
   })
 
-  if (props.enableRowSelection === true) {
-    columns.push(selectColumn)
-  }
+  if (props.enableRowSelection === true) columns.push(selectColumn)
 
-  const nullToEmptyReplacer = ( _key: string, value: unknown ) => {
-    return ( null === value ? "" : value );
-  };
-  const prepareDataItem = ( item: any ) => {
-    return accessors.map( accessor => {
-      let value;
-      
-      try {
-        value = item[accessor] ?? "";
-      }
-      catch {
-        value = "";
-      }
+  const prepareRowDataForExport = ( row: any ) => displayedAccessors.map( accessor => {
+    const value = row[accessor]
+    return (types[accessor] === 'object')
+            ? JSON.stringify(value, (( _key: string, value: unknown ) => value === null ? "" : value))
+            : value
+  })
 
-      return (typeof value === 'object') ? JSON.stringify( value, nullToEmptyReplacer ) : String(value)
-    });
-  };
+  const getHeadersForExport = () : Array<string> => displayedAccessors.map(accessor => headers[accessor].props.children)
+  const getRowsForExport = () : Array<Array<any>> => ((tableRef.current) ? tableRef.current.getFinalData() : []).map(prepareRowDataForExport)
+
   return <>
     <span className="flex items-center mb-3">
       <Input className="max-w-[40%] mr-auto" placeholder="Rechercher" onChange={(e) => { setGlobalFilter(e.target.value) }} />
       <Button id="download_csv" title="Télécharger en csv" variant={'outline'} className="h-9 w-9 p-2 mt-1" onClick={() => {
-        if (tableRef.current) {
-          
-          const headingsRow = accessors.map( accessor => headers[accessor].props.children ).join( ";" )
-          const contentRows = tableRef.current.getFinalData().map( dataItem => {
-            return prepareDataItem( dataItem ).join( ";" )
-          });
+        const headingsRow = getHeadersForExport().join(';')
+        const contentRows = getRowsForExport().map(row => row.map(v=>(v instanceof Date) ? CoreDateToString(v) : v).join(';'))
 
-          const csvDataString = [ headingsRow, ...contentRows ].join( "\r\n" )
+        const csvDataString = [ headingsRow, ...contentRows ].join("\r\n")
 
-          const universalBom = "\uFEFF"
-          const blobParts    = [ universalBom + csvDataString ]
-          const blobOptions: BlobPropertyBag = {
-            type: "text/csv;charset=UTF-8"
-          }
-
-          const file = new Blob( blobParts, blobOptions )
-          const link = document.createElement( "a" )
-          
-          link.href     = window.URL.createObjectURL( file )
-          link.download = `${caption+"_"+DateToFileString(new Date())}.csv`
-          link.click()
+        const universalBom = "\uFEFF"
+        const blobParts    = [ universalBom + csvDataString ]
+        const blobOptions: BlobPropertyBag = {
+          type: "text/csv;charset=UTF-8"
         }
+
+        const file = new Blob( blobParts, blobOptions )
+        const link = document.createElement("a")
+        
+        link.href = window.URL.createObjectURL(file)
+        link.download = `${sanitizeFileName(caption)+" "+DateToFileString(new Date())}.csv`
+        link.click()
       }}><Download/></Button>
       <Button id="download_xlsx" title="Télécharger en xlsx" variant={'outline'} className="h-9 w-9 p-2 mt-1" onClick={async () => {
-        if (tableRef.current) {
-          
-          const headingsRow = accessors.map( accessor => headers[accessor].props.children )
-          const contentRows = tableRef.current.getFinalData().map( dataItem => {
-            return prepareDataItem( dataItem )
-          })
+        const headingsRow = getHeadersForExport()
+        const contentRows = getRowsForExport()
 
-          const workbook = new ExcelJS.Workbook()
-          const worksheet = workbook.addWorksheet('Sheet1')
+        const workbook = new ExcelJS.Workbook()
+        const worksheet = workbook.addWorksheet('Sheet1')
 
-          worksheet.addRow(headingsRow)
-          contentRows.forEach((row) => { worksheet.addRow(row) })
+        worksheet.addRow(headingsRow)
+        contentRows.forEach((row) => { worksheet.addRow(row) })
 
-          workbook.xlsx.writeBuffer()
+        workbook.xlsx.writeBuffer()
           .then(buffer => {
             const blobOptions: BlobPropertyBag = {
               type: "application/vnd.ms-excel"
             }
 
             const file = new Blob( [buffer], blobOptions );
-            const link = document.createElement( "a" );
+            const link = document.createElement("a");
             
-            link.href     = window.URL.createObjectURL( file );
-            link.download = `${caption+"_"+DateToFileString(new Date())}.xlsx`;
+            link.href = window.URL.createObjectURL(file);
+            link.download = `${sanitizeFileName(caption)+" "+DateToFileString(new Date())}.xlsx`;
             link.click();
           })
           .catch(err => console.log('Error writing excel export', err))
-        }
       }}><Download/></Button>
     </span>
     

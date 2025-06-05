@@ -87,10 +87,6 @@
     {
         "id": "j8974jyr6",
         "category": "Surveillance",
-        "hardwareType": {
-            "name": "Caméra",
-            "icon_source": "https://www.seekpng.com/png/detail/151-1518297_security-camera-icon-surveillance-camera-icon-white.png"
-        },
         "label": "Caméras hall",
         "description": "Caméras pointant sur le hall.",
         "hardwareParameters": {

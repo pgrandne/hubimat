@@ -39,7 +39,7 @@ export const DateFilterFunction = (row: any, columnId: string, filterValue: Date
       : filterValueRange.start <= date && date <= filterValueRange.end
 }
 
-export const isDate = (object: any) : boolean => (toDate(object) != undefined)
+export const isDate = (object: any) : boolean => object instanceof Date
 
 enum options {
   all="all",
