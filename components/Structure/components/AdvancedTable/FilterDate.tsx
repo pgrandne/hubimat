@@ -1,4 +1,3 @@
-import { DatePicker } from "@/components/ui/date-picker";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import {
   Select,
@@ -10,6 +9,7 @@ import {
 } from "@/components/ui/select";
 import { useState } from "react";
 import { disablingProps } from "./DisableDropDownMenuItem";
+import { DateTimePicker } from "@/components/ui/datetime-picker";
 
 const toDate = (object: any): Date | undefined => {
     if (typeof object?.getMonth === 'function') {
@@ -17,19 +17,25 @@ const toDate = (object: any): Date | undefined => {
     }
     return undefined
 }
-const toDateRange = (unknown: any) => {
-    return {"start": unknown?.start, "end": unknown?.end}
+const toDateRange = (object: any) => {
+    return {"start": object?.start, "end": object?.end}
 }
 
+type TimePickerType = {hour?: boolean; minute?: boolean; second?: boolean;}
+type DateWithTimePickerType = {date: Date, timePicker: TimePickerType}
 export type DateRangeType = {"start": Date | undefined, "end": Date | undefined}
 
-export const DateFilterFunction = (row: any, columnId: string, filterValue: Date | DateRangeType) => {
+export const DateFilterFunction = (row: any, columnId: string, filterValue: DateWithTimePickerType | DateRangeType) => {
     const date : Date = row.original[columnId]
-    const filterValueDate = toDate(filterValue)
+    const filterValueDate = (filterValue as DateWithTimePickerType)?.date
+    const filterTimePicker = (filterValue as DateWithTimePickerType)?.timePicker
     const filterValueRange = toDateRange(filterValue)
 
     return filterValueDate != undefined
       ? date.getDate() === filterValueDate.getDate() && date.getMonth() === filterValueDate.getMonth() && date.getFullYear() == filterValueDate.getFullYear()
+        && (filterTimePicker.hour !== true || date.getHours() === filterValueDate.getHours())
+        && (filterTimePicker.minute !== true || date.getMinutes() === filterValueDate.getMinutes())
+        && (filterTimePicker.second !== true || date.getSeconds() === filterValueDate.getSeconds())
       : filterValueRange.start <= date && date <= filterValueRange.end
 }
 
@@ -48,9 +54,10 @@ export default function FilterDate({
   columnFilter: any
   setColumnFilter: Function
 }) {
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(toDate(columnFilter));
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(columnFilter?.date);
   const [selectedRange, setSelectedRange] = useState<DateRangeType>(toDateRange(columnFilter))
   const [filterSelected, setSelectedFilter] = useState<string>(columnFilter == undefined ? options.all : selectedDate != undefined ? options.specific : options.range);
+  const [timePicker, setTimePicker] = useState<TimePickerType>(columnFilter?.timePicker ?? {hour:false, minute:false,second:false})
   
   return (
     <>
@@ -59,8 +66,8 @@ export default function FilterDate({
           onValueChange={
               (value) => {
                   if (value == options.all) setColumnFilter(undefined)
-                  if (value == options.specific && selectedDate != undefined) setColumnFilter(selectedDate)
-                  if (value == options.range && selectedDate != undefined) setColumnFilter(selectedDate)
+                  if (value == options.specific && selectedDate != undefined) setColumnFilter({date: selectedDate, timePicker: timePicker})
+                  if (value == options.range && selectedRange != undefined) setColumnFilter(selectedRange)
                   setSelectedFilter(value)
               }
           }
@@ -81,25 +88,27 @@ export default function FilterDate({
       
       {filterSelected == options.specific && (
         <DropdownMenuItem {...disablingProps}>
-          <DatePicker setDate={(date) => {
-            setSelectedDate(date)
-            setColumnFilter(date)
-          }} date={selectedDate} />
+          <DateTimePicker value={selectedDate} timePicker={timePicker} setTimePicker={setTimePicker}
+            onChange={(date) => {
+              setSelectedDate(date)
+              setColumnFilter({date: date, timePicker: timePicker})
+            }}
+          />
         </DropdownMenuItem>
       )}
       {filterSelected == options.range && (
       <>
         <DropdownMenuItem {...disablingProps}>
-          <DatePicker setDate={(date) => {
+          <DateTimePicker value={selectedRange.start} onChange={(date) => {
             setSelectedRange({"start": date, "end": selectedRange.end})
             setColumnFilter({"start": date, "end": selectedRange.end})
-            }} date={selectedRange.start} />
+            }} />
         </DropdownMenuItem>
         <DropdownMenuItem {...disablingProps}>
-          <DatePicker setDate={(date) => {
+          <DateTimePicker value={selectedRange.end} onChange={(date) => {
             setSelectedRange({"start": selectedRange.start, "end": date})
             setColumnFilter({"start": selectedRange.start, "end": date})
-          }} date={selectedRange.end} />
+          }} />
         </DropdownMenuItem>
       </>)}
     </>
