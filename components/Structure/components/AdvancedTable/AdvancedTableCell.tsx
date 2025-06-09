@@ -7,11 +7,6 @@ interface Props {
   sortingFunction?: (valueA: any, valueB: any) => -1 | 0 | 1
 }
 
-const AdvancedTableCell = (props: PropsWithChildren<Props>) => {
-
-  return (
-    <span style={{marginRight:'0.5em'}}>{props.children}</span>
-  )
-}
+const AdvancedTableCell = (props: PropsWithChildren<Props>) => ""
 
 export default AdvancedTableCell

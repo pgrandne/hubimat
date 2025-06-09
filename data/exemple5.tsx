@@ -24,7 +24,4 @@ export type HardwareParameters = {
   utl: number
 }
 
-// get the data and map it to its type (if we don't do that fields will be undefined when trying to cast to a custom type)
-export function getData5(): Hardware[] {
-  return exampleData5.map((content): Hardware => content)
-}
+export const getData5 = (): Hardware[] => exampleData5

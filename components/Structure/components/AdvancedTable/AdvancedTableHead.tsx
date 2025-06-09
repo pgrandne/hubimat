@@ -8,17 +8,15 @@ interface Props {
   accessor: string,
   hidden?: boolean,
   className?: string,
-  defaultSort?: number,
+  // defaultSort?: number,
   enableFiltering?: boolean,
   enableSorting?: boolean,
   enableGrouping?: boolean,
-  defaultFilter?: Function,
+  // defaultFilter?: Function,
   displayValueFunction?: Function
   icon?: ReactNode
 }
 
-const AdvancedTableHead = (props: PropsWithChildren<Props>) => {
-  return <span style={{marginRight:'0.5em'}}>{props.children}</span>
-}
+const AdvancedTableHead = (props: PropsWithChildren<Props>) => ""
 
 export default AdvancedTableHead
