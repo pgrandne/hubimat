@@ -93,7 +93,6 @@ const AdvancedTable = (props: PropsWithChildren<Props>) => {
                     : {}
 
   const columns = useMemo(() => {
-    console.log("Build columns", caption)
     const tempColumns = displayedAccessors.map((accessor): ColumnDef<unknown, unknown> =>
     {
       // Get the column data type
@@ -167,14 +166,11 @@ const AdvancedTable = (props: PropsWithChildren<Props>) => {
   const getHeadersForExport = () : Array<string> => displayedAccessors.map(accessor => headers[accessor].props.children)
   const getRowsForExport = () : Array<Array<any>> => ((tableRef.current) ? tableRef.current.getFinalData() : []).map(prepareRowDataForExport)
 
-  console.log("load advanced table", caption)
-
   return <>
     <span className="flex items-center">
       <Input className="max-w-[40%] w-full mr-auto ml-0" placeholder="Rechercher" onChange={(e) => { setGlobalFilter(e.target.value) }} />
       {props.enableExport?.includes("csv") &&
       <Button id="download_csv" title="Télécharger en csv" variant={'outline'} className="h-9 w-9 p-2 mt-1" disabled={isExportButtonDisabled} onClick={async (e) => {
-        const start = new Date()
         if (isExportButtonDisabled) return;
         setIsExportButtonDisabled(true)
 
@@ -199,15 +195,12 @@ const AdvancedTable = (props: PropsWithChildren<Props>) => {
           link.href = window.URL.createObjectURL(file)
           link.download = `${sanitizeFileName(caption)+" "+DateToFileString(new Date())}.csv`
           link.click()
-          
-          console.log("Data processing time", (new Date().getTime()) - start.getTime())
         })
         .catch(err => console.log('Error writing csv export', err))
         .finally(() => setIsExportButtonDisabled(false))
       }}><Download/></Button> }
       {props.enableExport?.includes("xlsx") &&
       <Button id="download_xlsx" title="Télécharger en xlsx" variant={'outline'} className="h-9 w-9 p-2 mt-1 ml-2" disabled={isExportButtonDisabled} onClick={async (e) => {
-        const start = new Date()
         if (isExportButtonDisabled) return;
         setIsExportButtonDisabled(true)
 
@@ -232,8 +225,6 @@ const AdvancedTable = (props: PropsWithChildren<Props>) => {
             link.href = window.URL.createObjectURL(file);
             link.download = `${sanitizeFileName(caption)+" "+DateToFileString(new Date())}.xlsx`;
             link.click();
-
-            console.log("Data processing time", (new Date().getTime()) - start.getTime())
           })
           .catch(err => console.log('Error writing excel export', err))
           .finally(() => setIsExportButtonDisabled(false))
