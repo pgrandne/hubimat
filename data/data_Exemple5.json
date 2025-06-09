@@ -1,0 +1,100 @@
+[
+    {
+        "id": "728ed52f",
+        "category": "Surveillance",
+        "hardwareType": {
+            "name": "Caméra",
+            "icon_source": "https://www.seekpng.com/png/detail/151-1518297_security-camera-icon-surveillance-camera-icon-white.png"
+        },
+        "label": "Caméra 1",
+        "description": "Caméra pointant sur la porte d'entrée.",
+        "hardwareParameters": {
+            "type": "Surveillance",
+            "protocol": "Nedap",
+            "utl": 3
+        },
+        "tests": true,
+        "instance": 1
+    },
+    {
+        "id": "d4z6a854d",
+        "category": "Accès",
+        "hardwareType": {
+            "name": "Porte",
+            "icon_source": "https://static.vecteezy.com/system/resources/previews/022/045/918/original/door-icon-style-vector.jpg"
+        },
+        "label": "Porte d'entrée",
+        "description": "",
+        "hardwareParameters": {
+            "type": "Point d'accès",
+            "protocol": "Wiegand",
+            "utl": 56
+        },
+        "tests": true,
+        "instance": 1
+    },
+    {
+        "id": "f65eza4h",
+        "category": "Surveillance",
+        "hardwareType": {
+            "name": "Caméra",
+            "icon_source": "https://www.seekpng.com/png/detail/151-1518297_security-camera-icon-surveillance-camera-icon-white.png"
+        },
+        "label": "Caméras hall",
+        "description": "Caméras pointant sur le hall.",
+        "hardwareParameters": {
+            "type": "Surveillance",
+            "protocol": "Nedap",
+            "utl": 8
+        },
+        "tests": false,
+        "instance": 3
+    },
+    {
+        "id": "de4f8fe7",
+        "category": "Surveillance",
+        "hardwareType": {
+            "name": "Caméra",
+            "icon_source": "https://www.seekpng.com/png/detail/151-1518297_security-camera-icon-surveillance-camera-icon-white.png"
+        },
+        "label": "Caméras hall",
+        "description": "Caméras pointant sur le hall.",
+        "hardwareParameters": {
+            "type": "Surveillance",
+            "protocol": "Nedap",
+            "utl": 8
+        },
+        "tests": false,
+        "instance": 28
+    },
+    {
+        "id": "fr8e7f4re",
+        "category": "Surveillance",
+        "hardwareType": {
+            "name": "Caméra",
+            "icon_source": "https://www.seekpng.com/png/detail/151-1518297_security-camera-icon-surveillance-camera-icon-white.png"
+        },
+        "label": "Caméras hall",
+        "description": "Caméras pointant sur le hall.",
+        "hardwareParameters": {
+            "type": "Surveillance",
+            "protocol": "Nedap",
+            "utl": 8
+        },
+        "tests": false,
+        "instance": 35
+    },
+    {
+        "id": "j8974jyr6",
+        "category": "Surveillance",
+        "label": "Caméras hall",
+        "description": "Caméras pointant sur le hall.",
+        "hardwareParameters": {
+            "type": "Surveillance",
+            "protocol": "Nedap",
+            "utl": 8
+        },
+        "tests": false,
+        "instance": 159
+    }
+]

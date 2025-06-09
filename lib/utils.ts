@@ -388,3 +388,22 @@ export function UpdateToastByError(
 ) {
   toast.error(`Action NON réalisée. ${error.message}`, { id: toastId });
 }
+
+export function sanitizeFileName(filename: string): string {
+  // Define invalid characters for Windows file names
+  const invalidChars = /[<>:"\/\\|?*]/g;
+  
+  // Remove invalid characters
+  let sanitized = filename.replace(invalidChars, "_");
+
+  // Trim spaces from start and end
+  sanitized = sanitized.trim();
+
+  // Prevent reserved names (simple safeguard)
+  const reservedNames = ["CON", "PRN", "AUX", "NUL", "COM1", "LPT1"];
+  if (reservedNames.includes(sanitized.toUpperCase())) {
+    sanitized += "_safe";
+  }
+
+  return sanitized || "unnamed_file"; // Default if empty
+}
