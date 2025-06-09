@@ -18,6 +18,7 @@ interface Props {
   enableGeneralSearch?: boolean
   enableRowSelection?: boolean
   initialPageSize?: number
+  enableExport?: ("csv" | "xlsx")[]
 }
 
 function isComponent(object: any, componentName: string) {
@@ -66,6 +67,7 @@ const selectColumn: ColumnDef<any, unknown> = {
 }
 
 const AdvancedTable = (props: PropsWithChildren<Props>) => {
+  const [isExportButtonDisabled, setIsExportButtonDisabled] = useState(false)
 
   const [globalFilter, setGlobalFilter] = useState<string>()
   const tableRef = useRef<AdvancedTablePropsMethods>()
@@ -161,28 +163,47 @@ const AdvancedTable = (props: PropsWithChildren<Props>) => {
   const getRowsForExport = () : Array<Array<any>> => ((tableRef.current) ? tableRef.current.getFinalData() : []).map(prepareRowDataForExport)
 
   return <>
-    <span className="flex items-center mb-3">
-      <Input className="max-w-[40%] mr-auto" placeholder="Rechercher" onChange={(e) => { setGlobalFilter(e.target.value) }} />
-      <Button id="download_csv" title="Télécharger en csv" variant={'outline'} className="h-9 w-9 p-2 mt-1" onClick={() => {
-        const headingsRow = getHeadersForExport().join(';')
-        const contentRows = getRowsForExport().map(row => row.map(v=>(v instanceof Date) ? CoreDateToString(v) : v).join(';'))
+    <span className="flex items-center">
+      <Input className="max-w-[40%] w-full mr-auto ml-0" placeholder="Rechercher" onChange={(e) => { setGlobalFilter(e.target.value) }} />
+      {props.enableExport?.includes("csv") &&
+      <Button id="download_csv" title="Télécharger en csv" variant={'outline'} className="h-9 w-9 p-2 mt-1" disabled={isExportButtonDisabled} onClick={async (e) => {
+        const start = new Date()
+        if (isExportButtonDisabled) return;
+        setIsExportButtonDisabled(true)
 
-        const csvDataString = [ headingsRow, ...contentRows ].join("\r\n")
+        new Promise((resolve) => {
+          setTimeout(() => {
+            resolve(getRowsForExport().map(row => row.map(v=>(v instanceof Date) ? CoreDateToString(v) : v).join(';')));
+          }, 0);
+        }).then(result => {
+          const headingsRow = getHeadersForExport().join(';')
+          const contentRows: string[] = result as string[]
+          const csvDataString = [ headingsRow, ...contentRows ].join("\r\n")
 
-        const universalBom = "\uFEFF"
-        const blobParts    = [ universalBom + csvDataString ]
-        const blobOptions: BlobPropertyBag = {
-          type: "text/csv;charset=UTF-8"
-        }
+          const universalBom = "\uFEFF"
+          const blobParts    = [ universalBom + csvDataString ]
+          const blobOptions: BlobPropertyBag = {
+            type: "text/csv;charset=UTF-8"
+          }
 
-        const file = new Blob( blobParts, blobOptions )
-        const link = document.createElement("a")
-        
-        link.href = window.URL.createObjectURL(file)
-        link.download = `${sanitizeFileName(caption)+" "+DateToFileString(new Date())}.csv`
-        link.click()
-      }}><Download/></Button>
-      <Button id="download_xlsx" title="Télécharger en xlsx" variant={'outline'} className="h-9 w-9 p-2 mt-1" onClick={async () => {
+          const file = new Blob( blobParts, blobOptions )
+          const link = document.createElement("a")
+          
+          link.href = window.URL.createObjectURL(file)
+          link.download = `${sanitizeFileName(caption)+" "+DateToFileString(new Date())}.csv`
+          link.click()
+          
+          console.log("Data processing time", (new Date().getTime()) - start.getTime())
+        })
+        .catch(err => console.log('Error writing csv export', err))
+        .finally(() => setIsExportButtonDisabled(false))
+      }}><Download/></Button> }
+      {props.enableExport?.includes("xlsx") &&
+      <Button id="download_xlsx" title="Télécharger en xlsx" variant={'outline'} className="h-9 w-9 p-2 mt-1 ml-2" disabled={isExportButtonDisabled} onClick={async (e) => {
+        const start = new Date()
+        if (isExportButtonDisabled) return;
+        setIsExportButtonDisabled(true)
+
         const headingsRow = getHeadersForExport()
         const contentRows = getRowsForExport()
 
@@ -204,11 +225,16 @@ const AdvancedTable = (props: PropsWithChildren<Props>) => {
             link.href = window.URL.createObjectURL(file);
             link.download = `${sanitizeFileName(caption)+" "+DateToFileString(new Date())}.xlsx`;
             link.click();
+
+            console.log("Data processing time", (new Date().getTime()) - start.getTime())
           })
           .catch(err => console.log('Error writing excel export', err))
-      }}><Download/></Button>
+          .finally(() => setIsExportButtonDisabled(false))
+      }}><Download/></Button>}
     </span>
-    
+    {isExportButtonDisabled && <span className="flex items-center text-xs mt-2"><span className="ml-auto mr-auto">Export en cours...</span></span>}
+    <div className="mb-3"></div>
+
     <TanstackTableImplementation ref={tableRef} columns={columns} data={props.data} className={props.className} globalFilterValue={globalFilter} pagination={pagination} setPagination={setPagination}/>
 
     <div className="flex w-full items-center text-xs mt-2" style={{justifyContent:'space-between', position:'relative'}}>
