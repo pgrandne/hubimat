@@ -14,7 +14,6 @@ import {
   getGroupedRowModel,
   getExpandedRowModel,
   getPaginationRowModel,
-  Updater,
   PaginationState,
   OnChangeFn,
 } from "@tanstack/react-table"
@@ -172,4 +171,5 @@ const TanstackTableImplementation = forwardRef(<TData, TValue>({
   )
 })
 
+TanstackTableImplementation.displayName = "TanstackTableImplementation";
 export default TanstackTableImplementation

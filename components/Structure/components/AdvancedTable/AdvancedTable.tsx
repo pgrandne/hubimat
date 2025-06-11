@@ -75,24 +75,23 @@ const AdvancedTable = (props: PropsWithChildren<Props>) => {
   const caption = String(forceReactElement(Children.toArray(props.children).filter(child => isComponent(child, 'AdvancedTableCaption')).at(0))?.props?.children ?? 'tableau_hubiquity')
 
   const advancedTableHeader = forceReactElement(Children.toArray(props.children).filter(child => isComponent(child, 'AdvancedTableHeader')).at(0))
-  if (advancedTableHeader == undefined || !Array.isArray(advancedTableHeader.props.children)) return <div>No header row</div>
-
+  
   //C'est une propriété obligatoire donc il y a forcément un accessor par header
-  const headers = Object.assign({}, ...advancedTableHeader.props.children.map((header: ReactElement) => {return {[header.props.accessor]:header}}))
+  const headers = Object.assign({}, ...(advancedTableHeader?.props?.children?.map((header: ReactElement) => {return {[header.props.accessor]:header}}) ?? []))
   const accessors = Object.keys(headers)
   const displayedAccessors = accessors.filter(accessor => headers[accessor].props.hidden !== true)
   const types = Object.fromEntries(accessors.map(a => [[a], undefined]))
 
-  if (accessors.some(accessor => accessor === '')) return <div>One or more accessors are empty</div>
-
-  const AdvancedTableBodyRow = forceReactElement(Children.toArray(props.children).filter(child => isComponent(child, 'AdvancedTableBodyRow')).at(0))
-  const rowCells = AdvancedTableBodyRow && AdvancedTableBodyRow.props.children
-                    ? (Array.isArray(AdvancedTableBodyRow.props.children))
-                      ? Object.assign({}, ...(AdvancedTableBodyRow.props.children.map((rowCell: ReactElement) => {return {[rowCell.props.accessor]:rowCell}})))
-                      : {[(AdvancedTableBodyRow.props.children as ReactElement).props.accessor]:(AdvancedTableBodyRow.props.children as ReactElement)}
-                    : {}
-
   const columns = useMemo(() => {
+    if (displayedAccessors.length == 0) return []
+
+    const AdvancedTableBodyRow = forceReactElement(Children.toArray(props.children).filter(child => isComponent(child, 'AdvancedTableBodyRow')).at(0))
+    const rowCells = AdvancedTableBodyRow && AdvancedTableBodyRow.props.children
+                      ? (Array.isArray(AdvancedTableBodyRow.props.children))
+                        ? Object.assign({}, ...(AdvancedTableBodyRow.props.children.map((rowCell: ReactElement) => {return {[rowCell.props.accessor]:rowCell}})))
+                        : {[(AdvancedTableBodyRow.props.children as ReactElement).props.accessor]:(AdvancedTableBodyRow.props.children as ReactElement)}
+                      : {}
+
     const tempColumns = displayedAccessors.map((accessor): ColumnDef<unknown, unknown> =>
     {
       // Get the column data type
@@ -154,7 +153,10 @@ const AdvancedTable = (props: PropsWithChildren<Props>) => {
     if (props.enableRowSelection === true) tempColumns.push(selectColumn)
 
     return tempColumns
-  }, [props]) ?? []
+  }, [displayedAccessors, headers, props.children, props.data, props.enableRowSelection, types])
+
+  if (advancedTableHeader == undefined || !Array.isArray(advancedTableHeader.props.children)) return <div>No header row</div>
+  if (accessors.some(accessor => accessor === '')) return <div>One or more accessors are empty</div>
 
   const prepareRowDataForExport = (row: any) => displayedAccessors.map(accessor => {
     const value = row[accessor]
@@ -249,7 +251,7 @@ const AdvancedTable = (props: PropsWithChildren<Props>) => {
           <SelectContent className="min-w-0 w-full">
             {
               Array.from({ length: (tableRef.current) ? tableRef.current.getPageCount() : 1}, (_, index) =>
-                <SelectItem className="text-xs" value={String(index)}>{String(index+1)}</SelectItem>
+                <SelectItem key={`select_page_${index}`} className="text-xs" value={String(index)}>{String(index+1)}</SelectItem>
               )
             }
           </SelectContent>
