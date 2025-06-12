@@ -12,8 +12,8 @@ const nodeTypes = {
 };
 
 const initialNodes = [
-  { id: '1', position: { x: 0, y: 0 }, data: { }, type: "baseNode" },
-  { id: '2', position: { x: 0, y: 300 }, data: { }, type: "baseNode" },
+  { id: '1', position: { x: 0, y: 0 }, data: { }, type: "baseNode", selectable: false },
+  { id: '2', position: { x: 0, y: 300 }, data: { }, type: "baseNode", selectable: false },
 ];
 const initialEdges = [{ id: 'e1-2', source: '1', target: '2' }];
 
