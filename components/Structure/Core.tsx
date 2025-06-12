@@ -26,3 +26,5 @@ export const Core = () => {
   )
 
 }
+
+// Auto-layout example https://reactflow.dev/examples/layout/auto-layout
