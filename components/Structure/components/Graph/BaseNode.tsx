@@ -43,7 +43,7 @@ const BaseNodeDemo = memo(({ data, selected, positionAbsoluteY }: NodeProps) => 
                         case "Select":
                             return (
                                 <Select key={`select_${index}`} defaultValue={"1"}>
-                                    <SelectTrigger className="mr-auto ml-4">
+                                    <SelectTrigger className="mr-auto ml-4 mb-3 pointer-events-none opacity-50">
                                         <SelectValue />
                                     </SelectTrigger>
                                     <SelectContent>
@@ -52,11 +52,11 @@ const BaseNodeDemo = memo(({ data, selected, positionAbsoluteY }: NodeProps) => 
                                 </Select>
                             )
                         case FormElement.checkbox:
-                            return <span className="mr-auto ml-4"><Checkbox key={`checkbox_${index}`} className="mr-2" />A cocher</span>
+                            return <span className="mr-auto ml-4 mb-3 pointer-events-none opacity-50"><Checkbox key={`checkbox_${index}`} className="mr-2" />A cocher</span>
                         case FormElement.text:
-                            return <Input key={`input_${index}`} type="text" placeholder="Enter text here" className="w-[90%] mr-auto ml-4" />
+                            return <Input key={`input_${index}`} type="text" placeholder="Enter text here" className="w-[90%] mr-auto ml-4 mb-3 pointer-events-none opacity-50" />
                         case FormElement.radio:
-                            return <RadioGroup defaultValue="option-one" className="opacity-50 mr-auto ml-4">
+                            return <RadioGroup defaultValue="option-one" className="opacity-50 mr-auto ml-4 mb-3">
                                             Titre
                                             <div className="flex items-center space-x-2 pointer-events-none">
                                                 <RadioGroupItem value="option-one" id="option-one" />
@@ -74,7 +74,7 @@ const BaseNodeDemo = memo(({ data, selected, positionAbsoluteY }: NodeProps) => 
                         default:
                             return <></>;
                     }
-                }).map((e, index) => <>{e}<div key={`separator_${index}`} className="h-[1rem]"></div></>)}
+                })}
                 {elementList.length > 0 && <Button key={`validate`} className="ml-auto mr-4" disabled={true}>Valider</Button>}
                 
                 <div className="flex w-full gap-4">
