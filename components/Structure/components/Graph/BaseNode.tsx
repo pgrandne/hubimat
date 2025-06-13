@@ -1,4 +1,4 @@
-import { memo, useState } from "react";
+import { memo, useRef, useState } from "react";
  
 import { Handle, NodeProps, Position, useNodeId } from "@xyflow/react";
 import { BaseNode } from "@/components/ui/base-node";
@@ -11,21 +11,28 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 
 enum FormElement {
   checklist = "Check-list",
   boolean = "Boolean",
   radio = "Radio",
+  select = "Select",
+  checkbox = "Check-box",
+  text = "Texte"
 }
+
  
-const BaseNodeDemo = memo(({ selected }: NodeProps) => {
+const BaseNodeDemo = memo(({ data, selected, positionAbsoluteY }: NodeProps) => {
     const nodeId = useNodeId()
     const [addElementDialogOpen, setAddElementDialogOpen] = useState(false)
+    const [addStepDialogOpen, setAddStepDialogOpen] = useState(false)
     const [elementList, setElementList] = useState<string[]>([])
     const [selectedField, setSelectedField] = useState("");
+    const nodeRef = useRef()
 
     return (
-        <BaseNode selected={selected} className="p-2 w-[20rem] flex items-center flex-col cursor-default">
+        <BaseNode ref={nodeRef} selected={selected} className="p-2 w-[20rem] flex items-center flex-col cursor-default" onVolumeChange={(v) => console.log(v)}>
                 <Handle type="target" position={Position.Top} isConnectable={false} className="opacity-0"/>
                 <Handle type="source" position={Position.Bottom} isConnectable={false} className="opacity-0"/>
                 
@@ -44,9 +51,9 @@ const BaseNodeDemo = memo(({ selected }: NodeProps) => {
                                     </SelectContent>
                                 </Select>
                             )
-                        case "checkbox":
+                        case FormElement.checkbox:
                             return <span className="mr-auto ml-4"><Checkbox key={`checkbox_${index}`} className="mr-2" />A cocher</span>
-                        case "text":
+                        case FormElement.text:
                             return <Input key={`input_${index}`} type="text" placeholder="Enter text here" className="w-[90%] mr-auto ml-4" />
                         case FormElement.radio:
                             return <RadioGroup defaultValue="option-one" className="opacity-50 mr-auto ml-4">
@@ -67,12 +74,13 @@ const BaseNodeDemo = memo(({ selected }: NodeProps) => {
                         default:
                             return <></>;
                     }
-                }).map((e, index) => <>{e}<div key={`separator_${index}`} className="h-[1rem]"/></>)}
+                }).map((e, index) => <>{e}<div key={`separator_${index}`} className="h-[1rem]"></div></>)}
                 {elementList.length > 0 && <Button key={`validate`} className="ml-auto mr-4" disabled={true}>Valider</Button>}
-
+                
+                <div className="flex w-full gap-4">
                 <Dialog open={addElementDialogOpen} onOpenChange={(open) => {setAddElementDialogOpen(open); setSelectedField("");}}>
-                    <DialogTrigger className="w-[90%] h-[2.5rem] mt-3 border rounded-md text-lg">
-                        +
+                    <DialogTrigger className="w-full h-[2.5rem] mt-3 border rounded-md text-md">
+                        Ajouter un champ
                     </DialogTrigger>
                     <DialogContent className="max-w-[80%] max-h-[80%] aspect-square flex flex-col gap-4">
                         { selectedField==="" && <>
@@ -82,10 +90,11 @@ const BaseNodeDemo = memo(({ selected }: NodeProps) => {
                                 Tst
                                 </DialogDescription>
                             </DialogHeader>
+
                             <Input type="text" placeholder="Rechercher" className="w-full border mt-3" />
+
                             <div className="w-full flex flex-wrap min-h-fit-content mt-5">
                             
-
                             {/* <Select value={selectedField} onValueChange={setSelectedField}>
                                 <SelectTrigger className="w-full border rounded-md p-2">
                                     {selectedField || "Choisissez un Type de Champ"}
@@ -159,7 +168,7 @@ const BaseNodeDemo = memo(({ selected }: NodeProps) => {
                                     </div>
                                 </CardContent>
                             </Card>
-                                {["Select", "checkbox", "text"].map(elementName =>
+                                {[FormElement.select, FormElement.checkbox, FormElement.text].map(elementName =>
                                     <Button key={`button_${elementName}`} variant={'outline'} className="w-[12rem] h-[12rem] m-auto mb-5"
                                         onClick={()=>{ setElementList(elementList.concat([elementName])); setAddElementDialogOpen(false)}}
                                     >
@@ -187,8 +196,8 @@ const BaseNodeDemo = memo(({ selected }: NodeProps) => {
                             <div className="mt-auto ml-auto">
                                 <span><Checkbox className="mr-2" />Champ obligatoire</span>
                                 <Button className="w-[10rem] ml-4" variant={"outline"} onClick={() => {
-                                setElementList(elementList.concat(selectedField))
-                                setAddElementDialogOpen(false)
+                                    setElementList(elementList.concat(selectedField))
+                                    setAddElementDialogOpen(false)
                                 }}>Ajouter</Button>
                             </div>
                             
@@ -196,6 +205,74 @@ const BaseNodeDemo = memo(({ selected }: NodeProps) => {
                         
                     </DialogContent>
                 </Dialog>
+
+                <Dialog open={addStepDialogOpen} onOpenChange={setAddStepDialogOpen}>
+                    <DialogTrigger className="w-full h-[2.5rem] mt-3 border rounded-md text-md">
+                        Nouvelle étape
+                    </DialogTrigger>
+                    <DialogContent className="max-h-[60%] aspect-[9/16]  flex flex-col gap-4">
+                        <DialogHeader className="mb-4">
+                            <DialogTitle>Connecter une nouvelle étape</DialogTitle>
+                            <DialogDescription>
+                                Explications de comment ça marche
+                            </DialogDescription>
+                        </DialogHeader>
+                        
+                        {elementList.map((elementName, index) => {
+                            switch (elementName) {
+                                case "Select":
+                                    return (
+                                        <div className="flex w-full gap-4 items-center">
+                                            <Select key={`select_${index}`} defaultValue={"1"}>
+                                                <SelectTrigger className="mr-auto ml-4">
+                                                    <SelectValue />
+                                                </SelectTrigger>
+                                                <SelectContent>
+                                                    {["1","2","3"].map(choix => <SelectItem key={`select_${index}_${choix}`} value={choix}>Choix {choix}</SelectItem>) }
+                                                </SelectContent>
+                                            </Select>
+                                            <span className="mr-auto ml-4 flex items-center"><Switch key={`slider_${index}`} className="mr-2" />Ignorer</span>
+                                        </div>
+                                    )
+                                case FormElement.checkbox:
+                                    return (<div className="flex w-full gap-4 items-center">
+                                        <span className="mr-auto ml-4"><Checkbox key={`checkbox_${index}`} className="mr-2" />A cocher</span>
+                                        <span className="mr-auto ml-4 flex items-center"><Switch key={`slider_${index}`} className="mr-2" />Ignorer</span>
+                                    </div>)
+                                case FormElement.radio:
+                                    return (<div className="flex w-full gap-4 items-center">
+                                        <RadioGroup defaultValue="option-one-new-step" className="mr-auto ml-4">
+                                            Titre
+                                            <div className="flex items-center space-x-2">
+                                                <RadioGroupItem value="option-one-new-step" id="option-one-new-step" />
+                                                <Label htmlFor="option-one">Choix un</Label>
+                                            </div>
+                                            <div className="flex items-center space-x-2">
+                                                <RadioGroupItem value="option-two-new-step" id="option-two-new-step" />
+                                                <Label htmlFor="option-two">Choix deux</Label>
+                                            </div>
+                                            <div className="flex items-center space-x-2">
+                                                <RadioGroupItem value="option-three-new-step" id="option-three-new-step" />
+                                                <Label htmlFor="option-three">Choix trois</Label>
+                                            </div>
+                                        </RadioGroup>
+                                        <span className="mr-auto ml-4 flex items-center"><Switch key={`slider_${index}`} className="mr-2" />Ignorer</span>
+                                    </div>)
+                                default:
+                                    return <></>;
+                            }
+                        }).map((e, index) => <>{e}<div key={`separator_${index}`} className="h-[1rem]"></div></>)}
+
+                        <div className="mt-auto ml-auto">
+                            <span><Checkbox className="mr-2" />Champ obligatoire</span>
+                            <Button className="w-[10rem] ml-4" variant={"outline"} onClick={() => {
+                                data.createNewStep((positionAbsoluteY ?? 0) + ((nodeRef.current) ? nodeRef.current.getBoundingClientRect().height : 0))
+                                setAddStepDialogOpen(false)
+                            }}>Créer une nouvelle étape</Button>
+                        </div>
+                    </DialogContent>
+                </Dialog>
+                </div>
         </BaseNode>
     );
 });
