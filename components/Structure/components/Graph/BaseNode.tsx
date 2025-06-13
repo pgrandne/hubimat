@@ -12,6 +12,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/com
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import EditableText from "./EditableText"
 
 enum FormElement {
   checklist = "Check-list",
@@ -30,6 +31,7 @@ const BaseNodeDemo = memo(({ data, selected, positionAbsoluteY }: NodeProps) => 
     const [elementList, setElementList] = useState<string[]>([])
     const [selectedField, setSelectedField] = useState("");
     const nodeRef = useRef()
+    const [isOver, setIsOver] = useState("")
 
     return (
         <BaseNode ref={nodeRef} selected={selected} className="p-2 w-[20rem] flex items-center flex-col cursor-default" onVolumeChange={(v) => console.log(v)}>
@@ -56,21 +58,25 @@ const BaseNodeDemo = memo(({ data, selected, positionAbsoluteY }: NodeProps) => 
                         case FormElement.text:
                             return <Input key={`input_${index}`} type="text" placeholder="Enter text here" className="w-[90%] mr-auto ml-4 mb-3 pointer-events-none opacity-50" />
                         case FormElement.radio:
-                            return <RadioGroup defaultValue="option-one" className="opacity-50 mr-auto ml-4 mb-3">
-                                            Titre
-                                            <div className="flex items-center space-x-2 pointer-events-none">
-                                                <RadioGroupItem value="option-one" id="option-one" />
-                                                <Label htmlFor="option-one">Choix un</Label>
+                            return (<div className="w-full border border-transparent hover:border-white" onPointerEnter={(e) => setIsOver(`radio_${index}`)} onPointerLeave={() => setIsOver("")}>
+                                
+                                <RadioGroup key={`radio_${index}`} defaultValue="option-one" className="opacity-50 mr-auto ml-4 mb-3">
+                                            <EditableText initText={"Titre"} />
+                                            <div className="flex items-center space-x-2">
+                                                <RadioGroupItem value="option-one" id="option-one" className="pointer-events-none" />
+                                                <Label htmlFor="option-one" onClick={e => e.preventDefault()}><EditableText initText={"Choix un"} /></Label>
                                             </div>
-                                            <div className="flex items-center space-x-2 pointer-events-none">
+                                            <div className="flex items-center space-x-2">
                                                 <RadioGroupItem value="option-two" id="option-two" />
-                                                <Label htmlFor="option-two">Choix deux</Label>
+                                                <Label htmlFor="option-two" onClick={e => e.preventDefault()}><EditableText initText={"Choix deux"} /></Label>
                                             </div>
-                                            <div className="flex items-center space-x-2 pointer-events-none">
-                                                <RadioGroupItem value="option-two" id="option-two" />
-                                                <Label htmlFor="option-two">Choix trois</Label>
+                                            <div className="flex items-center space-x-2">
+                                                <RadioGroupItem value="option-three" id="option-three" />
+                                                <Label htmlFor="option-three" onClick={e => e.preventDefault()}><EditableText initText={"Choix trois"} /></Label>
                                             </div>
                                         </RadioGroup>
+                                        {isOver === `radio_${index}` && <Button className="mr-auto">+</Button>}
+                                        </div>)
                         default:
                             return <></>;
                     }
@@ -264,7 +270,6 @@ const BaseNodeDemo = memo(({ data, selected, positionAbsoluteY }: NodeProps) => 
                         }).map((e, index) => <>{e}<div key={`separator_${index}`} className="h-[1rem]"></div></>)}
 
                         <div className="mt-auto ml-auto">
-                            <span><Checkbox className="mr-2" />Champ obligatoire</span>
                             <Button className="w-[10rem] ml-4" variant={"outline"} onClick={() => {
                                 data.createNewStep((positionAbsoluteY ?? 0) + ((nodeRef.current) ? nodeRef.current.getBoundingClientRect().height : 0))
                                 setAddStepDialogOpen(false)
