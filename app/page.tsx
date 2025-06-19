@@ -16,6 +16,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { ReactFlowProvider } from "@xyflow/react";
 
 const Home = () => (
   <main className="flex h-screen">
@@ -26,7 +27,10 @@ const Home = () => (
       </div>
       <div className="h-[calc(100%-70px)] flex justify-between">
         <LeftSideBar />
-        <Core />
+        <ReactFlowProvider>
+          <Core />
+        </ReactFlowProvider>
+        
         <RightSideBar />
       </div>
     </div>
