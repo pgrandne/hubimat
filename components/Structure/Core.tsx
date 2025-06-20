@@ -110,7 +110,7 @@ export const Core = () => {
           <AdvancedTableCell
             accessor="hardwareType"
             valueEditFunction={(hardwareType:HardwareType) => { return (hardwareType) ? <>
-                <Image src={hardwareType.icon_source} className="mr-2" style={{maxWidth:'50px'}} alt={hardwareType.name+"_icon"} />
+                <Image src={hardwareType.icon_source} width={50} height={50} className="mr-2 max-w-[50px] max-h-[50px]" alt={hardwareType.name+"_icon"} />
                 {hardwareType.name}
               </> : undefined } }
             sortingFunction={(valueA: HardwareType, valueB: HardwareType) => { return (valueA.name < valueB.name) ? -1 : (valueA.name > valueB.name) ? 1 : 0 }}

@@ -82,6 +82,7 @@ const TanstackTableImplementation = forwardRef(<TData, TValue>({
     globalFilterFn: 'includesString',
     getPaginationRowModel: getPaginationRowModel(),
     onPaginationChange: setPagination,
+    // autoResetPageIndex: false, fix error in dev mode but prevents update of pagination info on first load, see https://github.com/TanStack/table/issues/5026
     state: {
       rowSelection,
       sorting,
@@ -131,41 +132,41 @@ const TanstackTableImplementation = forwardRef(<TData, TValue>({
             </TableRow>
           ))}
         </TableHeader>
-        <TableBody>
-          {table.getRowModel().rows?.length ? (
-            table.getRowModel().rows.map((row) => (
-              <TableRow
-                key={row.id}
-                data-state={row.getIsSelected() && "selected"}
-              >
-                {
-                  row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} className="pl-2 h-12 text-left text-sm">
-                      <div className="flex items-center">
-                        {
-                          row.getCanExpand() && cell.getIsGrouped() &&
-                          <button onClick={row.getToggleExpandedHandler()} style={{ cursor: 'pointer' }}>
-                            {row.getIsExpanded() ? <ChevronDown /> : <ChevronRight />}
-                          </button>
-                        }
-                        {
-                          (!row.getCanExpand() && !cell.column.getIsGrouped() || row.getCanExpand() && cell.getIsGrouped() || cell.column.id === 'select') && 
-                          flexRender(cell.column.columnDef.cell, cell.getContext())
-                        }
-                      </div>
-                    </TableCell>
-                  ))
-                }
+          <TableBody>
+            {table.getRowModel().rows?.length ? (
+              table.getRowModel().rows.map((row) => (
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && "selected"}
+                >
+                  {
+                    row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id} className="pl-2 h-12 text-left text-sm">
+                        <div className="flex items-center">
+                          {
+                            row.getCanExpand() && cell.getIsGrouped() &&
+                            <button onClick={row.getToggleExpandedHandler()} style={{ cursor: 'pointer' }}>
+                              {row.getIsExpanded() ? <ChevronDown /> : <ChevronRight />}
+                            </button>
+                          }
+                          {
+                            (!row.getCanExpand() && !cell.column.getIsGrouped() || row.getCanExpand() && cell.getIsGrouped() || cell.column.id === 'select') && 
+                            flexRender(cell.column.columnDef.cell, cell.getContext())
+                          }
+                        </div>
+                      </TableCell>
+                    ))
+                  }
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={columns.length} className="h-24 text-center">
+                  No results.
+                </TableCell>
               </TableRow>
-            ))
-          ) : (
-            <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center">
-                No results.
-              </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
+            )}
+          </TableBody>
       </Table>
     </div>
   )
