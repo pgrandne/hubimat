@@ -74,6 +74,7 @@ const AdvancedTable = (props: PropsWithChildren<Props>) => {
   const [globalFilter, setGlobalFilter] = useState<string>()
   const tableRef = useRef<AdvancedTablePropsMethods>(null)
   const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: (props.initialPageSize) ? props.initialPageSize : 10 })
+  const [pageCount, setPageCount] = useState(1)
   const [caption, setCaption] = useState<string>("tableau_hubiquity")
   const [headers, setHeaders] = useState<{[key:string]: ReactElement<any>}>({})
   const [displayedAccessors, setDisplayedAccessors] = useState<string[]>([])
@@ -174,6 +175,8 @@ const AdvancedTable = (props: PropsWithChildren<Props>) => {
     setColumns(_columns)
   }, [props.children, props.data, props.enableRowSelection])
 
+  useEffect(() => setPageCount((tableRef.current) ? tableRef.current.getPageCount() : 1), [globalFilter, pagination])
+
   const prepareRowDataForExport = (row: any) => displayedAccessors.map(accessor => {
     const value = row[accessor]
     return (types[accessor] === 'object')
@@ -266,7 +269,7 @@ const AdvancedTable = (props: PropsWithChildren<Props>) => {
             </SelectTrigger>
             <SelectContent className="min-w-0 w-full">
               {
-                Array.from({ length: (tableRef.current) ? tableRef.current.getPageCount() : 1}, (_, index) =>
+                Array.from({length: pageCount}, (_, index) =>
                   <SelectItem key={`select_page_${index}`} className="text-xs" value={String(index)}>{String(index+1)}</SelectItem>
                 )
               }
@@ -278,7 +281,7 @@ const AdvancedTable = (props: PropsWithChildren<Props>) => {
 
         <div className="flex items-center">
           Résultats par page
-          <Select onValueChange={(value) => {if (tableRef.current) {tableRef.current.setPageSize(Number(value))}}}
+          <Select onValueChange={(value) => {if (tableRef.current) { tableRef.current.setPageSize(Number(value)) }}}
             defaultValue={String(pagination.pageSize)}
           >
             <SelectTrigger className="min-w-0 w-fit text-xs h-[2em]">
