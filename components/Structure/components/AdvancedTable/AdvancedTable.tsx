@@ -1,5 +1,7 @@
+"use client"
+
 import TanstackTableImplementation, { AdvancedTablePropsMethods } from "./TanstackTableImplementation";
-import { Children, PropsWithChildren, ReactElement, useMemo, useRef, useState } from 'react';
+import { Children, isValidElement, JSXElementConstructor, PropsWithChildren, ReactElement, useEffect, useMemo, useRef, useState } from 'react';
 import { ColumnDef, Row, Table } from "@tanstack/react-table";
 import HeaderCell from "./HeaderCell";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -11,12 +13,13 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import * as ExcelJS from 'exceljs';
+import AdvancedTableCaption from "./AdvancedTableCaption";
+import AdvancedTableHeader from "./AdvancedTableHeader";
+import AdvancedTableBodyRow from "./AdvancedTableBodyRow";
+import CellRawValue from "./CellRawValue";
 
-function isComponent(object: any, componentName: string) {
-  return typeof object === 'object' && Object.hasOwn(object, 'type') && object.type.name === componentName
-}
-
-const forceReactElement = (object: any): ReactElement => object
+const isComponent = (element: React.ReactNode, componentType: string | JSXElementConstructor<any>): element is React.ReactElement =>
+  isValidElement(element) && element.type === componentType;
 
 export function ObjectToString(object: any): string {
     if (typeof object === 'object') {
@@ -68,49 +71,61 @@ interface Props {
 
 const AdvancedTable = (props: PropsWithChildren<Props>) => {
   const [isExportButtonDisabled, setIsExportButtonDisabled] = useState(false)
-
   const [globalFilter, setGlobalFilter] = useState<string>()
-  const tableRef = useRef<AdvancedTablePropsMethods>()
+  const tableRef = useRef<AdvancedTablePropsMethods>(null)
   const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: (props.initialPageSize) ? props.initialPageSize : 10 })
-  const caption = String(forceReactElement(Children.toArray(props.children).filter(child => isComponent(child, 'AdvancedTableCaption')).at(0))?.props?.children ?? 'tableau_hubiquity')
+  const [caption, setCaption] = useState<string>("tableau_hubiquity")
+  const [headers, setHeaders] = useState<{[key:string]: ReactElement<any>}>({})
+  const [displayedAccessors, setDisplayedAccessors] = useState<string[]>([])
+  const [types, setTypes] = useState<{[key:string]: string|undefined}>({})
+  const [columns, setColumns] = useState<ColumnDef<unknown>[]>([])
 
-  const advancedTableHeader = forceReactElement(Children.toArray(props.children).filter(child => isComponent(child, 'AdvancedTableHeader')).at(0))
-  
-  //C'est une propriété obligatoire donc il y a forcément un accessor par header
-  const headers = Object.assign({}, ...(advancedTableHeader?.props?.children?.map((header: ReactElement) => {return {[header.props.accessor]:header}}) ?? []))
-  const accessors = Object.keys(headers)
-  const displayedAccessors = accessors.filter(accessor => headers[accessor].props.hidden !== true)
-  const types = Object.fromEntries(accessors.map(a => [[a], undefined]))
+  useEffect(() => {
+    const _childArray = Children.toArray(props.children)
 
-  const columns = useMemo(() => {
-    if (displayedAccessors.length == 0) return []
+    const node = _childArray.find((child) => isComponent(child, AdvancedTableCaption))
+    const _caption = node ? String((node as ReactElement<any>).props.children) : 'tableau_hubiquity'
 
-    const AdvancedTableBodyRow = forceReactElement(Children.toArray(props.children).filter(child => isComponent(child, 'AdvancedTableBodyRow')).at(0))
-    const rowCells = AdvancedTableBodyRow && AdvancedTableBodyRow.props.children
-                      ? (Array.isArray(AdvancedTableBodyRow.props.children))
-                        ? Object.assign({}, ...(AdvancedTableBodyRow.props.children.map((rowCell: ReactElement) => {return {[rowCell.props.accessor]:rowCell}})))
-                        : {[(AdvancedTableBodyRow.props.children as ReactElement).props.accessor]:(AdvancedTableBodyRow.props.children as ReactElement)}
+    const _advancedTableHeader = _childArray.find((child) => isComponent(child, AdvancedTableHeader)) as ReactElement<any> | undefined
+    
+    const _headers = Object.assign(
+        {},
+        ...Children.toArray(_advancedTableHeader?.props?.children || []).map((header: any) => ({
+          [header.props.accessor]: header,
+        }))
+      )
+    
+    const _accessors = Object.keys(_headers)
+    const _displayedAccessors = _accessors.filter((accessor) => _headers[accessor]?.props?.hidden !== true)
+    const _types = Object.fromEntries(_accessors.map(a => [[a], undefined]))
+
+    const _advancedTableBodyRow = _childArray.find(child => isComponent(child, AdvancedTableBodyRow)) as ReactElement<any> | undefined
+
+    const rowCells = _advancedTableBodyRow?.props?.children
+                      ? (Array.isArray(_advancedTableBodyRow.props.children))
+                        ? Object.assign({}, ...(_advancedTableBodyRow.props.children.map((rowCell: ReactElement<any>) => {return {[rowCell.props.accessor]:rowCell}})))
+                        : {[(_advancedTableBodyRow.props.children as ReactElement<any>).props.accessor]:(_advancedTableBodyRow.props.children as ReactElement)}
                       : {}
 
-    const tempColumns = displayedAccessors.map((accessor): ColumnDef<unknown, unknown> =>
+    const _columns = _displayedAccessors.map((accessor): ColumnDef<unknown, unknown> =>
     {
       // Get the column data type
       const columnTypes = new Set<string>(props.data.map(row => Object.prototype.toString.call(row[accessor]).split(" ")[1].slice(0,-1)))
       columnTypes.delete('undefined')
-      if (columnTypes.size == 1) types[accessor] = columnTypes.values().next().value?.toLowerCase()
+      if (columnTypes.size == 1) _types[accessor] = columnTypes.values().next().value?.toLowerCase()
 
-      const isDateColumn = types[accessor] === 'date'
-      const isNumberColumn = types[accessor] === 'number'
-      const isBooleanColumn = types[accessor] === 'boolean'
+      const isDateColumn = _types[accessor] === 'date'
+      const isNumberColumn = _types[accessor] === 'number'
+      const isBooleanColumn = _types[accessor] === 'boolean'
 
       const columnDef: ColumnDef<unknown, unknown> = {
         accessorKey: accessor,
         filterFn: isDateColumn ? DateFilterFunction : (isNumberColumn ? NumberFilterFunction : ArrayFilterFunction),
         header: ({ table, column }) => (
-          <HeaderCell table={table} column={column} label={headers[accessor].props.children} icon={headers[accessor].props.icon}
-            enableSorting={headers[accessor].props.enableSorting} enableFiltering={headers[accessor].props.enableFiltering} enableGrouping={headers[accessor].props.enableGrouping}
+          <HeaderCell table={table} column={column} label={_headers[accessor].props.children} icon={_headers[accessor].props.icon}
+            enableSorting={_headers[accessor].props.enableSorting} enableFiltering={_headers[accessor].props.enableFiltering} enableGrouping={_headers[accessor].props.enableGrouping}
             isDateColumn={isDateColumn} isNumberColumn={isNumberColumn}
-            displayValueFunction={headers[accessor].props.displayValueFunction}
+            displayValueFunction={_headers[accessor].props.displayValueFunction}
           />
         ),
       }
@@ -122,7 +137,7 @@ const AdvancedTable = (props: PropsWithChildren<Props>) => {
                             : (isDateColumn) ? CoreDateToString(row.getValue(accessor)) : row.getValue(accessor) )
           const cellChildren = (rowCells[accessor].props.children?.length > 0) ? rowCells[accessor].props.children : cellValue
           if (!Array.isArray(cellChildren)) return cellChildren //If there is only one child the children array is not constructed (react behavior) so we return it directly
-          return rowCells[accessor].props.children?.map((child: any) => isComponent(child, 'CellRawValue') ? cellValue : child)
+          return rowCells[accessor].props.children?.map((child: any) => isComponent(child, CellRawValue) ? cellValue : child)
         }
 
         if (rowCells[accessor].props.sortingFunction != undefined)
@@ -150,13 +165,14 @@ const AdvancedTable = (props: PropsWithChildren<Props>) => {
       return columnDef
     })
 
-    if (props.enableRowSelection === true) tempColumns.push(selectColumn)
+    if (props.enableRowSelection === true && _columns.length > 0) _columns.push(selectColumn)
 
-    return tempColumns
-  }, [displayedAccessors, headers, props.children, props.data, props.enableRowSelection, types])
-
-  if (advancedTableHeader == undefined || !Array.isArray(advancedTableHeader.props.children)) return <div>No header row</div>
-  if (accessors.some(accessor => accessor === '')) return <div>One or more accessors are empty</div>
+    setCaption(_caption)
+    setHeaders(_headers)
+    setDisplayedAccessors(_displayedAccessors)
+    setTypes(_types)
+    setColumns(_columns)
+  }, [props.children, props.data, props.enableRowSelection])
 
   const prepareRowDataForExport = (row: any) => displayedAccessors.map(accessor => {
     const value = row[accessor]
@@ -241,44 +257,44 @@ const AdvancedTable = (props: PropsWithChildren<Props>) => {
       
       <div>{pagination.pageIndex*pagination.pageSize+1}-{Math.min(pagination.pageSize*(pagination.pageIndex+1), (tableRef.current)?tableRef.current.getFilteredDataSize():0)} sur {(tableRef.current)?tableRef.current.getFilteredDataSize():0} résultats</div>
 
-      <div className="flex items-center" style={{position:'absolute', left:'50%', transform:'translateX(-50%)'}}>
-        <Button variant={"ghost"} className="p-1 h-fit" onClick={ () => {if (tableRef.current) tableRef.current.goToFirstPage()}}><SkipBack className="w-4 h-4"/></Button>
-        <Button variant={"ghost"} className="p-1 h-fit" onClick={ () => {if (tableRef.current) tableRef.current.previousPage()}}><ChevronLeft className="w-4 h-4"/></Button>
-        <Select value={String(pagination.pageIndex)} onValueChange={(value) => {if (tableRef.current) tableRef.current.setPageIndex(Number(value))}}>
-          <SelectTrigger className="min-w-0 text-xs h-[2em]">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent className="min-w-0 w-full">
-            {
-              Array.from({ length: (tableRef.current) ? tableRef.current.getPageCount() : 1}, (_, index) =>
-                <SelectItem key={`select_page_${index}`} className="text-xs" value={String(index)}>{String(index+1)}</SelectItem>
-              )
-            }
-          </SelectContent>
-        </Select>
-        <Button variant={"ghost"} className="p-1 h-fit" onClick={ () => {if (tableRef.current) tableRef.current.nextPage()}}><ChevronRight className="w-4 h-4"/></Button>
-        <Button variant={"ghost"} className="p-1 h-fit" onClick={ () => {if (tableRef.current) tableRef.current.goToLastPage()}}><SkipForward className="w-4 h-4"/></Button>
-      </div>
+        <div className="flex items-center" style={{position:'absolute', left:'50%', transform:'translateX(-50%)'}}>
+          <Button variant={"ghost"} className="p-1 h-fit" onClick={ () => {if (tableRef.current) tableRef.current.goToFirstPage()}}><SkipBack className="w-4 h-4"/></Button>
+          <Button variant={"ghost"} className="p-1 h-fit" onClick={ () => {if (tableRef.current) tableRef.current.previousPage()}}><ChevronLeft className="w-4 h-4"/></Button>
+          <Select value={String(pagination.pageIndex)} onValueChange={(value) => {if (tableRef.current) tableRef.current.setPageIndex(Number(value))}}>
+            <SelectTrigger className="min-w-0 text-xs h-[2em]">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent className="min-w-0 w-full">
+              {
+                Array.from({ length: (tableRef.current) ? tableRef.current.getPageCount() : 1}, (_, index) =>
+                  <SelectItem key={`select_page_${index}`} className="text-xs" value={String(index)}>{String(index+1)}</SelectItem>
+                )
+              }
+            </SelectContent>
+          </Select>
+          <Button variant={"ghost"} className="p-1 h-fit" onClick={ () => {if (tableRef.current) tableRef.current.nextPage()}}><ChevronRight className="w-4 h-4"/></Button>
+          <Button variant={"ghost"} className="p-1 h-fit" onClick={ () => {if (tableRef.current) tableRef.current.goToLastPage()}}><SkipForward className="w-4 h-4"/></Button>
+        </div>
 
-      <div className="flex items-center">
-        Résultats par page
-        <Select onValueChange={(value) => {if (tableRef.current) {tableRef.current.setPageSize(Number(value))}}}
-          defaultValue={String(pagination.pageSize)}
-        >
-          <SelectTrigger className="min-w-0 w-fit text-xs h-[2em]">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent className="min-w-0 w-full">
-              <SelectItem className="text-xs" value="5">5</SelectItem>
-              <SelectItem className="text-xs" value="10">10</SelectItem>
-              <SelectItem className="text-xs" value="15">15</SelectItem>
-              <SelectItem className="text-xs" value="20">20</SelectItem>
-              <SelectItem className="text-xs" value="25">25</SelectItem>
-              <SelectItem className="text-xs" value="50">50</SelectItem>
-              <SelectItem className="text-xs" value="100">100</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
+        <div className="flex items-center">
+          Résultats par page
+          <Select onValueChange={(value) => {if (tableRef.current) {tableRef.current.setPageSize(Number(value))}}}
+            defaultValue={String(pagination.pageSize)}
+          >
+            <SelectTrigger className="min-w-0 w-fit text-xs h-[2em]">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent className="min-w-0 w-full">
+                <SelectItem className="text-xs" value="5">5</SelectItem>
+                <SelectItem className="text-xs" value="10">10</SelectItem>
+                <SelectItem className="text-xs" value="15">15</SelectItem>
+                <SelectItem className="text-xs" value="20">20</SelectItem>
+                <SelectItem className="text-xs" value="25">25</SelectItem>
+                <SelectItem className="text-xs" value="50">50</SelectItem>
+                <SelectItem className="text-xs" value="100">100</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
     </div>
   </>
 }
