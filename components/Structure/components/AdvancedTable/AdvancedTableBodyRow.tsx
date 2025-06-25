@@ -1,8 +1,1 @@
-import { Children } from 'react';
-
-export default function AdvancedTableBodyRow({ children }: { children?: any }) {
-
-  return (
-    <>{children}</>
-  )
-}
+export default function AdvancedTableBodyRow({ children }: { children: any }) {return <></>}

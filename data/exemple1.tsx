@@ -9,15 +9,4 @@ type Log = {
     UserLastName?: string
 }
 
-export function getData1(): Log[] {
-    return exampleData1.map((content): Log => {
-        let { date, ...rest } = content
-        var dateObj = new Date(content.date);
-        if (!date.toString().includes("+"))
-            dateObj.setTime(dateObj.getTime() + dateObj.getTimezoneOffset() * 60 * 1000);
-        return {
-            date: dateObj,
-            ...rest
-        }
-    })
-}
+export const getData1 = (): Log[] => exampleData1.map( content => ({...content, date:new Date(content.date)}) )

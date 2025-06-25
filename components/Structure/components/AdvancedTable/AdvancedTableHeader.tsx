@@ -1,12 +1,7 @@
-import { Children, PropsWithChildren } from 'react';
+import { PropsWithChildren } from 'react';
 
 interface Props {}
 
-const AdvancedTableHeader = (props: PropsWithChildren<Props>) => {
-
-  return (
-    <>{props.children}</>
-  )
-}
+const AdvancedTableHeader = (props: PropsWithChildren<Props>) => ""
 
 export default AdvancedTableHeader

@@ -13,10 +13,11 @@ import AdvancedTableBodyRow from "./components/AdvancedTable/AdvancedTableBodyRo
 import { Calendar, CircuitBoard, MemoryStick, MousePointerClick, User } from "lucide-react";
 import { getData5, HardwareParameters, HardwareType } from "@/data/exemple5";
 import { getData4 } from "@/data/exemple4";
+import Image from "next/image";
 
-
-const defaultMethodFilter = () => {}
-
+const data1 = getData1()
+const data4 = getData4()
+const data5 = getData5()
 
 export const Core = () => {
   const [exampleChoice, setexampleChoice] = useState(1);
@@ -25,19 +26,18 @@ export const Core = () => {
     <div className="container py-8 flex" style={{ flexFlow:'column', width: '100%', margin: '0.8rem', borderWidth: '1px', borderRadius: '0.5em' }}>
       <div>
         {[1, 2, 3, 4, 5].map((i) =>
-          <Button variant="outline" onClick={() => setexampleChoice(i)} style={{ marginRight: "1em", marginBottom: "2em" }}>
+          <Button key={`button_${i}`} variant="outline" onClick={() => setexampleChoice(i)} style={{ marginRight: "1em", marginBottom: "2em" }}>
             Exemple {i}
           </Button>)
         }
       </div>
       
-      
       { (exampleChoice==1) &&
-      <AdvancedTable data={getData1()} enableGeneralSearch={true} enableRowSelection={true} enableExport={["csv", "xlsx"]}>
-        <AdvancedTableCaption>A list of Data.</AdvancedTableCaption>
+      <AdvancedTable data={data1} enableGeneralSearch={true} enableRowSelection={true} enableExport={["csv", "xlsx"]}>
+        <AdvancedTableCaption>Table 1</AdvancedTableCaption>
         <AdvancedTableHeader>
           <AdvancedTableHead accessor="date">Date</AdvancedTableHead>
-          <AdvancedTableHead accessor="DeviceType">Type d'appareil</AdvancedTableHead>
+          <AdvancedTableHead accessor="DeviceType">Type d&apos;appareil</AdvancedTableHead>
           <AdvancedTableHead accessor="Device">Appareil</AdvancedTableHead>
           <AdvancedTableHead accessor="Action">Action effectuée</AdvancedTableHead>
           <AdvancedTableHead accessor="UserFirstName">Prénom</AdvancedTableHead>
@@ -46,12 +46,12 @@ export const Core = () => {
       </AdvancedTable>}
 
       { (exampleChoice==2) &&
-      <AdvancedTable data={getData1()} enableGeneralSearch={true} enableRowSelection={true} initialPageSize={5}>
-        <AdvancedTableCaption>A list of Data.</AdvancedTableCaption>
+      <AdvancedTable data={data1} enableGeneralSearch={true} enableRowSelection={true} initialPageSize={5}>
+        <AdvancedTableCaption>Table 2</AdvancedTableCaption>
         <AdvancedTableHeader>
-          <AdvancedTableHead accessor="date" defaultSort={sortType.MinortoMayor} icon={<Calendar />}>Date</AdvancedTableHead>
-          <AdvancedTableHead accessor="DeviceType" enableFiltering={false} enableSorting={false} enableGrouping={false} icon={<CircuitBoard />}>Type d'appareil</AdvancedTableHead>
-          <AdvancedTableHead accessor="Device" defaultFilter={defaultMethodFilter} icon={<MemoryStick />}>Appareil</AdvancedTableHead>
+          <AdvancedTableHead accessor="date" icon={<Calendar />}>Date</AdvancedTableHead>
+          <AdvancedTableHead accessor="DeviceType" enableFiltering={false} enableSorting={false} enableGrouping={false} icon={<CircuitBoard />}>Type d&apos;appareil</AdvancedTableHead>
+          <AdvancedTableHead accessor="Device" icon={<MemoryStick />}>Appareil</AdvancedTableHead>
           <AdvancedTableHead accessor="Action" enableFiltering={false} className="text-right" icon={<MousePointerClick />}>Action effectuée</AdvancedTableHead>
           <AdvancedTableHead accessor="UserFirstName" icon={<User />}>Prénom</AdvancedTableHead>
           <AdvancedTableHead accessor="UserLastName" icon={<User />}>Nom</AdvancedTableHead>
@@ -69,12 +69,23 @@ export const Core = () => {
         </AdvancedTableBodyRow>
       </AdvancedTable>}
 
-      { (exampleChoice==4) &&
-      <AdvancedTable data={getData4()} enableGeneralSearch={true} enableRowSelection={true} enableExport={["csv", "xlsx"]}>
-        <AdvancedTableCaption>A list of Data.</AdvancedTableCaption>
+      { (exampleChoice==3) &&
+      <AdvancedTable data={[]} enableGeneralSearch={true} enableRowSelection={true}>
+        <AdvancedTableCaption>Table 3</AdvancedTableCaption>
         <AdvancedTableHeader>
           <AdvancedTableHead accessor="date">Date</AdvancedTableHead>
-          <AdvancedTableHead accessor="DeviceType">Type d'appareil</AdvancedTableHead>
+          <AdvancedTableHead accessor="DeviceType">Type d&apos;appareil</AdvancedTableHead>
+          <AdvancedTableHead accessor="Device">Appareil</AdvancedTableHead>
+          <AdvancedTableHead accessor="Action">Action effectuée</AdvancedTableHead>
+        </AdvancedTableHeader>
+      </AdvancedTable>}
+
+      { (exampleChoice==4) &&
+      <AdvancedTable data={data4} enableGeneralSearch={true} enableRowSelection={true} enableExport={["csv", "xlsx"]}>
+        <AdvancedTableCaption>Table 4</AdvancedTableCaption>
+        <AdvancedTableHeader>
+          <AdvancedTableHead accessor="date">Date</AdvancedTableHead>
+          <AdvancedTableHead accessor="DeviceType">Type d&apos;appareil</AdvancedTableHead>
           <AdvancedTableHead accessor="Device">Appareil</AdvancedTableHead>
           <AdvancedTableHead accessor="Action">Action effectuée</AdvancedTableHead>
           <AdvancedTableHead accessor="UserFirstName">Prénom</AdvancedTableHead>
@@ -82,25 +93,14 @@ export const Core = () => {
         </AdvancedTableHeader>
       </AdvancedTable>}
 
-      { (exampleChoice==3) &&
-      <AdvancedTable data={[]} enableGeneralSearch={true} enableRowSelection={true}>
-        <AdvancedTableCaption>A list of Data.</AdvancedTableCaption>
-        <AdvancedTableHeader>
-          <AdvancedTableHead accessor="date">Date</AdvancedTableHead>
-          <AdvancedTableHead accessor="DeviceType">Type d'appareil</AdvancedTableHead>
-          <AdvancedTableHead accessor="Device">Appareil</AdvancedTableHead>
-          <AdvancedTableHead accessor="Action">Action effectuée</AdvancedTableHead>
-        </AdvancedTableHeader>
-      </AdvancedTable>}
-
       { (exampleChoice==5) &&
-      <AdvancedTable data={getData5()} enableGeneralSearch={true} enableRowSelection={true}>
-        <AdvancedTableCaption>A list of Data.</AdvancedTableCaption>
+      <AdvancedTable data={data5} enableGeneralSearch={true} enableRowSelection={true}>
+        <AdvancedTableCaption>Table 5</AdvancedTableCaption>
         <AdvancedTableHeader>
           <AdvancedTableHead accessor="id" hidden={true}>ID</AdvancedTableHead>
           <AdvancedTableHead accessor="category">Catégorie (Device type Group)</AdvancedTableHead>
-          <AdvancedTableHead accessor="hardwareType" displayValueFunction={(hardwareType:HardwareType) => hardwareType ? hardwareType.name : ""}>Icône et Type d'objet</AdvancedTableHead>
-          <AdvancedTableHead accessor="label">Label de l'objet</AdvancedTableHead>
+          <AdvancedTableHead accessor="hardwareType" displayValueFunction={(hardwareType:HardwareType) => hardwareType ? hardwareType.name : ""}>Icône et Type d&apos;objet</AdvancedTableHead>
+          <AdvancedTableHead accessor="label">Label de l&apos;objet</AdvancedTableHead>
           <AdvancedTableHead accessor="description">Description</AdvancedTableHead>
           <AdvancedTableHead accessor="hardwareParameters">Paramètre(s) Interface</AdvancedTableHead>
           <AdvancedTableHead accessor="tests">Tests</AdvancedTableHead>
@@ -110,7 +110,7 @@ export const Core = () => {
           <AdvancedTableCell
             accessor="hardwareType"
             valueEditFunction={(hardwareType:HardwareType) => { return (hardwareType) ? <>
-                <img src={hardwareType.icon_source} className="mr-2" style={{maxWidth:'50px'}} />
+                <Image src={hardwareType.icon_source} className="mr-2" style={{maxWidth:'50px'}} alt={hardwareType.name+"_icon"} />
                 {hardwareType.name}
               </> : undefined } }
             sortingFunction={(valueA: HardwareType, valueB: HardwareType) => { return (valueA.name < valueB.name) ? -1 : (valueA.name > valueB.name) ? 1 : 0 }}
