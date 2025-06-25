@@ -36,7 +36,7 @@ export default function FilterList({ columnFilter, setColumnFilter, columnValues
             <CommandList>
                 <CommandEmpty>Aucun résultat</CommandEmpty>
                 <CommandItem key="select_all" className="cursor-pointer" onSelect={() => setColumnFilter(undefined)}>
-                    Sélectionner tout
+                    Supprimer le filtre
                 </CommandItem>
                 {
                     columnValuesCounted.map(

@@ -69,7 +69,7 @@ export default function FilterDate({
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem value={options.all}>Sélectionner tout</SelectItem>
+              <SelectItem value={options.all}>Supprimer le filtre</SelectItem>
               <SelectItem value={options.specific}>Date spécifique</SelectItem>
               <SelectItem value={options.range}>Période</SelectItem>
             </SelectGroup>
