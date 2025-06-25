@@ -76,8 +76,8 @@ export default function HeaderCell({
         )
         setMenuContentCssUpdated(true)
       }
-      else if (rect.height > 600) {
-        setMenuContentCss('[data-radix-menu-content] { max-height: 600px !important; overflow-y: scroll; }')
+      else if (rect.height > 630) {
+        setMenuContentCss('[data-radix-menu-content] { max-height: 630px !important; overflow-y: scroll; }')
         setMenuContentCssUpdated(true)
       }
     }
