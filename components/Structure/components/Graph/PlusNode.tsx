@@ -16,7 +16,7 @@ const PlusNode = memo(({ data, selected, positionAbsoluteX, positionAbsoluteY, i
     const newEdge = {id:`e${newNode.id}-${id}`, source:newNode.id, target:id, type: ConnectionLineType.SmoothStep, hidden: true};
 
     setNodes((nds) => [...nds, newNode]);
-    setEdges((eds) => [...eds.map(ed => ed.target===id ? {...ed, target:newNode.id} : ed ), newEdge]);
+    setEdges((eds) => [...eds.map(ed => ed.target===id ? {...ed, target:newNode.id, hidden:true} : ed ), newEdge]);
   };
 
   return (
