@@ -7,17 +7,19 @@ import PlusNode from './components/Graph/PlusNode';
 import dagre from '@dagrejs/dagre';
 
 import '@xyflow/react/dist/style.css';
+import BaseNodeDemo from './components/Graph/Deprecated_BaseNode';
 
 const nodeTypes = {
   stepNode: StepNode,
-  plusNode: PlusNode
+  plusNode: PlusNode,
+  demoNode: BaseNodeDemo
 };
 
 const initialNodes = [
-  { id: '1', position: { x: 0, y: 0 }, data: { }, type: "stepNode", selectable: false },
-  { id: '2', position: { x: 0, y: 0 }, data: { }, type: "plusNode", selectable: false },
-  { id: '3', position: { x: 0, y: 0 }, data: { }, type: "stepNode", selectable: false },
-  { id: '4', position: { x: 0, y: 0 }, data: { }, type: "plusNode", selectable: false },
+  { id: '1', position: { x: 0, y: 0 }, data: { title:"demoNode" }, type: "demoNode", selectable: false },
+  { id: '2', position: { x: 0, y: 0 }, data: { title:"plusNode 1" }, type: "plusNode", selectable: false },
+  { id: '3', position: { x: 0, y: 0 }, data: { title:"Etape 0" }, type: "stepNode", selectable: false },
+  { id: '4', position: { x: 0, y: 0 }, data: { title:"plusNode 2" }, type: "plusNode", selectable: false },
 ];
 const connectionLineType = ConnectionLineType.SmoothStep
 const initialEdges = [

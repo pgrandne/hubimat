@@ -24,10 +24,16 @@ const PopoverTrigger = React.forwardRef<
 ));
 PopoverTrigger.displayName = PopoverPrimitive.Trigger.displayName;
 
+type PopoverContentProps = React.ComponentPropsWithoutRef<
+  typeof PopoverPrimitive.Content
+> & {
+  useCloseButton?: boolean;
+};
+
 const PopoverContent = React.forwardRef<
   React.ElementRef<typeof PopoverPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof PopoverPrimitive.Content>
->(({ className, align = "center", sideOffset = 4, ...props }, ref) => (
+  PopoverContentProps
+>(({ className, align = "center", sideOffset = 4, useCloseButton = true, ...props }, ref) => (
   <PopoverPrimitive.Portal>
     <PopoverPrimitive.Content
       ref={ref}
@@ -39,11 +45,11 @@ const PopoverContent = React.forwardRef<
       )}
       {...props}
     >
-      <div className="absolute top-1 right-1 z-50">
+      { useCloseButton && <div className="absolute top-1 right-1 z-50">
         <PopoverPrimitive.Close aria-label="Close" className="hover:opacity-50">
           <X size={23} />
         </PopoverPrimitive.Close>
-      </div>
+      </div> }
       {props.children}
     </PopoverPrimitive.Content>
   </PopoverPrimitive.Portal>

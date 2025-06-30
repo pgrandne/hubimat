@@ -1,15 +1,15 @@
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 
-function EditableText( { defaultValue, onChange, placeholder } : 
-  { defaultValue ?: string, onChange ?: (value?:string) => void, placeholder ?: string }
+function EditableText( { defaultValue = "", onChange, placeholder } : 
+  { defaultValue ?: string, onChange ?: (value:string) => void, placeholder ?: string }
 ) {
-  const [isEditing, setIsEditing] = useState(false);
-  const [text, setText] = useState(defaultValue);
+  const [isEditing, setIsEditing] = useState(false)
+  const [text, setText] = useState(defaultValue)
 
-  const handleDoubleClick = () => setIsEditing(true);
-  const handleChange = (e: { target: { value: string } }) => { setText(e.target.value); onChange?.(e.target.value); }
-  const handleBlur = () => setIsEditing(false);
+  const handleDoubleClick = () => setIsEditing(true)
+  const handleChange = (e: { target: { value: string } }) => setText(e.target.value)
+  const handleBlur = () => {setIsEditing(false); onChange?.(text)}
 
   return (
     <div className="w-full">
@@ -22,14 +22,14 @@ function EditableText( { defaultValue, onChange, placeholder } :
           onKeyDown={e => {if (e.code === 'Enter') e.currentTarget.blur()}}
           autoFocus
           placeholder={placeholder}
-          className="w-[calc(100%-2px)] h-fit mx-1 flex rounded-md border border-input bg-background px-1 py-1.5 text-sm ring-offset-background disabled:cursor-not-allowed disabled:opacity-50"
+          className="w-full h-fit flex rounded-md border border-input bg-background px-1 py-1.5 text-sm ring-offset-background disabled:cursor-not-allowed disabled:opacity-50"
         />
       ) : (
         <span className={cn(
-          "w-[calc(100%-2px)] h-fit mx-1 flex rounded-md border border-transparent hover:border-white px-1 py-1.5 text-sm", 
-          text && text !== "" ? "" : "italic text-gray-500"
-        )}
-          style={{boxSizing:"border-box"}}
+            "h-fit flex rounded-md border border-transparent hover:border-white px-1 py-1.5 text-sm", 
+            text && text !== "" ? "" : "italic text-gray-500"
+          )}
+          style={{ overflowWrap: "anywhere" }}
           onDoubleClick={handleDoubleClick}>
             {text && text !== "" ? text : placeholder }
         </span>

@@ -38,7 +38,7 @@ const BaseNodeDemo = memo(({ data, selected, positionAbsoluteY }: NodeProps) => 
                 <Handle type="target" position={Position.Top} isConnectable={false} className="opacity-0"/>
                 <Handle type="source" position={Position.Bottom} isConnectable={false} className="opacity-0"/>
                 
-                <div key="step_number" className="m-3">Etape {nodeId}</div>
+                <div key="step_number" className="m-3">Démo node {nodeId}</div>
 
                 {elementList.map((elementName, index) => {
                     switch (elementName) {
