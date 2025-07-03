@@ -5,6 +5,7 @@ import {
   ArrowDown,
   ArrowDown10,
   ArrowDownAZ,
+  ArrowUp,
   ArrowUp10,
   ArrowUpAZ,
   ChevronDown,
@@ -114,10 +115,14 @@ export default function HeaderCell({
             {column.getIsSorted() && column.getIsFiltered() ? (
               <>
                 <Funnel className="h-3 w-3" />
-                <ArrowDown className="h-3 w-3" />
+                {column.getIsSorted() === 'asc'
+                  ? <ArrowDown className="h-3 w-3" />
+                  : <ArrowUp className="h-3 w-3" />}
               </>
             ) : column.getIsSorted() ? (
-              <ArrowDown className="h-4 w-4" />
+              column.getIsSorted() === 'asc'
+                ? <ArrowDown className="h-4 w-4" />
+                : <ArrowUp className="h-4 w-4" />
             ) : column.getIsFiltered() ? (
               <Funnel className="h-3*4 w-4" />
             ) : (
