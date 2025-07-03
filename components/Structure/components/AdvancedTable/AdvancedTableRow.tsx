@@ -1,1 +1,0 @@
-export default function AdvancedTableRow({ children }: { children: any }) {return <></>}

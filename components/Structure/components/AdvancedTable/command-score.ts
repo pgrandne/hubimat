@@ -44,12 +44,12 @@ var SCORE_CONTINUE_MATCH = 1,
   // ordering (like alphabetical) that it makes sense to rely on when
   // there are many prefix matches, so we don't make the penalty increase
   // with the number of tokens.
-  PENALTY_NOT_COMPLETE = 0.99
+  PENALTY_NOT_COMPLETE = 0.99;
 
 var IS_GAP_REGEXP = /[\\\/_+.#"@\[\(\{&]/,
   COUNT_GAPS_REGEXP = /[\\\/_+.#"@\[\(\{&]/g,
   IS_SPACE_REGEXP = /[\s-]/,
-  COUNT_SPACE_REGEXP = /[\s-]/g
+  COUNT_SPACE_REGEXP = /[\s-]/g;
 
 function commandScoreInner(
   string: string,
@@ -58,25 +58,25 @@ function commandScoreInner(
   lowerAbbreviation: string,
   stringIndex: number,
   abbreviationIndex: number,
-  memoizedResults: { [x: string]: number },
+  memoizedResults: { [x: string]: number }
 ) {
   if (abbreviationIndex === abbreviation.length) {
     if (stringIndex === string.length) {
-      return SCORE_CONTINUE_MATCH
+      return SCORE_CONTINUE_MATCH;
     }
-    return PENALTY_NOT_COMPLETE
+    return PENALTY_NOT_COMPLETE;
   }
 
-  var memoizeKey = `${stringIndex},${abbreviationIndex}`
+  var memoizeKey = `${stringIndex},${abbreviationIndex}`;
   if (memoizedResults[memoizeKey] !== undefined) {
-    return memoizedResults[memoizeKey]
+    return memoizedResults[memoizeKey];
   }
 
-  var abbreviationChar = lowerAbbreviation.charAt(abbreviationIndex)
-  var index = lowerString.indexOf(abbreviationChar, stringIndex)
-  var highScore = 0
+  var abbreviationChar = lowerAbbreviation.charAt(abbreviationIndex);
+  var index = lowerString.indexOf(abbreviationChar, stringIndex);
+  var highScore = 0;
 
-  var score, transposedScore, wordBreaks, spaceBreaks
+  var score, transposedScore, wordBreaks, spaceBreaks;
 
   while (index >= 0) {
     score = commandScoreInner(
@@ -86,40 +86,47 @@ function commandScoreInner(
       lowerAbbreviation,
       index + 1,
       abbreviationIndex + 1,
-      memoizedResults,
-    )
+      memoizedResults
+    );
     if (score > highScore) {
       if (index === stringIndex) {
-        score *= SCORE_CONTINUE_MATCH
+        score *= SCORE_CONTINUE_MATCH;
       } else if (IS_GAP_REGEXP.test(string.charAt(index - 1))) {
-        score *= SCORE_NON_SPACE_WORD_JUMP
-        wordBreaks = string.slice(stringIndex, index - 1).match(COUNT_GAPS_REGEXP)
+        score *= SCORE_NON_SPACE_WORD_JUMP;
+        wordBreaks = string
+          .slice(stringIndex, index - 1)
+          .match(COUNT_GAPS_REGEXP);
         if (wordBreaks && stringIndex > 0) {
-          score *= Math.pow(PENALTY_SKIPPED, wordBreaks.length)
+          score *= Math.pow(PENALTY_SKIPPED, wordBreaks.length);
         }
       } else if (IS_SPACE_REGEXP.test(string.charAt(index - 1))) {
-        score *= SCORE_SPACE_WORD_JUMP
-        spaceBreaks = string.slice(stringIndex, index - 1).match(COUNT_SPACE_REGEXP)
+        score *= SCORE_SPACE_WORD_JUMP;
+        spaceBreaks = string
+          .slice(stringIndex, index - 1)
+          .match(COUNT_SPACE_REGEXP);
         if (spaceBreaks && stringIndex > 0) {
-          score *= Math.pow(PENALTY_SKIPPED, spaceBreaks.length)
+          score *= Math.pow(PENALTY_SKIPPED, spaceBreaks.length);
         }
       } else {
-        score *= SCORE_CHARACTER_JUMP
+        score *= SCORE_CHARACTER_JUMP;
         if (stringIndex > 0) {
-          score *= Math.pow(PENALTY_SKIPPED, index - stringIndex)
+          score *= Math.pow(PENALTY_SKIPPED, index - stringIndex);
         }
       }
 
       if (string.charAt(index) !== abbreviation.charAt(abbreviationIndex)) {
-        score *= PENALTY_CASE_MISMATCH
+        score *= PENALTY_CASE_MISMATCH;
       }
     }
 
     if (
       (score < SCORE_TRANSPOSITION &&
-        lowerString.charAt(index - 1) === lowerAbbreviation.charAt(abbreviationIndex + 1)) ||
-      (lowerAbbreviation.charAt(abbreviationIndex + 1) === lowerAbbreviation.charAt(abbreviationIndex) && // allow duplicate letters. Ref #7428
-        lowerString.charAt(index - 1) !== lowerAbbreviation.charAt(abbreviationIndex))
+        lowerString.charAt(index - 1) ===
+          lowerAbbreviation.charAt(abbreviationIndex + 1)) ||
+      (lowerAbbreviation.charAt(abbreviationIndex + 1) ===
+        lowerAbbreviation.charAt(abbreviationIndex) && // allow duplicate letters. Ref #7428
+        lowerString.charAt(index - 1) !==
+          lowerAbbreviation.charAt(abbreviationIndex))
     ) {
       transposedScore = commandScoreInner(
         string,
@@ -128,35 +135,50 @@ function commandScoreInner(
         lowerAbbreviation,
         index + 1,
         abbreviationIndex + 2,
-        memoizedResults,
-      )
+        memoizedResults
+      );
 
       if (transposedScore * SCORE_TRANSPOSITION > score) {
-        score = transposedScore * SCORE_TRANSPOSITION
+        score = transposedScore * SCORE_TRANSPOSITION;
       }
     }
 
     if (score > highScore) {
-      highScore = score
+      highScore = score;
     }
 
-    index = lowerString.indexOf(abbreviationChar, index + 1)
+    index = lowerString.indexOf(abbreviationChar, index + 1);
   }
 
-  memoizedResults[memoizeKey] = highScore
-  return highScore
+  memoizedResults[memoizeKey] = highScore;
+  return highScore;
 }
 
 function formatInput(string: string) {
   // convert all valid space characters to space so they match each other
-  return string.toLowerCase().replace(COUNT_SPACE_REGEXP, ' ')
+  return string.toLowerCase().replace(COUNT_SPACE_REGEXP, " ");
 }
 
-export function commandScore(string: string, abbreviation: string, aliases: string[]): number {
+export function commandScore(
+  string: string,
+  abbreviation: string,
+  aliases: string[]
+): number {
   /* NOTE:
    * in the original, we used to do the lower-casing on each recursive call, but this meant that toLowerCase()
    * was the dominating cost in the algorithm, passing both is a little ugly, but considerably faster.
    */
-  string = aliases && aliases.length > 0 ? `${string + ' ' + aliases.join(' ')}` : string
-  return commandScoreInner(string, abbreviation, formatInput(string), formatInput(abbreviation), 0, 0, {})
+  string =
+    aliases && aliases.length > 0
+      ? `${string + " " + aliases.join(" ")}`
+      : string;
+  return commandScoreInner(
+    string,
+    abbreviation,
+    formatInput(string),
+    formatInput(abbreviation),
+    0,
+    0,
+    {}
+  );
 }

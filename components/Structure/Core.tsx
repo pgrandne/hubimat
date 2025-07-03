@@ -3,7 +3,6 @@
 import { Button } from "../ui/button";
 import { useState } from 'react';
 import { getData1 } from "@/data/exemple1";
-import AdvancedTable from "./components/AdvancedTable";
 import AdvancedTableCaption from "./components/AdvancedTable/AdvancedTableCaption";
 import AdvancedTableCell from "./components/AdvancedTable/AdvancedTableCell";
 import AdvancedTableHead, { sortType } from "./components/AdvancedTable/AdvancedTableHead";
@@ -14,6 +13,7 @@ import { Calendar, CircuitBoard, MemoryStick, MousePointerClick, User } from "lu
 import { getData5, HardwareParameters, HardwareType } from "@/data/exemple5";
 import { getData4 } from "@/data/exemple4";
 import Image from "next/image";
+import AdvancedTable from "./components/AdvancedTable/AdvancedTable";
 
 const data1 = getData1()
 const data4 = getData4()

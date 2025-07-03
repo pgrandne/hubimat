@@ -1,22 +1,22 @@
-import { Children, PropsWithChildren, ReactNode } from 'react';
+import { Children, PropsWithChildren, ReactNode } from "react";
 
 export const sortType = {
-  'MinortoMayor':1
-}
+  MinortoMayor: 1,
+};
 
 interface Props {
-  accessor: string,
-  hidden?: boolean,
-  className?: string,
+  accessor: string;
+  hidden?: boolean;
+  className?: string;
   // defaultSort?: number,
-  enableFiltering?: boolean,
-  enableSorting?: boolean,
-  enableGrouping?: boolean,
+  enableFiltering?: boolean;
+  enableSorting?: boolean;
+  enableGrouping?: boolean;
   // defaultFilter?: Function,
-  displayValueFunction?: Function
-  icon?: ReactNode
+  displayValueFunction?: Function;
+  icon?: ReactNode;
 }
 
-const AdvancedTableHead = (props: PropsWithChildren<Props>) => ""
+const AdvancedTableHead = (props: PropsWithChildren<Props>) => "";
 
-export default AdvancedTableHead
+export default AdvancedTableHead;
