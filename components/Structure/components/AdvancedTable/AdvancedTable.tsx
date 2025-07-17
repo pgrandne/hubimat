@@ -28,6 +28,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Download,
+  Plus,
   SkipBack,
   SkipForward,
   X,
@@ -55,13 +56,8 @@ const isComponent = (
   isValidElement(element) && element.type === componentType;
 
 export function ObjectToString(object: any): string {
-  // By Perrin for SCRUM-501 : Error: can't access property "getMonth", object is null
-  if (object === null) {
-    return "";
-  }
-
   if (typeof object === "object") {
-    return typeof object.getMonth === "function"
+    return object instanceof Date
       ? DateToFileString(object)
       : Object.values(object).join("-");
   }
@@ -111,6 +107,8 @@ interface Props {
   enableRowSelection?: boolean;
   initialPageSize?: number;
   enableExport?: ("csv" | "xlsx")[];
+  onAdd?: () => void
+  showFooter?: boolean
 }
 
 const AdvancedTable = (props: PropsWithChildren<Props>) => {
@@ -129,6 +127,7 @@ const AdvancedTable = (props: PropsWithChildren<Props>) => {
   const [displayedAccessors, setDisplayedAccessors] = useState<string[]>([]);
   const [types, setTypes] = useState<{ [key: string]: string | undefined }>({});
   const [columns, setColumns] = useState<ColumnDef<unknown>[]>([]);
+  const [onRowClick, setOnRowClick] = useState<(row: any) => void | undefined>(() => {})
 
   useEffect(() => {
     const _childArray = Children.toArray(props.children);
@@ -292,6 +291,7 @@ const AdvancedTable = (props: PropsWithChildren<Props>) => {
     setDisplayedAccessors(_displayedAccessors);
     setTypes(_types);
     setColumns(_columns);
+    setOnRowClick(() => _advancedTableBodyRow?.props?.onRowClick);
   }, [props.children, props.data, props.enableRowSelection]);
 
   useEffect(
@@ -319,13 +319,26 @@ const AdvancedTable = (props: PropsWithChildren<Props>) => {
   return (
     <>
       <span className="flex items-center">
-        <Input
-          className="max-w-[40%] w-full mr-auto ml-0"
-          placeholder="Rechercher"
-          onChange={(e) => {
-            setGlobalFilter(e.target.value);
-          }}
-        />
+        { props.enableGeneralSearch !== false &&
+          <Input
+            className="max-w-[40%] w-full mr-auto ml-0"
+            placeholder="Rechercher"
+            onChange={(e) => {
+              setGlobalFilter(e.target.value);
+            }}
+          />
+        }
+        { props.onAdd && (
+          <Button
+            id="add_element"
+            title="Ajouter"
+            variant={"outline"}
+            className="h-9 w-9 p-2 mt-1"
+            onClick={props.onAdd}
+          >
+            <Plus />
+          </Button>
+        )}
         {props.enableExport?.includes("csv") && (
           <Button
             id="download_csv"
@@ -444,129 +457,132 @@ const AdvancedTable = (props: PropsWithChildren<Props>) => {
         globalFilterValue={globalFilter}
         pagination={pagination}
         setPagination={setPagination}
+        onRowClick={onRowClick}
       />
 
-      <div
-        className="flex w-full items-center text-xs mt-2 h-fit"
-        style={{ justifyContent: "space-between", position: "relative" }}
-      >
-        <div>
-          {pagination.pageIndex * pagination.pageSize + 1}-
-          {Math.min(
-            pagination.pageSize * (pagination.pageIndex + 1),
-            tableRef.current ? tableRef.current.getFilteredDataSize() : 0
-          )}{" "}
-          sur {tableRef.current ? tableRef.current.getFilteredDataSize() : 0}{" "}
-          résultats
-        </div>
-
+      { props.showFooter !== false &&
         <div
-          className="flex items-center"
-          style={{
-            position: "absolute",
-            left: "50%",
-            transform: "translateX(-50%)",
-          }}
+          className="flex w-full items-center text-xs mt-2 h-fit"
+          style={{ justifyContent: "space-between", position: "relative" }}
         >
-          <Button
-            variant={"ghost"}
-            className="p-1 h-fit"
-            onClick={() => {
-              if (tableRef.current) tableRef.current.goToFirstPage();
-            }}
-          >
-            <SkipBack className="w-4 h-4" />
-          </Button>
-          <Button
-            variant={"ghost"}
-            className="p-1 h-fit"
-            onClick={() => {
-              if (tableRef.current) tableRef.current.previousPage();
-            }}
-          >
-            <ChevronLeft className="w-4 h-4" />
-          </Button>
-          <Select
-            value={String(pagination.pageIndex)}
-            onValueChange={(value) => {
-              if (tableRef.current)
-                tableRef.current.setPageIndex(Number(value));
-            }}
-          >
-            <SelectTrigger className="min-w-0 text-xs h-[2em]">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent className="min-w-0 w-full">
-              {Array.from({ length: pageCount }, (_, index) => (
-                <SelectItem
-                  key={`select_page_${index}`}
-                  className="text-xs"
-                  value={String(index)}
-                >
-                  {String(index + 1)}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <Button
-            variant={"ghost"}
-            className="p-1 h-fit"
-            onClick={() => {
-              if (tableRef.current) tableRef.current.nextPage();
-            }}
-          >
-            <ChevronRight className="w-4 h-4" />
-          </Button>
-          <Button
-            variant={"ghost"}
-            className="p-1 h-fit"
-            onClick={() => {
-              if (tableRef.current) tableRef.current.goToLastPage();
-            }}
-          >
-            <SkipForward className="w-4 h-4" />
-          </Button>
-        </div>
+          <div>
+            {pagination.pageIndex * pagination.pageSize + 1}-
+            {Math.min(
+              pagination.pageSize * (pagination.pageIndex + 1),
+              tableRef.current ? tableRef.current.getFilteredDataSize() : 0
+            )}{" "}
+            sur {tableRef.current ? tableRef.current.getFilteredDataSize() : 0}{" "}
+            résultats
+          </div>
 
-        <div className="flex items-center">
-          Résultats par page
-          <Select
-            onValueChange={(value) => {
-              if (tableRef.current) {
-                tableRef.current.setPageSize(Number(value));
-              }
+          <div
+            className="flex items-center"
+            style={{
+              position: "absolute",
+              left: "50%",
+              transform: "translateX(-50%)",
             }}
-            defaultValue={String(pagination.pageSize)}
           >
-            <SelectTrigger className="min-w-0 w-fit text-xs h-[2em]">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent className="min-w-0 w-full">
-              <SelectItem className="text-xs" value="5">
-                5
-              </SelectItem>
-              <SelectItem className="text-xs" value="10">
-                10
-              </SelectItem>
-              <SelectItem className="text-xs" value="15">
-                15
-              </SelectItem>
-              <SelectItem className="text-xs" value="20">
-                20
-              </SelectItem>
-              <SelectItem className="text-xs" value="25">
-                25
-              </SelectItem>
-              <SelectItem className="text-xs" value="50">
-                50
-              </SelectItem>
-              <SelectItem className="text-xs" value="100">
-                100
-              </SelectItem>
-            </SelectContent>
-          </Select>
+            <Button
+              variant={"ghost"}
+              className="p-1 h-fit"
+              onClick={() => {
+                if (tableRef.current) tableRef.current.goToFirstPage();
+              }}
+            >
+              <SkipBack className="w-4 h-4" />
+            </Button>
+            <Button
+              variant={"ghost"}
+              className="p-1 h-fit"
+              onClick={() => {
+                if (tableRef.current) tableRef.current.previousPage();
+              }}
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </Button>
+            <Select
+              value={String(pagination.pageIndex)}
+              onValueChange={(value) => {
+                if (tableRef.current)
+                  tableRef.current.setPageIndex(Number(value));
+              }}
+            >
+              <SelectTrigger className="min-w-0 text-xs h-[2em]">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent className="min-w-0 w-full">
+                {Array.from({ length: pageCount }, (_, index) => (
+                  <SelectItem
+                    key={`select_page_${index}`}
+                    className="text-xs"
+                    value={String(index)}
+                  >
+                    {String(index + 1)}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <Button
+              variant={"ghost"}
+              className="p-1 h-fit"
+              onClick={() => {
+                if (tableRef.current) tableRef.current.nextPage();
+              }}
+            >
+              <ChevronRight className="w-4 h-4" />
+            </Button>
+            <Button
+              variant={"ghost"}
+              className="p-1 h-fit"
+              onClick={() => {
+                if (tableRef.current) tableRef.current.goToLastPage();
+              }}
+            >
+              <SkipForward className="w-4 h-4" />
+            </Button>
+          </div>
+          
+          <div className="flex items-center">
+            Résultats par page
+            <Select
+              onValueChange={(value) => {
+                if (tableRef.current) {
+                  tableRef.current.setPageSize(Number(value));
+                }
+              }}
+              defaultValue={String(pagination.pageSize)}
+            >
+              <SelectTrigger className="min-w-0 w-fit text-xs h-[2em]">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent className="min-w-0 w-full">
+                <SelectItem className="text-xs" value="5">
+                  5
+                </SelectItem>
+                <SelectItem className="text-xs" value="10">
+                  10
+                </SelectItem>
+                <SelectItem className="text-xs" value="15">
+                  15
+                </SelectItem>
+                <SelectItem className="text-xs" value="20">
+                  20
+                </SelectItem>
+                <SelectItem className="text-xs" value="25">
+                  25
+                </SelectItem>
+                <SelectItem className="text-xs" value="50">
+                  50
+                </SelectItem>
+                <SelectItem className="text-xs" value="100">
+                  100
+                </SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
-      </div>
+      }
     </>
   );
 };

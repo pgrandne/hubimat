@@ -1,1 +1,1 @@
-export default function AdvancedTableBodyRow({ children }: { children: any }) {return <></>}
+export default function AdvancedTableBodyRow({ children, onRowClick }: { children?: any, onRowClick?: (row: any) => void }) {return <></>}

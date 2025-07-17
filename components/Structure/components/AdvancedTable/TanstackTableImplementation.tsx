@@ -45,6 +45,7 @@ interface AdvancedTableProps<TData, TValue> {
   globalFilterValue?: string;
   pagination: PaginationState;
   setPagination: OnChangeFn<PaginationState>;
+  onRowClick?: (row: any) => void
 }
 
 export interface AdvancedTablePropsMethods {
@@ -69,6 +70,7 @@ const TanstackTableImplementation = forwardRef(
       globalFilterValue,
       pagination,
       setPagination,
+      onRowClick,
     }: AdvancedTableProps<TData, TValue>,
     ref: Ref<unknown> | undefined
   ) => {
@@ -159,6 +161,8 @@ const TanstackTableImplementation = forwardRef(
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
+                  onClick={() => onRowClick?.(row.original)}
+                  className={onRowClick && "hover:cursor-pointer"}
                 >
                   {row.getVisibleCells().map((cell, index) => (
                     <TableCell
